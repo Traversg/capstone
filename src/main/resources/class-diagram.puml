@@ -1,0 +1,190 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class User {
+- userId : String
+- userName : String
+- weight : double
++ getUserId() : String
++ setUserId() : void
++ getUserName() : String
++ setUserName() : void
++ getWeight() : double
++ setWeight() : void
+}
+
+class Workout {
+- workoutType : enum
+- userId : String
+- date : Date
+- timeStarted : TimeStamp
+- timeEnded : TimeStamp
+- squatReps : int[]
+- benchReps : int[]
+- deadliftReps : int[]
+- ohpReps : int[]
+- rowReps : int[]
++ getWorkoutType() : String
++ setWorkoutType() : void
++ getUserId() : String
++ setUserId() : void
++ getDate() : Date
++ setDate() : void
++ getTimeStarted() : TimeStamp
++ setTimeStarted() : void
++ getTimeEnded() : TimeStamp
++ setTimeEnded() : void
++ getSquatReps() : int[]
++ setSquatReps() : void
++ getBenchReps() : int[]
++ setBenchReps() : void
++ getDeadliftReps() : int[]
++ setDeadliftReps() : void
++ getOHPReps() : int[]
++ setOHPReps() : void
++ getRowReps() : int[]
++ setRowReps() : void
+}
+
+class WorkoutInProgress {
+- workoutType : enum
+- userId : String
+- date : Date
+- timeStarted : TimeStamp
+- timeEnded : TimeStamp
+- squatReps : int[]
+- benchReps : int[]
+- deadliftReps : int[]
+- ohpReps : int[]
+- rowReps : int[]
+- isCompleted : boolean
++ getWorkoutType() : String
++ setWorkoutType() : void
++ getUserId() : String
++ setUserId() : void
++ getDate() : Date
++ setDate() : void
++ getTimeStarted() : TimeStamp
++ setTimeStarted() : void
++ getTimeEnded() : TimeStamp
++ setTimeEnded() : void
++ getSquatReps() : int[]
++ setSquatReps() : void
++ getBenchReps() : int[]
++ setBenchReps() : void
++ getDeadliftReps() : int[]
++ setDeadliftReps() : void
++ getOHPReps() : int[]
++ setOHPReps() : void
++ getRowReps() : int[]
++ setRowReps() : void
++ getIsCompleted() : boolean
++ setIsCompleted() : void
+}
+
+class LiftLog {
+- userId : String
+- deadlift : int
+- squat : int
+- bench : int
+- ohp : int
+- row : int
++ getUserId() : String
++ setUserId() : void
++ getDeadlift() : int
++ setDeadlift() : void
++ getSquat() : int
++ setSquat() : void
++ getBench() : int
++ setBench() : void
++ getOHP() : int
++ setOHP() : void
++ getRow() : int
++ setRow() : void
+}
+
+enum WorkoutType {
+WORKOUT_A
+WORKOUT_B
+}
+
+class UserDao {
+- final dynamoDBMapper : DynamoDBMapper
++ getUser : User
++ addUser : User
+}
+
+class LiftLogDao {
+- final dynamoDBMapper : DynamoDBMapper
++ getLiftLog : LiftLog
++ updateLiftLog : LiftLog
++ createLiftLog : LiftLog
+}
+
+class WorkoutDao {
+- final dynamoDBMapper : DynamoDBMapper
++ getWorkout : Workout
++ createWorkout : Workout
++ getWorkoutHistory: List<Workout>
+}
+
+class WorkoutInProgressDao {
+- final dynamoDBMapper : DynamoDBMapper
++ createWorkoutInProgress : WorkoutInProgress
++ updateWorkoutInProgress : WorkoutInProgress
+}
+
+class AddRepsToSetActivity {
+- final workoutInProgressDao : WorkoutInProgressDao
+- handleRequest(AddRepsToSetRequest request) : AddRepsToSetResult
+}
+
+class StartWorkoutActivity {
+- final workoutInProgressDaoDao : WorkoutInProgressDao
+- final workoutDao : WorkoutDao
++ handleRequest(StartWorkoutRequest request) : StartWorkoutResult
+}
+
+class EndWorkoutActivity {
+- final workoutDao : WorkoutDao
+- final workoutInProgressDao : WorkoutInProgressDao
+- final liftLogDao : liftLogDao
++ handleRequest(EndWorkoutRequest request) : EndWorkoutResult
+}
+
+class GetWorkoutHistoryActivity {
+- final workoutDao : WorkoutDao
++ handleRequest(EndWorkoutRequest request) : EndWorkoutResult
+}
+
+class GetUpcomingWorkoutActivity {
+- final workoutDao : workoutDao
+- final liftLogDao : liftLogDao
++ handleRequest(GetUpcomingWorkout request) : GetUpcomingResult
+}
+
+class CreateProgramActivity {
+- final userDao : UserDao
+- final liftLogDao : LiftLogDao
++ handleRequest(CreateProgramRequest request) : CreateProgramResult
+}
+
+User --|> UserDao
+LiftLog --|> LiftLogDao
+Workout --|> WorkoutDao
+WorkoutInProgress --|> WorkoutInProgressDao
+AddRepsToSetActivity <|-- WorkoutInProgressDao
+StartWorkoutActivity <|-- WorkoutInProgressDao
+StartWorkoutActivity <|-- WorkoutDao
+EndWorkoutActivity <|-- WorkoutDao
+EndWorkoutActivity <|-- WorkoutInProgressDao
+EndWorkoutActivity <|-- LiftLogDao
+GetWorkoutHistoryActivity <|-- WorkoutDao
+GetUpcomingWorkoutActivity <|-- LiftLogDao
+GetUpcomingWorkoutActivity <|-- WorkoutDao
+CreateProgramActivity <|-- UserDao
+CreateProgramActivity <|-- LiftLogDao
+WorkoutType --|> WorkoutInProgress
+WorkoutType --|> Workout
+@enduml
+

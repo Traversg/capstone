@@ -1,0 +1,9 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+Client -> Website_Start_Workout_Page: Click start workout button
+Website_Start_Workout_Page -> StartWorkoutActivity: Send start workout request
+StartWorkoutActivity -> WorkoutInProgressDao: Save workout in progress
+StartWorkoutActivity -> Website_Start_Workout_Page: Send start workout result
+Website_Start_Workout_Page -> Client: Sent to workout in progress page
+@enduml
