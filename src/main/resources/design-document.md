@@ -85,11 +85,11 @@ Workout In Progress Table:
 ## 6. API
 
 ### 6.1 Add Reps To Set Endpoint
-- Accepts `PUT` requests to /workoutinprogress/:id
+- Accepts `PUT` requests to /workoutinprogress/:userId
 - Accepts data to update a `workoutinprogress` including the number of reps, the exercise, and the ID associated with the workout. Returns the corresponding `workoutinprogress`.
 
 ### 6.2 Get Upcoming Workouts Endpoint
-- Accepts `GET` requests to /workout/:id
+- Accepts `GET` requests to /workout/:userId
 - Accepts a user ID and returns the corresponding Workouts.
 
 ### 6.3 Start Workout Endpoint
@@ -98,11 +98,11 @@ Workout In Progress Table:
 
 ![startworkoutImage](diagram-13903889164156429315.png)
 ### 6.4 End Workout Endpoint
-- Accepts `PUT` requests to /workoutinprogress/:id
+- Accepts `PUT` requests to /workoutinprogress/:userid
 - Accepts data to update a 'workoutinprogress' including a signal of completion and returns the corresponding workout `workoutinprogress`.
 
 ### 6.5 Get Workout History Endpoint
-- Accepts `GET` requests to /workout/:id
+- Accepts `GET` requests to /workout/:userId
 - Accepts a user ID and returns the corresponding workouts
 
 ### 6.6 Create Profile Endpoint
