@@ -80,7 +80,6 @@ Workout In Progress Table:
 - OHPReps : Attribute : int[]
 - RowReps : Attribute : int[]
 - DeadliftReps : Attribute : int[]
-- isCompleted : Attribute : int[]
 
 ## 6. API
 

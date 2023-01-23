@@ -72,7 +72,6 @@ class WorkoutInProgress {
 - deadliftReps : int[]
 - ohpReps : int[]
 - rowReps : int[]
-- isCompleted : boolean
 + getWorkoutType() : String
 + setWorkoutType() : void
 + getUserId() : String
@@ -93,8 +92,6 @@ class WorkoutInProgress {
 + setOHPReps() : void
 + getRowReps() : int[]
 + setRowReps() : void
-+ getIsCompleted() : boolean
-+ setIsCompleted() : void
 }
 
 enum WorkoutType {
