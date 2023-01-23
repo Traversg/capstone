@@ -39,6 +39,7 @@ class Workout {
 - deadliftReps : int[]
 - ohpReps : int[]
 - rowReps : int[]
+- isComplete : boolean
 + getWorkoutType() : String
 + setWorkoutType() : void
 + getUserId() : String
@@ -59,39 +60,8 @@ class Workout {
 + setOHPReps() : void
 + getRowReps() : int[]
 + setRowReps() : void
-}
-
-class WorkoutInProgress {
-- workoutType : enum
-- userId : String
-- date : Date
-- timeStarted : TimeStamp
-- timeEnded : TimeStamp
-- squatReps : int[]
-- benchReps : int[]
-- deadliftReps : int[]
-- ohpReps : int[]
-- rowReps : int[]
-+ getWorkoutType() : String
-+ setWorkoutType() : void
-+ getUserId() : String
-+ setUserId() : void
-+ getDate() : Date
-+ setDate() : void
-+ getTimeStarted() : TimeStamp
-+ setTimeStarted() : void
-+ getTimeEnded() : TimeStamp
-+ setTimeEnded() : void
-+ getSquatReps() : int[]
-+ setSquatReps() : void
-+ getBenchReps() : int[]
-+ setBenchReps() : void
-+ getDeadliftReps() : int[]
-+ setDeadliftReps() : void
-+ getOHPReps() : int[]
-+ setOHPReps() : void
-+ getRowReps() : int[]
-+ setRowReps() : void
++ isComplete() : boolean
+- isComplete() : void
 }
 
 enum WorkoutType {
@@ -112,26 +82,18 @@ class WorkoutDao {
 + getWorkoutHistory: List<Workout>
 }
 
-class WorkoutInProgressDao {
-- final dynamoDBMapper : DynamoDBMapper
-+ createWorkoutInProgress : WorkoutInProgress
-+ updateWorkoutInProgress : WorkoutInProgress
-}
-
 class AddRepsToSetActivity {
-- final workoutInProgressDao : WorkoutInProgressDao
+- final workoutDao : WorkoutDao
 - handleRequest(AddRepsToSetRequest request) : AddRepsToSetResult
 }
 
 class StartWorkoutActivity {
-- final workoutInProgressDaoDao : WorkoutInProgressDao
 - final workoutDao : WorkoutDao
 + handleRequest(StartWorkoutRequest request) : StartWorkoutResult
 }
 
 class EndWorkoutActivity {
 - final workoutDao : WorkoutDao
-- final workoutInProgressDao : WorkoutInProgressDao
 - final userDao : UserDao
 + handleRequest(EndWorkoutRequest request) : EndWorkoutResult
 }
@@ -154,18 +116,14 @@ class CreateProgramActivity {
 
 User --|> UserDao
 Workout --|> WorkoutDao
-WorkoutInProgress --|> WorkoutInProgressDao
-AddRepsToSetActivity <|-- WorkoutInProgressDao
-StartWorkoutActivity <|-- WorkoutInProgressDao
+AddRepsToSetActivity <|-- WorkoutDao
 StartWorkoutActivity <|-- WorkoutDao
 EndWorkoutActivity <|-- WorkoutDao
-EndWorkoutActivity <|-- WorkoutInProgressDao
 EndWorkoutActivity <|-- UserDao
 GetWorkoutHistoryActivity <|-- WorkoutDao
 GetUpcomingWorkoutActivity <|-- UserDao
 GetUpcomingWorkoutActivity <|-- WorkoutDao
 CreateProgramActivity <|-- UserDao
-WorkoutType --|> WorkoutInProgress
 WorkoutType --|> Workout
 @enduml
 

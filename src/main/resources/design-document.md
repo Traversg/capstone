@@ -68,37 +68,31 @@ Workout Table:
 - OHPReps : Attribute : int[]
 - RowReps : Attribute : int[]
 - DeadliftReps : Attribute : int[]
+- isComplete : Attribute : boolean
 
-Workout In Progress Table:
+Workout GSI Table:
 - UserId : Partition Key : String
-- WorkoutType : Attribute : enum
-- Date : Attribute : Datetime
-- TimeStarted : Attribute : TimeStamp
-- TimeEnded : Attribute : TimeStamp
-- SquatReps : Attribute : int[]
-- BenchReps : Attribute : int[]
-- OHPReps : Attribute : int[]
-- RowReps : Attribute : int[]
-- DeadliftReps : Attribute : int[]
+- isComplete : Sort Key : boolean
+- Include All
 
 ## 6. API
 
 ### 6.1 Add Reps To Set Endpoint
-- Accepts `PUT` requests to /workoutinprogress/:userId
-- Accepts data to update a `workoutinprogress` including the number of reps, the exercise, and the ID associated with the workout. Returns the corresponding `workoutinprogress`.
+- Accepts `PUT` requests to /workout/:userId
+- Accepts data to update a `workout` including the number of reps, the exercise, and the user ID associated with the workout. Returns the corresponding `workout`.
 
 ### 6.2 Get Upcoming Workouts Endpoint
 - Accepts `GET` requests to /workout/:userId
 - Accepts a user ID and returns the corresponding Workouts.
 
 ### 6.3 Start Workout Endpoint
-- Accepts `POST` requests to /workoutinprogress
-- Accepts data to create a new `workoutinprogress` with a given `workoutinprogress` ID and returns a new `workoutinprogress`.
+- Accepts `POST` requests to /workout
+- Accepts data to create a new `workout` with a provided userID and returns a new `workout`.
 
 ![startworkoutImage](diagram-13903889164156429315.png)
 ### 6.4 End Workout Endpoint
-- Accepts `PUT` requests to /workoutinprogress/:userid
-- Accepts data to update a 'workoutinprogress' including a signal of completion and returns the corresponding workout `workoutinprogress`.
+- Accepts `PUT` requests to /workout/:userid
+- Accepts data to update a `workout` including a signal of completion and returns the corresponding `workout`.
 
 ### 6.5 Get Workout History Endpoint
 - Accepts `GET` requests to /workout/:userId
