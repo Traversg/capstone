@@ -3,9 +3,9 @@
 ## 1. Problem Statement
 
 As a weightlifter who uses the 5x5 program, I have trouble keeping track of all my workouts in my journal
-and spend too much time calculating my current workout weights, warmup weights, 
-and deload weights. I would like to digitize all of my workouts that keeps track 
-of my progress and workouts , when I need to deload, and what my next workouts 
+and spend too much time calculating my current workout weights, warmup weights,
+and deload weights. I would like to digitize all of my workouts that keeps track
+of my progress and workouts , when I need to deload, and what my next workouts
 will look like. I would also like the application to calculate my warmup weights,
 deload weights, and rest time between sets.
 
@@ -48,7 +48,7 @@ U5. As a lifter, I want to see what my warmup weights are for each exercise.
 ## 5. Tables
 
 User Table:
-- UserId : Partition Key : String
+- Id : Partition Key : String
 - UserName : Attribute : String
 - Weight : Attribute : double
 - Deadlift : Attribute  : int
@@ -89,7 +89,7 @@ Workout GSI Table:
 - Accepts `POST` requests to /workout
 - Accepts data to create a new `workout` with a provided userID and returns a new `workout`.
 
-![startworkoutImage](diagram-13903889164156429315.png)
+![startWorkoutImage](diagram-13903889164156429315.png)
 ### 6.4 End Workout Endpoint
 - Accepts `PUT` requests to /workout/:userid
 - Accepts data to update a `workout` including a signal of completion and returns the corresponding `workout`.
