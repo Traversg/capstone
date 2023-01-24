@@ -100,7 +100,7 @@ Workout GSI Table:
 
 ### 6.6 Create Profile Endpoint
 - Accepts `POST` requests to /user
-- Accepts data to create a new user and lift log, with a provided ID, name, body weight, and exercise weight and returns a new User.
+- Accepts data to create a new user, with a provided ID, name, body weight, and exercise weight and returns a new User.
 
 ## 7. Mockup
 
