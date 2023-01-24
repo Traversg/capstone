@@ -11,25 +11,23 @@ deload weights, and rest time between sets.
 
 ## 2. Use Cases
 
-U1. As a lifter, I want to enter how many reps I did for each set.
+U1. As a lifter, I want to be able to enter my starting weights, so I can begin my program.
 
-U2. As a lifter, I want to see what my working weights are for the day.
+U2. As a lifter, I want to see which workout I need to do that day, so I don't accidentally do the wrong workout.
 
-U3. As a lifter, I want to see which workout I need to do that day.
+U3. As a lifter, I want to see what my working weights are for the day, so I can set the appropriate weights on the bar.
 
-U4. As a lifter, I want a timer to start after my set, so I know how long to rest between my sets.
+U4. As a lifter, I want to enter how many reps I did for each set, so I can track my progress.
 
-U4. As a lifter, I want to see a recent history of my workouts.
+U5. As lifter, I want to be able to keep track of my body weight, so I can see if I'm gaining too much weight or not enough weight.
 
-U5. As a lifter, I want to see my upcoming workouts calculated for the week.
+U6. As a lifter, I want to see my upcoming workouts calculated for the week, so I don't have to caculate each future workout.
 
-U6. As lifter, I want to be able to keep track of my body weight.
+U7. As a lifter, I want a timer to start after my set, so I know how long to rest between my sets.
 
-U7. As a lifter, I want to be able to enter my starting weights.
+U8. As a lifter, I want to see a recent history of my workouts, so I can see the progress I've made.
 
-U8. As a lifter, I want to be able to log the weights for all of my lifts.
-
-U9. As a lifter, I want to know how long my workout was.
+U9. As a lifter, I want to know how long my workout was, so I know how long to block out my workout in my calendar.
 
 ## 3. Stretch Goals
 
@@ -50,76 +48,59 @@ U5. As a lifter, I want to see what my warmup weights are for each exercise.
 ## 5. Tables
 
 User Table:
-- UserId : Partition Key
-- UserName : Attribute
-- Weight : Attribute
-
-Lift Log Table:
-- UserId : Partition Key
-- Deadlift : Attribute
-- Squat : Attribute
-- Bench : Attribute
-- OHP : Attribute
-- Row : Attribute
+- UserId : Partition Key : String
+- UserName : Attribute : String
+- Weight : Attribute : double
+- Deadlift : Attribute  : int
+- Squat : Attribute : int
+- Bench : Attribute : int
+- OHP : Attribute : int
+- Row : Attribute : int
 
 Workout Table:
-- UserId : Partition Key
-- WorkoutId : Sort Key
-- WorkoutType : Attribute
-- Date : Attribute
-- TimeStarted : Attribute
-- TimeEnded : Attribute
-- SquatReps : Attribute
-- BenchReps : Attribute
-- OHPReps : Attribute
-- RowReps : Attribute
-- DeadliftReps : Attribute
+- UserId : Partition Key : String
+- Date : Sort Key : Datetime
+- WorkoutType : Attribute : enum
+- TimeStarted : Attribute : TimeStamp
+- TimeEnded : Attribute : TimeStamp
+- SquatReps : Attribute : int[]
+- BenchReps : Attribute : int[]
+- OHPReps : Attribute : int[]
+- RowReps : Attribute : int[]
+- DeadliftReps : Attribute : int[]
+- isComplete : Attribute : boolean
 
 Workout GSI Table:
-- UserId : Partition Key
-- Date : Sort Key
+- UserId : Partition Key : String
+- isComplete : Sort Key : boolean
 - Include All
-
-Workout In Progress Table:
-- WorkoutInProgressId : Partition Key
-- UserId : Sort Key
-- WorkoutType : Attribute
-- Date : Attribute
-- TimeStarted : Attribute
-- TimeEnded : Attribute
-- SquatReps : Attribute
-- BenchReps : Attribute
-- OHPReps : Attribute
-- RowReps : Attribute
-- DeadliftReps : Attribute
-- isCompleted : Attribute
 
 ## 6. API
 
 ### 6.1 Add Reps To Set Endpoint
-- Accepts `PUT` requests to /workoutinprogress/:id
-- Accepts data to update a `workoutinprogress` including the number of reps, the exercise, and the ID associated with the workout.
+- Accepts `PUT` requests to /workout/:userId
+- Accepts data to update a `workout` including the number of reps, the exercise, and the user ID associated with the workout. Returns the corresponding `workout`.
 
 ### 6.2 Get Upcoming Workouts Endpoint
-- Accepts `GET` requests to /workout/:id
-- Accepts a user ID and returns the corresponding Workouts
+- Accepts `GET` requests to /workout/:userId
+- Accepts a user ID and returns the corresponding Workouts.
 
 ### 6.3 Start Workout Endpoint
-- Accepts `POST` requests to /workoutinprogress
-- Accepts data to create a new `workoutinprogress` with a given `workoutinprogress` ID
+- Accepts `POST` requests to /workout
+- Accepts data to create a new `workout` with a provided userID and returns a new `workout`.
 
 ![startworkoutImage](diagram-13903889164156429315.png)
 ### 6.4 End Workout Endpoint
-- Accepts `PUT` requests to /workoutinprogress/:id
-- Accepts data to update a 'workoutinprogress' including a signal of completion
+- Accepts `PUT` requests to /workout/:userid
+- Accepts data to update a `workout` including a signal of completion and returns the corresponding `workout`.
 
 ### 6.5 Get Workout History Endpoint
-- Accepts `GET` requests to /workout/:id
+- Accepts `GET` requests to /workout/:userId
 - Accepts a user ID and returns the corresponding workouts
 
 ### 6.6 Create Profile Endpoint
 - Accepts `POST` requests to /user
-- Accepts data to create a new user and lift log, with a provided ID, name, body weight, and exercise weight
+- Accepts data to create a new user and lift log, with a provided ID, name, body weight, and exercise weight and returns a new User.
 
 ## 7. Mockup
 
