@@ -48,7 +48,7 @@ U5. As a lifter, I want to see what my warmup weights are for each exercise.
 ## 5. Tables
 
 User Table:
-- UserId : Partition Key : String
+- Id : Partition Key : String
 - UserName : Attribute : String
 - Weight : Attribute : double
 - Deadlift : Attribute  : int

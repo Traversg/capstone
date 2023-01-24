@@ -1,4 +1,4 @@
-package com.nashss.fivelifts.dynamodb.models;
+package com.nashss.se.fivelifts.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
@@ -6,9 +6,12 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.Objects;
 
+/**
+ * Represents a User in the user table.
+ */
 @DynamoDBTable(tableName = "users")
 public class User {
-    private String userId;
+    private String id;
     private String userName;
     private double bodyWeight;
     private int deadlift;
@@ -17,13 +20,13 @@ public class User {
     private int overheadPress;
     private int barbellRow;
 
-    @DynamoDBHashKey(attributeName = "userId")
-    public String getUserId() {
-        return userId;
+    @DynamoDBHashKey(attributeName = "id")
+    public String getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserId(String id) {
+        this.id = id;
     }
 
     @DynamoDBAttribute(attributeName = "userName")
@@ -91,11 +94,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(userName, user.userName);
+        return Objects.equals(id, user.id) && Objects.equals(userName, user.userName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, userName);
+        return Objects.hash(id, userName);
     }
 }
