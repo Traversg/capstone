@@ -1,5 +1,9 @@
 package com.nashss.se.fivelifts.activity.requests;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+@JsonDeserialize(builder = CreateProfileRequest.Builder.class)
 public class CreateProfileRequest {
     private final String userName;
     private final double bodyWeight;
@@ -66,6 +70,7 @@ public class CreateProfileRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder
     public static class Builder {
         private String userName;
         private double bodyWeight;

@@ -1,7 +1,5 @@
 package com.nashss.se.fivelifts.models;
 
-import com.amazonaws.services.dynamodbv2.xspec.B;
-
 import java.util.Objects;
 
 public class UserModel {
