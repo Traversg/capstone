@@ -4,7 +4,8 @@ import java.util.Objects;
 
 public class UserModel {
     private final String id;
-    private final String userName;
+    private final String name;
+    private final String email;
     private final double bodyWeight;
     private final int deadlift;
     private final int squat;
@@ -12,10 +13,11 @@ public class UserModel {
     private final int overheadPress;
     private final int barbellRow;
 
-    private UserModel(String id, String userName, double bodyWeight, int deadlift,
+    private UserModel(String id, String name, String email, double bodyWeight, int deadlift,
                       int squat, int bench, int overheadPress, int barbellRow) {
         this.id = id;
-        this.userName = userName;
+        this.name = name;
+        this.email = email;
         this.bodyWeight = bodyWeight;
         this.deadlift = deadlift;
         this.squat = squat;
@@ -28,8 +30,12 @@ public class UserModel {
         return id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public double getBodyWeight() {
@@ -61,12 +67,12 @@ public class UserModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserModel userModel = (UserModel) o;
-        return Objects.equals(id, userModel.id) && Objects.equals(userName, userModel.userName);
+        return Objects.equals(id, userModel.id) && Objects.equals(name, userModel.name) && Objects.equals(email, userModel.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName);
+        return Objects.hash(id, name, email);
     }
 
     //CHECKSTYLE:OFF:Builder
@@ -76,7 +82,8 @@ public class UserModel {
 
     public static class Builder {
         private String id;
-        private String userName;
+        private String name;
+        private String email;
         private double bodyWeight;
         private int deadlift;
         private int squat;
@@ -89,8 +96,13 @@ public class UserModel {
             return this;
         }
 
-        public Builder withUserName(String userName) {
-            this.userName = userName;
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withEmail(String email) {
+            this.email = email;
             return this;
         }
 
@@ -125,7 +137,7 @@ public class UserModel {
         }
 
         public UserModel build() {
-            return new UserModel(id, userName, bodyWeight, deadlift, squat,
+            return new UserModel(id, name, email, bodyWeight, deadlift, squat,
                     bench, overheadPress, barbellRow);
         }
     }

@@ -6,8 +6,11 @@ import com.nashss.se.fivelifts.converters.ModelConverter;
 import com.nashss.se.fivelifts.dynamodb.UserDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.models.UserModel;
+import com.nashss.se.fivelifts.utils.FiveLiftsServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.inject.Inject;
 
 /**
  * Implementation of the CreateProfileActivity for the FiveLifts' CreateProfile API.
@@ -23,6 +26,7 @@ public class CreateProfileActivity {
      *
      * @param userDao UserDap to access the playlists table.
      */
+    @Inject
     public CreateProfileActivity(UserDao userDao) {
         this.userDao = userDao;
     }
@@ -44,7 +48,9 @@ public class CreateProfileActivity {
         log.info("Received CreateProfileRequest {}", createProfileRequest);
 
         User newUser = new User();
-        newUser.setUserName(createProfileRequest.getUserName());
+        newUser.setId(FiveLiftsServiceUtils.generatePlaylistId());
+        newUser.setName(createProfileRequest.getName());
+        newUser.setEmail(createProfileRequest.getEmail());
         newUser.setBodyWeight(createProfileRequest.getBodyWeight());
         newUser.setBarbellRow(createProfileRequest.getBarbellRow());
         newUser.setDeadlift(createProfileRequest.getDeadlift());

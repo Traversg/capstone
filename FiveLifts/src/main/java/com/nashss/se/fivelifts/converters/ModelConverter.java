@@ -15,7 +15,9 @@ public class ModelConverter {
      */
     public UserModel toUserModel(User user) {
         return UserModel.builder()
-                .withUserName(user.getUserName())
+                .withId(user.getId())
+                .withName(user.getName())
+                .withEmail(user.getEmail())
                 .withBodyWeight(user.getBodyWeight())
                 .withBarbellRow(user.getBarbellRow())
                 .withBench(user.getBench())

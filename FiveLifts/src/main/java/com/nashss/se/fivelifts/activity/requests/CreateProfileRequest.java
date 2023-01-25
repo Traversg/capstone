@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = CreateProfileRequest.Builder.class)
 public class CreateProfileRequest {
-    private final String userName;
+    private final String name;
+    private final String email;
     private final double bodyWeight;
     private final int deadlift;
     private final int squat;
@@ -13,9 +14,10 @@ public class CreateProfileRequest {
     private final int overheadPress;
     private final int barbellRow;
 
-    private CreateProfileRequest(String userName, double bodyWeight, int deadlift, int squat,
+    private CreateProfileRequest(String name, String email, double bodyWeight, int deadlift, int squat,
                                  int bench, int overheadPress, int barbellRow) {
-        this.userName = userName;
+        this.name = name;
+        this.email = email;
         this.bodyWeight = bodyWeight;
         this.deadlift = deadlift;
         this.squat = squat;
@@ -24,8 +26,12 @@ public class CreateProfileRequest {
         this.barbellRow = barbellRow;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public double getBodyWeight() {
@@ -55,7 +61,8 @@ public class CreateProfileRequest {
     @Override
     public String toString() {
         return "CreateProfileRequest{" +
-                "userName='" + userName + '\'' +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 ", bodyWeight=" + bodyWeight + '\'' +
                 ", deadlift=" + deadlift + '\'' +
                 ", squat=" + squat + '\'' +
@@ -72,7 +79,8 @@ public class CreateProfileRequest {
 
     @JsonPOJOBuilder
     public static class Builder {
-        private String userName;
+        private String name;
+        private String email;
         private double bodyWeight;
         private int deadlift;
         private int squat;
@@ -81,8 +89,13 @@ public class CreateProfileRequest {
         private int barbellRow;
 
 
-        public Builder withUserName(String userName) {
-            this.userName = userName;
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withEmail(String email) {
+            this.email = email;
             return this;
         }
 
@@ -117,7 +130,7 @@ public class CreateProfileRequest {
         }
 
         public CreateProfileRequest build() {
-            return new CreateProfileRequest(userName, bodyWeight, deadlift, squat,
+            return new CreateProfileRequest(name, email, bodyWeight, deadlift, squat,
                     bench, overheadPress, barbellRow);
         }
 
