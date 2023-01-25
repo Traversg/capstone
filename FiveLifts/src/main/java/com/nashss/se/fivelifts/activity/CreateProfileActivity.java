@@ -1,6 +1,11 @@
 package com.nashss.se.fivelifts.activity;
 
+import com.nashss.se.fivelifts.activity.requests.CreateProfileRequest;
+import com.nashss.se.fivelifts.activity.results.CreateProfileResult;
+import com.nashss.se.fivelifts.converters.ModelConverter;
 import com.nashss.se.fivelifts.dynamodb.UserDao;
+import com.nashss.se.fivelifts.dynamodb.models.User;
+import com.nashss.se.fivelifts.models.UserModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,4 +40,23 @@ public class CreateProfileActivity {
      *                              associated with it
      * @return createProfileResult result object containing the API defined {@link UserModel}
      */
+    public CreateProfileResult handleRequest(final CreateProfileRequest createProfileRequest) {
+        log.info("Received CreateProfileRequest {}", createProfileRequest);
+
+        User newUser = new User();
+        newUser.setUserName(createProfileRequest.getUserName());
+        newUser.setBodyWeight(createProfileRequest.getBodyWeight());
+        newUser.setBarbellRow(createProfileRequest.getBarbellRow());
+        newUser.setDeadlift(createProfileRequest.getDeadlift());
+        newUser.setBench(createProfileRequest.getBench());
+        newUser.setOverheadPress(createProfileRequest.getOverheadPress());
+        newUser.setSquat(createProfileRequest.getSquat());
+
+        userDao.saveUser(newUser);
+
+        UserModel userModel = new ModelConverter().toUserModel(newUser);
+        return CreateProfileResult.builder()
+                .withUser(userModel)
+                .build();
+    }
 }

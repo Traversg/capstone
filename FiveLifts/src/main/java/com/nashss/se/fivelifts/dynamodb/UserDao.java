@@ -36,4 +36,13 @@ public class UserDao {
         }
         return user;
     }
+
+    /**
+     * Saves (creates or updates) the given user.
+     *
+     * @param user The user to save
+     */
+    public void saveUser(User user) {
+        dynamoDbMapper.save(user);
+    }
 }

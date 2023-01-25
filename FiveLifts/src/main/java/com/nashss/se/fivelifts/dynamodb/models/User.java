@@ -43,7 +43,7 @@ public class User {
         return bodyWeight;
     }
 
-    public void setWeight(double bodyWeight) {
+    public void setBodyWeight(double bodyWeight) {
         this.bodyWeight = bodyWeight;
     }
 
