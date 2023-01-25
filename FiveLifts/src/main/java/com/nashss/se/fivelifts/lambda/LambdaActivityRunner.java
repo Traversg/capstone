@@ -1,5 +1,6 @@
 package com.nashss.se.fivelifts.lambda;
 
+import com.nashss.se.fivelifts.dependency.DaggerServiceComponent;
 import com.nashss.se.fivelifts.dependency.ServiceComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

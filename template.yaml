@@ -222,7 +222,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
-      CodeUri: FiveLiftsServiceLambda
+      CodeUri: FiveLifts
       Handler: com.nashss.se.fivelifts.lambda.CreateProfileLambda::handleRequest
       Runtime: java11
       Architectures:

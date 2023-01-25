@@ -37,9 +37,10 @@ public class CreateProfileActivity {
      * <p>
      * It then returns the newly created user profile.
      * <p>
-     * If the provided user name has invalid characters or body weight and lift numbers are too large, throws an
+     * If the provided body weight and lift numbers are too large, throws an
      * InvalidAttributeValueException
      *
+     * If any provided weight fields are empty, throws an InvalidAttributeValueException
      * @param createProfileRequest request object containing the user name, body weight, and lift data
      *                              associated with it
      * @return createProfileResult result object containing the API defined {@link UserModel}
