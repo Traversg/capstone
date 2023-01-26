@@ -1,0 +1,39 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+.background {
+    background-color: #121212;
+
+}
+
+button {
+    background-color: #ff0024;
+    color: #ffffff;
+    border: none;
+    width: 500px;
+}
+
+/* LOGIN PAGE */
+
+.button-group button {
+    padding: 20px;
+    border-radius: 4px;
+    font-size: 30px;
+    font-family: 'Anton', sans-serif;
+}
+
+.button-group {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    margin-top: 50%;
+    margin-bottom: 50%;
+}
+

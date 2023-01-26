@@ -1,5 +1,5 @@
 import FiveLiftsClient from '../api/fiveLiftsClient';
-// import Header from '../components/header';
+import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
@@ -9,10 +9,11 @@ import DataStore from '../util/DataStore';
 class Login extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'redirectToViewPlaylist'], this);
+        this.bindClassMethods(['mount', 'login', 'redirectToWorkout', 'createProfile', 'redirectToCreateProfile'], this);
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.redirectToViewPlaylist);
-        // this.header = new Header(this.dataStore);
+        this.dataStore.addChangeListener(this.redirectToWorkout);
+        this.dataStore.addChangeListener(this.redirectToCreateProfile);
+        this.header = new Header(this.dataStore);
     }
 
     /**
@@ -22,9 +23,9 @@ class Login extends BindingClass {
         document.getElementById('login').addEventListener('click', this.login);
         document.getElementById('create-profile').addEventListener('click', this.createProfile)
 
-        // this.header.addHeaderToPage();
+        this.header.addHeaderToPage();
 
-        this.client = new MusicPlaylistClient();
+        this.client = new FiveLiftsClient();
     }
 
     /**
