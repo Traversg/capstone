@@ -1,25 +1,21 @@
-* {
-    font-family: 'Poppins', sans-serif;
-}
 .background {
-    background-color: #121212;
-
+    background-color: #000000;
 }
 
 button {
     background-color: #ff0024;
     color: #ffffff;
     border: none;
-    width: 500px;
 }
 
-/* LOGIN PAGE */
+/* INDEX PAGE */
 
 .button-group button {
     padding: 20px;
     border-radius: 4px;
     font-size: 30px;
     font-family: 'Anton', sans-serif;
+    width: 500px;
 }
 
 .button-group {
@@ -36,4 +32,83 @@ button {
     margin-top: 50%;
     margin-bottom: 50%;
 }
+
+/* STARTING WEIGHTS PAGE */
+
+.starting-weights-card {
+    background-color: #1c1c1e;
+    border-radius: 8px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 200px;
+    width: 75%
+}
+
+.starting-weights-card h3 {
+    padding-top: 25px;
+    padding-left: 25px;
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.starting-weights-card-content {
+    padding-left: 25px;
+    padding-bottom: 25px;
+
+}
+
+label {
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+input {
+    width: 100px;
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin-top: 10px;
+    outline: none;
+    background-color: #757575;
+    color: #ffffff;
+
+}
+
+input:focus {
+    border: 2px solid #ff0024;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #ffffff;
+    opacity: 1; /* Firefox */
+  }
+
+label, input {
+    display: flex;
+    flex-direction: column;
+}
+
+.starting-weights-button {
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Anton', sans-serif;
+    width: 75%;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+}
+
+
 

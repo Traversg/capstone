@@ -6,7 +6,7 @@ import DataStore from '../util/DataStore';
 /**
  * Logic needed for the create playlist page of the website.
  */
-class Login extends BindingClass {
+class Index extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'login', 'redirectToWorkout', 'createProfile', 'redirectToCreateProfile'], this);
@@ -67,7 +67,7 @@ class Login extends BindingClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const login = new Login();
+    const login = new Index();
     login.mount();
 };
 
