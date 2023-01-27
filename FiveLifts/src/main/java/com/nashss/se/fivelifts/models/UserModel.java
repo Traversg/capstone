@@ -2,6 +2,9 @@ package com.nashss.se.fivelifts.models;
 
 import java.util.Objects;
 
+/**
+ * A model representation of a User object.
+ */
 public class UserModel {
     private final String id;
     private final String name;
@@ -64,10 +67,15 @@ public class UserModel {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         UserModel userModel = (UserModel) o;
-        return Objects.equals(id, userModel.id) && Objects.equals(name, userModel.name) && Objects.equals(email, userModel.email);
+        return Objects.equals(id, userModel.id) && Objects.equals(name, userModel.name) &&
+                Objects.equals(email, userModel.email);
     }
 
     @Override
