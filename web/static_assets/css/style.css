@@ -29,8 +29,7 @@ button {
 .main {
     display: flex;
     justify-content: center;
-    margin-top: 50%;
-    margin-bottom: 50%;
+    margin-top: 350px;
 }
 
 /* STARTING WEIGHTS PAGE */
@@ -41,7 +40,7 @@ button {
     margin-left: 100px;
     margin-right: 100px;
     margin-top: 200px;
-    width: 75%
+    width: 75%; 
 }
 
 .starting-weights-card h3 {
