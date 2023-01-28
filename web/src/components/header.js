@@ -23,11 +23,11 @@ export default class Header extends BindingClass {
         const currentUser = await this.client.getIdentity();
 
         const siteTitle = this.createSiteTitle();
-        const userInfo = this.createUserInfoForHeader(currentUser);
+        // const userInfo = this.createUserInfoForHeader(currentUser);
 
         const header = document.getElementById('header');
         header.appendChild(siteTitle);
-        header.appendChild(userInfo);
+        // header.appendChild(userInfo);
     }
 
     createSiteTitle() {

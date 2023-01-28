@@ -9,7 +9,7 @@ import DataStore from '../util/DataStore';
 class StartingWeights extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'redirectToWorkout'], this);
+        this.bindClassMethods(['mount'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.redirectToViewPlaylist);
         this.header = new Header(this.dataStore);
@@ -19,11 +19,11 @@ class StartingWeights extends BindingClass {
      * Add the header to the page and load the MusicPlaylistClient.
      */
     mount() {
-        document.getElementById('create').addEventListener('click', this.submit);
+        //document.getElementById('create').addEventListener('click', this.submit);
 
         this.header.addHeaderToPage();
 
-        this.client = new MusicPlaylistClient();
+        this.client = new FiveLiftsClient();
     }
 
     /**
@@ -74,8 +74,8 @@ class StartingWeights extends BindingClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const createPlaylist = new CreatePlaylist();
-    createPlaylist.mount();
+    const startingWeights = new StartingWeights();
+    startingWeights.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

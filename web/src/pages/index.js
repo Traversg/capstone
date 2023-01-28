@@ -33,7 +33,7 @@ class Index extends BindingClass {
      * the user.
      */
     async login() {
-        this.client.login;
+        document.getElementById('login').addEventListener('click', this.client.login);
         this.redirectToWorkout;
     }
 
