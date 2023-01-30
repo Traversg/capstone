@@ -23,7 +23,7 @@ module.exports = {
     usedExports: true
   },
   entry: {
-    login: path.resolve(__dirname, 'src', 'pages', 'index.js'),
+    index: path.resolve(__dirname, 'src', 'pages', 'index.js'),
     startingWeights : path.resolve(__dirname, 'src', 'pages', 'startingWeights.js')
   },
   output: {

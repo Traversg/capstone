@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="assets/startingWeights.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+
+<body class="background">
+    <header class="header" id="header"></header>
+    <div class="starting-weights-card">
+        <h3>Enter Starting Weights</h3>
+        <form class="starting-weights-card-content" id="starting-weights-form">
+            <p class="hidden error" id="error-message"> </p>
+            <p class="form-field">
+                <label>Squat</label>
+                <input type="number" required class="validated-field" id="squat" placeholder="0"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Bench Press</label>
+                <input type="number" required class="validated-field" id="bench-press" placeholder="0"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Overhead Press</label>
+                <input type="number" required class="validated-field" id="overhead-press" placeholder="0"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Barbell Row</label>
+                <input type="number" required class="validated-field" id="barbell-row" placeholder="0"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Deadlift</label>
+                <input type="number" required class="validated-field" id="deadlift" placeholder="0"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Body Weight</label>
+                <input type="number" required class="validated-field" id="body-weight" placeholder="0.0"
+                    autofocus>
+            </p>
+        </form>
+    </div>
+    <button class="starting-weights-button" id="starting-weights-button" type="button">SUBMIT</button>
+</body>
+
+</html>
