@@ -1,12 +1,13 @@
-package com.nashss.se.fivelifts.models;
+package com.nashss.se.fivelifts.activity.requests;
 
-import java.util.Objects;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 /**
- * A model representation of a User object.
+ * Implementation of the CreateProfileRequest for the FiveLifts' CreateProfile API.
  */
-public class UserModel {
-    private final String id;
+@JsonDeserialize(builder = CreateProfileRequest.Builder.class)
+public class CreateProfileRequest {
     private final String name;
     private final String email;
     private final double bodyWeight;
@@ -16,9 +17,8 @@ public class UserModel {
     private final int overheadPress;
     private final int barbellRow;
 
-    private UserModel(String id, String name, String email, double bodyWeight, int deadlift,
-                      int squat, int bench, int overheadPress, int barbellRow) {
-        this.id = id;
+    private CreateProfileRequest(String name, String email, double bodyWeight, int deadlift, int squat,
+                                 int bench, int overheadPress, int barbellRow) {
         this.name = name;
         this.email = email;
         this.bodyWeight = bodyWeight;
@@ -27,10 +27,6 @@ public class UserModel {
         this.bench = bench;
         this.overheadPress = overheadPress;
         this.barbellRow = barbellRow;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getName() {
@@ -66,21 +62,17 @@ public class UserModel {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        UserModel userModel = (UserModel) o;
-        return Objects.equals(id, userModel.id) && Objects.equals(name, userModel.name) &&
-                Objects.equals(email, userModel.email);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, email);
+    public String toString() {
+        return "CreateProfileRequest{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", bodyWeight=" + bodyWeight + '\'' +
+                ", deadlift=" + deadlift + '\'' +
+                ", squat=" + squat + '\'' +
+                ", bench=" + bench + '\'' +
+                ", overheadPress=" + overheadPress + '\'' +
+                ", barbellRow=" + barbellRow +
+                '}';
     }
 
     //CHECKSTYLE:OFF:Builder
@@ -88,8 +80,8 @@ public class UserModel {
         return new Builder();
     }
 
+    @JsonPOJOBuilder
     public static class Builder {
-        private String id;
         private String name;
         private String email;
         private double bodyWeight;
@@ -99,10 +91,6 @@ public class UserModel {
         private int overheadPress;
         private int barbellRow;
 
-        public Builder withId(String id) {
-            this.id = id;
-            return this;
-        }
 
         public Builder withName(String name) {
             this.name = name;
@@ -144,9 +132,10 @@ public class UserModel {
             return this;
         }
 
-        public UserModel build() {
-            return new UserModel(id, name, email, bodyWeight, deadlift, squat,
+        public CreateProfileRequest build() {
+            return new CreateProfileRequest(name, email, bodyWeight, deadlift, squat,
                     bench, overheadPress, barbellRow);
         }
+
     }
 }

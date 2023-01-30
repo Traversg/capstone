@@ -31,15 +31,17 @@ U9. As a lifter, I want to know how long my workout was, so I know how long to b
 
 ## 3. Stretch Goals
 
-U1. As a lifter, I want to see a graph of my progress for each lift.
+U1. As a lifter, I want to see a table of my progress for each lift.
 
-U2. As a lifter, I want to see a full history of my workouts by date.
+U2. As a lifter, I want to see a graph of my progress for each lift.
 
-U3. As a lifter, I want to be able to customize my sets.
+U3. As a lifter, I want to see a full history of my workouts by date.
 
-U4. As a lifter, I want to my deloads calculated for me when I don't hit 5x5 three workout days in a row.
+U4. As a lifter, I want to be able to customize my sets.
 
-U5. As a lifter, I want to see what my warmup weights are for each exercise.
+U5. As a lifter, I want to my deloads calculated for me when I don't hit 5x5 three workout days in a row.
+
+U6. As a lifter, I want to see what my warmup weights are for each exercise.
 
 ## 4. Design UML
 

@@ -80,7 +80,7 @@ checkstyle {
     }
 
     def checkstyleDir = configFile.toPath().parent
-    def suppressionFile = new File("$checkstyleDir/unit3/suppressions.xml")
+    def suppressionFile = new File("$checkstyleDir/suppressions.xml")
     configProperties.put('checkstyle.suppression.filter', suppressionFile) // This property is refereced in `checkstyle.xml`
 
     sourceSets = [sourceSets.main]

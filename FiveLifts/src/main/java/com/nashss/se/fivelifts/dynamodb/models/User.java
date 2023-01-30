@@ -12,7 +12,8 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "users")
 public class User {
     private String id;
-    private String userName;
+    private String email;
+    private String name;
     private double bodyWeight;
     private int deadlift;
     private int squat;
@@ -25,17 +26,26 @@ public class User {
         return id;
     }
 
-    public void setUserId(String id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    @DynamoDBAttribute(attributeName = "userName")
-    public String getUserName() {
-        return userName;
+    @DynamoDBAttribute(attributeName = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @DynamoDBAttribute(attributeName = "email")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @DynamoDBAttribute(attributeName = "bodyWeight")
@@ -43,7 +53,7 @@ public class User {
         return bodyWeight;
     }
 
-    public void setWeight(double bodyWeight) {
+    public void setBodyWeight(double bodyWeight) {
         this.bodyWeight = bodyWeight;
     }
 
@@ -91,14 +101,18 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(userName, user.userName);
+        return Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(name, user.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName);
+        return Objects.hash(id, email, name);
     }
 }

@@ -1,7 +1,12 @@
 package com.nashss.se.fivelifts.dynamodb.models;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.nashss.se.fivelifts.converters.DateConverter;
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 
 import java.util.Date;
 import java.util.List;
@@ -11,7 +16,6 @@ import java.util.List;
  */
 @DynamoDBTable(tableName = "workouts")
 public class Workout {
-    public static final String WORKOUT_IN_PROGRESS_INDEX = "WorkoutInProgressIndex";
     private String userId;
     private Date date;
     private String workoutType;
@@ -25,7 +29,6 @@ public class Workout {
     private boolean isComplete;
 
     @DynamoDBHashKey(attributeName = "userId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = WORKOUT_IN_PROGRESS_INDEX, attributeName = "userId")
     public String getUserId() {
         return userId;
     }
@@ -118,7 +121,6 @@ public class Workout {
         this.deadliftReps = deadliftReps;
     }
 
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = WORKOUT_IN_PROGRESS_INDEX, attributeName = "isComplete")
     public boolean isComplete() {
         return isComplete;
     }
