@@ -72,6 +72,38 @@ export default class FiveLiftsClient extends BindingClass {
     }
 
     /**
+     * Create a new profile owned by the current user.
+     * @param squat the starting weight for the squat exercise.
+     * @param benchPress the starting weight for the bench press exercise.
+     * @param overheadPress the starting weight for the overhead press exercise.
+     * @param barbellRow the starting weight for the barbell row exercise.
+     * @param deadlift the starting weight for the deadlift exercise.
+     * @param bodyWeight the body weight for the current user.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The profile that has been created.
+     */
+        async createProfile(squat, benchPress, overheadPress, barbellRow, deadlift, bodyWeight, errorCallback) {
+            try {
+                const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
+                const response = await this.axiosClient.post(`user`, {
+                    squat: squat,
+                    benchPress: benchPress,
+                    overheadPress: overheadPress,
+                    barbellRow: barbellRow,
+                    deadlift: deadlift,
+                    bodyWeight: bodyWeight
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                return response.data.profile;
+            } catch (error) {
+                this.handleError(error, errorCallback)
+            }
+        }
+
+    /**
      * Helper method to log the error and run any error functions.
      * @param error The error received from the server.
      * @param errorCallback (Optional) A function to execute if the call fails.

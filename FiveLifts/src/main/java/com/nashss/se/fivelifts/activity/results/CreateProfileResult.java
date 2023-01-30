@@ -7,20 +7,20 @@ import com.nashss.se.fivelifts.models.UserModel;
  */
 public class CreateProfileResult {
 
-    private final UserModel user;
+    private final UserModel profile;
 
-    private CreateProfileResult(UserModel user) {
-        this.user = user;
+    private CreateProfileResult(UserModel profile) {
+        this.profile = profile;
     }
 
-    public UserModel getUser() {
-        return user;
+    public UserModel getProfile() {
+        return profile;
     }
 
     @Override
     public String toString() {
         return "CreateProfileResult{" +
-                "user=" + user +
+                "profile=" + profile +
                 '}';
     }
 
@@ -30,15 +30,15 @@ public class CreateProfileResult {
     }
 
     public static class Builder {
-        private UserModel user;
+        private UserModel profile;
 
-        public Builder withUser(UserModel user) {
-            this.user = user;
+        public Builder withProfile(UserModel profile) {
+            this.profile = profile;
             return this;
         }
 
         public CreateProfileResult build() {
-            return new CreateProfileResult(user);
+            return new CreateProfileResult(profile);
         }
     }
 }

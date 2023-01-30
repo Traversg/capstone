@@ -19,7 +19,7 @@ class StartingWeights extends BindingClass {
      * Add the header to the page and load the MusicPlaylistClient.
      */
     mount() {
-        //document.getElementById('create').addEventListener('click', this.submit);
+        document.getElementById('starting-weights-button').addEventListener('click', this.submit);
 
         this.header.addHeaderToPage();
 
@@ -27,8 +27,8 @@ class StartingWeights extends BindingClass {
     }
 
     /**
-     * Method to run when the create playlist submit button is pressed. Call the MusicPlaylistService to create the
-     * playlist.
+     * Method to run when the create profile submit button is pressed. Call the FiveLiftsService to create the
+     * profile.
      */
     async submit(evt) {
         evt.preventDefault();
@@ -37,21 +37,18 @@ class StartingWeights extends BindingClass {
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
 
-        const createButton = document.getElementById('create');
+        const createButton = document.getElementById('starting-weights-button');
         const origButtonText = createButton.innerText;
         createButton.innerText = 'Loading...';
 
-        const playlistName = document.getElementById('playlist-name').value;
-        const tagsText = document.getElementById('tags').value;
+        const squat = document.getElementById('squat').value;
+        const benchPress = document.getElementById('bench-press').value;
+        const overheadPress = document.getElementById('overhead-press').value;
+        const barbellRow = document.getElementById('barbell-row').value;
+        const deadlift = document.getElementById('deadlift').value;
+        const bodyWeight = document.getElementById('body-weight').value;
 
-        let tags;
-        if (tagsText.length < 1) {
-            tags = null;
-        } else {
-            tags = tagsText.split(/\s*,\s*/);
-        }
-
-        const playlist = await this.client.createPlaylist(playlistName, tags, (error) => {
+        const profile = await this.client.createPlaylist(playlistName, tags, (error) => {
             createButton.innerText = origButtonText;
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');

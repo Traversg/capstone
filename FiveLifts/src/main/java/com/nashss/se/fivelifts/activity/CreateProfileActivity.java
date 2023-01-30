@@ -64,7 +64,7 @@ public class CreateProfileActivity {
 
         UserModel userModel = new ModelConverter().toUserModel(newUser);
         return CreateProfileResult.builder()
-                .withUser(userModel)
+                .withProfile(userModel)
                 .build();
     }
 }
