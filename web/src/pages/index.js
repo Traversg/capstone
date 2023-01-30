@@ -50,7 +50,7 @@ class Index extends BindingClass {
      * the user.
      */
     async createProfile() {
-        this.client.login;
+        document.getElementById('create-profile').addEventListener('click', this.client.login);
         this.redirectToCreateProfile;
     }
 

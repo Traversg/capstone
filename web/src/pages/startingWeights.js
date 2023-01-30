@@ -9,9 +9,9 @@ import DataStore from '../util/DataStore';
 class StartingWeights extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount'], this);
+        this.bindClassMethods(['mount', 'submit', 'redirectToWorkout'], this);
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.redirectToViewPlaylist);
+        this.dataStore.addChangeListener(this.redirectToWorkout);
         this.header = new Header(this.dataStore);
     }
 
@@ -48,21 +48,22 @@ class StartingWeights extends BindingClass {
         const deadlift = document.getElementById('deadlift').value;
         const bodyWeight = document.getElementById('body-weight').value;
 
-        const profile = await this.client.createPlaylist(playlistName, tags, (error) => {
+        const profile = await this.client.createProfile(squat, benchPress, overheadPress, 
+            barbellRow, deadlift, bodyWeight, (error) => {
             createButton.innerText = origButtonText;
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
         });
-        this.dataStore.set('playlist', playlist);
+        this.dataStore.set('profile', profile);
     }
 
     /**
      * When the playlist is updated in the datastore, redirect to the view playlist page.
      */
-    redirectToViewPlaylist() {
-        const playlist = this.dataStore.get('playlist');
-        if (playlist != null) {
-            window.location.href = `/playlist.html?id=${playlist.id}`;
+    redirectToWorkout() {
+        const profile = this.dataStore.get('profile');
+        if (profile != null) {
+            window.alert("Redirect to workout page.")
         }
     }
 }

@@ -15,7 +15,7 @@ export default class FiveLiftsClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'createProfile'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -87,7 +87,7 @@ export default class FiveLiftsClient extends BindingClass {
                 const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
                 const response = await this.axiosClient.post(`user`, {
                     squat: squat,
-                    benchPress: benchPress,
+                    bench: benchPress,
                     overheadPress: overheadPress,
                     barbellRow: barbellRow,
                     deadlift: deadlift,
