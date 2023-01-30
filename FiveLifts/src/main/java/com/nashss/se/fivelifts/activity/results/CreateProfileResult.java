@@ -2,6 +2,9 @@ package com.nashss.se.fivelifts.activity.results;
 
 import com.nashss.se.fivelifts.models.UserModel;
 
+/**
+ * Implementation of the CreateProfileResult for the FiveLifts' CreateProfile API.
+ */
 public class CreateProfileResult {
 
     private final UserModel user;

@@ -46,7 +46,7 @@ public class CreateProfileActivityTest {
                 .withSquat(expectedSquat)
                 .withBench(expectedBench)
                 .withBarbellRow(expectedBarbellRow)
-                .withOverheadPres(expectedOHP)
+                .withOverheadPress(expectedOHP)
                 .build();
 
         // WHEN

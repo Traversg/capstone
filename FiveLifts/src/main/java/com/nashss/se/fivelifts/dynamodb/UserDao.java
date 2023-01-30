@@ -1,8 +1,9 @@
 package com.nashss.se.fivelifts.dynamodb;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.exceptions.UserNotFoundException;
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

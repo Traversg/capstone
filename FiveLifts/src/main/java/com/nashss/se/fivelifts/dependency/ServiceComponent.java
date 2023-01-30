@@ -1,6 +1,6 @@
 package com.nashss.se.fivelifts.dependency;
-
 import com.nashss.se.fivelifts.activity.CreateProfileActivity;
+
 import dagger.Component;
 
 import javax.inject.Singleton;

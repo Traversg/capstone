@@ -3,6 +3,9 @@ package com.nashss.se.fivelifts.activity.requests;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+/**
+ * Implementation of the CreateProfileRequest for the FiveLifts' CreateProfile API.
+ */
 @JsonDeserialize(builder = CreateProfileRequest.Builder.class)
 public class CreateProfileRequest {
     private final String name;
@@ -119,7 +122,7 @@ public class CreateProfileRequest {
             return this;
         }
 
-        public Builder withOverheadPres(int overheadPress) {
+        public Builder withOverheadPress(int overheadPress) {
             this.overheadPress = overheadPress;
             return this;
         }

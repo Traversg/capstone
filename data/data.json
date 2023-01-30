@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "ABC123" },
+          "name": { "S": "Joe Sixpack" },
+          "email": { "S": "joe_sixpack@gmail.com" },
+          "bodyWeight": { "N": "175.0" },
+          "deadlift": {"N": "300"},
+          "squat": {"N": "275"},
+          "bench": {"N": "200"},
+          "overheadPress": {"N": "125"},
+          "barbellRow": {"N": "175"}
+        }
+      }
+    }
+  ]
+}
