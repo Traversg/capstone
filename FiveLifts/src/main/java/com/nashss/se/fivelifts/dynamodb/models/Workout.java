@@ -21,6 +21,11 @@ public class Workout {
     private String workoutType;
     private Date timeStarted;
     private Date timeEnded;
+    private int squatWeight;
+    private int benchWeight;
+    private int ohpWeight;
+    private int rowWeight;
+    private int deadliftWeight;
     private List<Integer> squatReps;
     private List<Integer> benchReps;
     private List<Integer> ohpReps;
@@ -74,6 +79,51 @@ public class Workout {
 
     public void setTimeEnded(Date timeEnded) {
         this.timeEnded = timeEnded;
+    }
+
+    @DynamoDBAttribute(attributeName = "squatWeight")
+    public int getSquatWeight() {
+        return squatWeight;
+    }
+
+    public void setSquatWeight(int squatWeight) {
+        this.squatWeight = squatWeight;
+    }
+
+    @DynamoDBAttribute(attributeName = "benchWeight")
+    public int getBenchWeight() {
+        return benchWeight;
+    }
+
+    public void setBenchWeight(int benchWeight) {
+        this.benchWeight = benchWeight;
+    }
+
+    @DynamoDBAttribute(attributeName = "ohpWeight")
+    public int getOhpWeight() {
+        return ohpWeight;
+    }
+
+    public void setOhpWeight(int ohpWeight) {
+        this.ohpWeight = ohpWeight;
+    }
+
+    @DynamoDBAttribute(attributeName = "rowWeight")
+    public int getRowWeight() {
+        return rowWeight;
+    }
+
+    public void setRowWeight(int rowWeight) {
+        this.rowWeight = rowWeight;
+    }
+
+    @DynamoDBAttribute(attributeName = "deadLiftWeight")
+    public int getDeadliftWeight() {
+        return deadliftWeight;
+    }
+
+    public void setDeadliftWeight(int deadliftWeight) {
+        this.deadliftWeight = deadliftWeight;
     }
 
     @DynamoDBAttribute(attributeName = "squatReps")
