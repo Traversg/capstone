@@ -122,7 +122,7 @@ public class CreateProfileRequest {
             return this;
         }
 
-        public Builder withOverheadPres(int overheadPress) {
+        public Builder withOverheadPress(int overheadPress) {
             this.overheadPress = overheadPress;
             return this;
         }

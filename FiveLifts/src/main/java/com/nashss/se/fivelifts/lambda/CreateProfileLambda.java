@@ -24,7 +24,7 @@ public class CreateProfileLambda
                         .withBarbellRow(unauthenticatedRequest.getBarbellRow())
                         .withBench(unauthenticatedRequest.getBench())
                         .withDeadlift(unauthenticatedRequest.getDeadlift())
-                        .withOverheadPres(unauthenticatedRequest.getOverheadPress())
+                        .withOverheadPress(unauthenticatedRequest.getOverheadPress())
                         .withSquat(unauthenticatedRequest.getSquat())
                         .withBodyWeight(unauthenticatedRequest.getBodyWeight())
                         .withName(claims.get("name"))
