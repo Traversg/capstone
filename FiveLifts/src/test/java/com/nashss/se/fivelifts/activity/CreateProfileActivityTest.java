@@ -55,15 +55,15 @@ public class CreateProfileActivityTest {
         // THEN
         verify(userDao).saveUser(any(User.class));
 
-        assertNotNull(result.getUser().getId());
-        assertEquals(expectedName, result.getUser().getName());
-        assertEquals(expectedEmail, result.getUser().getEmail());
-        assertEquals(expectedBodyWeight, result.getUser().getBodyWeight());
-        assertEquals(expectedDeadlift, result.getUser().getDeadlift());
-        assertEquals(expectedSquat, result.getUser().getSquat());
-        assertEquals(expectedBench, result.getUser().getBench());
-        assertEquals(expectedBarbellRow, result.getUser().getBarbellRow());
-        assertEquals(expectedOHP, result.getUser().getOverheadPress());
+        assertNotNull(result.getProfile().getId());
+        assertEquals(expectedName, result.getProfile().getName());
+        assertEquals(expectedEmail, result.getProfile().getEmail());
+        assertEquals(expectedBodyWeight, result.getProfile().getBodyWeight());
+        assertEquals(expectedDeadlift, result.getProfile().getDeadlift());
+        assertEquals(expectedSquat, result.getProfile().getSquat());
+        assertEquals(expectedBench, result.getProfile().getBench());
+        assertEquals(expectedBarbellRow, result.getProfile().getBarbellRow());
+        assertEquals(expectedOHP, result.getProfile().getOverheadPress());
     }
 
 
