@@ -112,8 +112,8 @@ public class WorkoutModel {
     }
 
     //CHECKSTYLE:OFF:Builder
-    public static UserModel.Builder builder() {
-        return new UserModel.Builder();
+    public static Builder builder() {
+        return new Builder();
     }
 
     public static class Builder {
