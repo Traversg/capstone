@@ -1,6 +1,7 @@
 package com.nashss.se.fivelifts.dependency;
 import com.nashss.se.fivelifts.activity.CreateProfileActivity;
 
+import com.nashss.se.fivelifts.activity.GetUpcomingWorkoutsActivity;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -17,4 +18,10 @@ public interface ServiceComponent {
      * @return CreateProfileActivity
      */
     CreateProfileActivity provideCreateProfileActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return GetUpcomingWorkoutsActivity
+     */
+    GetUpcomingWorkoutsActivity provideGetUpcomingWorkoutsActivity();
 }

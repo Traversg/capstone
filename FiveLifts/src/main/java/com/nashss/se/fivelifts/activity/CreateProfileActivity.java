@@ -24,7 +24,7 @@ public class CreateProfileActivity {
     /**
      * Instantiates a new CreateProfileActivity object.
      *
-     * @param userDao UserDap to access the playlists table.
+     * @param userDao UserDao to access the users table.
      */
     @Inject
     public CreateProfileActivity(UserDao userDao) {
@@ -37,8 +37,6 @@ public class CreateProfileActivity {
      * <p>
      * It then returns the newly created user profile.
      * <p>
-     * If the provided body weight and lift numbers are too large, throws an
-     * InvalidAttributeValueException
      *
      * If any provided weight fields are empty, throws an InvalidAttributeValueException
      * @param createProfileRequest request object containing the user name, body weight, and lift data

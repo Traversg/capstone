@@ -10,7 +10,7 @@ public class GetUpcomingWorkoutsRequest {
         this.email = email;
     }
 
-    public String getUserid() {
+    public String getEmail() {
         return email;
     }
 

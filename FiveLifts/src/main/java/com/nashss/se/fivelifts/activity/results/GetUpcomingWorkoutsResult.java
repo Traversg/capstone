@@ -5,12 +5,12 @@ import com.nashss.se.fivelifts.models.WorkoutModel;
 import java.util.List;
 
 /**
- * Implementation of the GetUpcomingWorkoutResult for the FiveLifts' GetUpcomingWorkoutResult API.
+ * Implementation of the GetUpcomingWorkoutsResult for the FiveLifts' GetUpcomingWorkoutsResult API.
  */
-public class GetUpcomingWorkoutResult {
+public class GetUpcomingWorkoutsResult {
     private final List<WorkoutModel> workouts;
 
-    private GetUpcomingWorkoutResult(List<WorkoutModel> workouts) {
+    private GetUpcomingWorkoutsResult(List<WorkoutModel> workouts) {
         this.workouts = workouts;
     }
 
@@ -38,8 +38,8 @@ public class GetUpcomingWorkoutResult {
             return this;
         }
 
-        public GetUpcomingWorkoutResult build() {
-            return new GetUpcomingWorkoutResult(workouts);
+        public GetUpcomingWorkoutsResult build() {
+            return new GetUpcomingWorkoutsResult(workouts);
         }
     }
 }

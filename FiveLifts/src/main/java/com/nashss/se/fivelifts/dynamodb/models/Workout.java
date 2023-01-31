@@ -7,7 +7,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
+import com.nashss.se.fivelifts.enums.WorkoutType;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +19,8 @@ import java.util.List;
 @DynamoDBTable(tableName = "workouts")
 public class Workout {
     private String email;
-    private Date date;
-    private String workoutType;
+    private Calendar date;
+    private WorkoutType workoutType;
     private Date timeStarted;
     private Date timeEnded;
     private int squatWeight;
@@ -44,20 +46,20 @@ public class Workout {
 
     @DynamoDBTypeConverted(converter = DateConverter.class)
     @DynamoDBRangeKey(attributeName = "date")
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
     @DynamoDBAttribute(attributeName = "workoutType")
-    public String getWorkoutType() {
+    public WorkoutType getWorkoutType() {
         return workoutType;
     }
 
-    public void setWorkoutType(String workoutType) {
+    public void setWorkoutType(WorkoutType workoutType) {
         this.workoutType = workoutType;
     }
 

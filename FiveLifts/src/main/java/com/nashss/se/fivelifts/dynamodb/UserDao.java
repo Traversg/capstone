@@ -18,7 +18,7 @@ public class UserDao {
     /**
      * Instantiates a UserDao object.
      *
-     * @param dynamoDbMapper the {@link DynamoDBMapper} used to interact with the album_track table
+     * @param dynamoDbMapper the {@link DynamoDBMapper} used to interact with the users table
      */
     @Inject
     public UserDao(DynamoDBMapper dynamoDbMapper) {
@@ -26,11 +26,11 @@ public class UserDao {
     }
 
     /**
-     * Retrieves a User by id.
+     * Retrieves a User by email.
      *
      * If not found, throws UserNotFoundException
      *
-     * @param email The id to look up
+     * @param email The email to look up
      * @return The corresponding User if found
      */
     public User getUser(String email) {

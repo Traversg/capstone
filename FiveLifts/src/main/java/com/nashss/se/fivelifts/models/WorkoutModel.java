@@ -1,5 +1,8 @@
 package com.nashss.se.fivelifts.models;
 
+import com.nashss.se.fivelifts.enums.WorkoutType;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -8,8 +11,8 @@ import java.util.List;
  */
 public class WorkoutModel {
     private final String email;
-    private final Date date;
-    private final String workoutType;
+    private final Calendar date;
+    private final WorkoutType workoutType;
     private final Date timeStarted;
     private final Date timeEnded;
     private final int squatWeight;
@@ -24,7 +27,7 @@ public class WorkoutModel {
     private final List<Integer> deadliftReps;
     private final boolean isComplete;
 
-    private WorkoutModel(String email, Date date, String workoutType, Date timeStarted,
+    private WorkoutModel(String email, Calendar date, WorkoutType workoutType, Date timeStarted,
                     Date timeEnded, int squatWeight, int benchWeight, int ohpWeight,
                     int rowWeight, int deadliftWeight, List<Integer> squatReps,
                     List<Integer> benchReps, List<Integer> ohpReps, List<Integer> rowReps,
@@ -51,11 +54,11 @@ public class WorkoutModel {
         return email;
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public String getWorkoutType() {
+    public WorkoutType getWorkoutType() {
         return workoutType;
     }
 
@@ -118,8 +121,8 @@ public class WorkoutModel {
 
     public static class Builder {
         private String email;
-        private Date date;
-        private String workoutType;
+        private Calendar date;
+        private WorkoutType workoutType;
         private Date timeStarted;
         private Date timeEnded;
         private int squatWeight;
@@ -139,12 +142,12 @@ public class WorkoutModel {
             return this;
         }
 
-        public Builder withDate(Date date) {
+        public Builder withDate(Calendar date) {
             this.date = date;
             return this;
         }
 
-        public Builder withWorkoutType(String workoutType) {
+        public Builder withWorkoutType(WorkoutType workoutType) {
             this.workoutType = workoutType;
             return this;
         }
