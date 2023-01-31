@@ -50,8 +50,8 @@ U6. As a lifter, I want to see what my warmup weights are for each exercise.
 ## 5. Tables
 
 User Table:
-- Id : Partition Key : String
-- UserName : Attribute : String
+- Email : Partition Key: String
+- Name : Attribute : String
 - Weight : Attribute : double
 - Deadlift : Attribute  : int
 - Squat : Attribute : int
@@ -60,7 +60,7 @@ User Table:
 - Row : Attribute : int
 
 Workout Table:
-- UserId : Partition Key : String
+- Email : Partition Key : String
 - Date : Sort Key : Datetime
 - WorkoutType : Attribute : enum
 - TimeStarted : Attribute : TimeStamp

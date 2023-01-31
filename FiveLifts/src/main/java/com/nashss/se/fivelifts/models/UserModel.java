@@ -6,7 +6,6 @@ import java.util.Objects;
  * A model representation of a User object.
  */
 public class UserModel {
-    private final String id;
     private final String name;
     private final String email;
     private final double bodyWeight;
@@ -16,9 +15,8 @@ public class UserModel {
     private final int overheadPress;
     private final int barbellRow;
 
-    private UserModel(String id, String name, String email, double bodyWeight, int deadlift,
+    private UserModel(String name, String email, double bodyWeight, int deadlift,
                       int squat, int bench, int overheadPress, int barbellRow) {
-        this.id = id;
         this.name = name;
         this.email = email;
         this.bodyWeight = bodyWeight;
@@ -27,10 +25,6 @@ public class UserModel {
         this.bench = bench;
         this.overheadPress = overheadPress;
         this.barbellRow = barbellRow;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getName() {
@@ -74,13 +68,13 @@ public class UserModel {
             return false;
         }
         UserModel userModel = (UserModel) o;
-        return Objects.equals(id, userModel.id) && Objects.equals(name, userModel.name) &&
+        return Objects.equals(name, userModel.name) &&
                 Objects.equals(email, userModel.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email);
+        return Objects.hash(name, email);
     }
 
     //CHECKSTYLE:OFF:Builder
@@ -89,7 +83,6 @@ public class UserModel {
     }
 
     public static class Builder {
-        private String id;
         private String name;
         private String email;
         private double bodyWeight;
@@ -98,11 +91,6 @@ public class UserModel {
         private int bench;
         private int overheadPress;
         private int barbellRow;
-
-        public Builder withId(String id) {
-            this.id = id;
-            return this;
-        }
 
         public Builder withName(String name) {
             this.name = name;
@@ -145,7 +133,7 @@ public class UserModel {
         }
 
         public UserModel build() {
-            return new UserModel(id, name, email, bodyWeight, deadlift, squat,
+            return new UserModel(name, email, bodyWeight, deadlift, squat,
                     bench, overheadPress, barbellRow);
         }
     }

@@ -6,7 +6,6 @@ import com.nashss.se.fivelifts.converters.ModelConverter;
 import com.nashss.se.fivelifts.dynamodb.UserDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.models.UserModel;
-import com.nashss.se.fivelifts.utils.FiveLiftsServiceUtils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -50,7 +49,6 @@ public class CreateProfileActivity {
         log.info("Received CreateProfileRequest {}", createProfileRequest);
 
         User newUser = new User();
-        newUser.setId(FiveLiftsServiceUtils.generateUserId());
         newUser.setName(createProfileRequest.getName());
         newUser.setEmail(createProfileRequest.getEmail());
         newUser.setBodyWeight(createProfileRequest.getBodyWeight());
