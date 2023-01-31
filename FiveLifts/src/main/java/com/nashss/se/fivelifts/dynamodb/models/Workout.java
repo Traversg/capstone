@@ -16,7 +16,7 @@ import java.util.List;
  */
 @DynamoDBTable(tableName = "workouts")
 public class Workout {
-    private String userId;
+    private String email;
     private Date date;
     private String workoutType;
     private Date timeStarted;
@@ -33,13 +33,13 @@ public class Workout {
     private List<Integer> deadliftReps;
     private boolean isComplete;
 
-    @DynamoDBHashKey(attributeName = "userId")
-    public String getUserId() {
-        return userId;
+    @DynamoDBHashKey(attributeName = "email")
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @DynamoDBTypeConverted(converter = DateConverter.class)

@@ -17,7 +17,6 @@ public class ModelConverter {
      */
     public UserModel toUserModel(User user) {
         return UserModel.builder()
-                .withId(user.getId())
                 .withName(user.getName())
                 .withEmail(user.getEmail())
                 .withBodyWeight(user.getBodyWeight())
@@ -37,7 +36,7 @@ public class ModelConverter {
      */
     public WorkoutModel toWorkoutModel(Workout workout) {
         return WorkoutModel.builder()
-                .withUserId(workout.getUserId())
+                .withEmail(workout.getEmail())
                 .withDate(workout.getDate())
                 .withWorkoutType(workout.getWorkoutType())
                 .withTimeStarted(workout.getTimeStarted())

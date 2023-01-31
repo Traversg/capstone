@@ -7,7 +7,7 @@ import java.util.List;
  * A model representation of a Workout object.
  */
 public class WorkoutModel {
-    private final String userId;
+    private final String email;
     private final Date date;
     private final String workoutType;
     private final Date timeStarted;
@@ -24,12 +24,12 @@ public class WorkoutModel {
     private final List<Integer> deadliftReps;
     private final boolean isComplete;
 
-    private WorkoutModel(String userId, Date date, String workoutType, Date timeStarted,
+    private WorkoutModel(String email, Date date, String workoutType, Date timeStarted,
                     Date timeEnded, int squatWeight, int benchWeight, int ohpWeight,
                     int rowWeight, int deadliftWeight, List<Integer> squatReps,
                     List<Integer> benchReps, List<Integer> ohpReps, List<Integer> rowReps,
                     List<Integer> deadliftReps, boolean isComplete) {
-        this.userId = userId;
+        this.email = email;
         this.date = date;
         this.workoutType = workoutType;
         this.timeStarted = timeStarted;
@@ -47,8 +47,8 @@ public class WorkoutModel {
         this.isComplete = isComplete;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getEmail() {
+        return email;
     }
 
     public Date getDate() {
@@ -117,7 +117,7 @@ public class WorkoutModel {
     }
 
     public static class Builder {
-        private String userId;
+        private String email;
         private Date date;
         private String workoutType;
         private Date timeStarted;
@@ -134,8 +134,8 @@ public class WorkoutModel {
         private List<Integer> deadliftReps;
         private boolean isComplete;
 
-        public Builder withUserId(String userId) {
-            this.userId = userId;
+        public Builder withEmail(String email) {
+            this.email = email;
             return this;
         }
 
@@ -215,7 +215,7 @@ public class WorkoutModel {
         }
 
         public WorkoutModel build() {
-            return new WorkoutModel(userId, date, workoutType, timeStarted, timeEnded, squatWeight,
+            return new WorkoutModel(email, date, workoutType, timeStarted, timeEnded, squatWeight,
                     benchWeight, ohpWeight, rowWeight, deadliftWeight, squatReps, benchReps, ohpReps,
                     rowReps, deadliftReps, isComplete);
         }

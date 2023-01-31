@@ -4,20 +4,20 @@ package com.nashss.se.fivelifts.activity.requests;
  * Implementation of the GetUpcomingWorkoutsRequest for the FiveLifts' GetUpcomingWorkouts API.
  */
 public class GetUpcomingWorkoutsRequest {
-    private final String userid;
+    private final String email;
 
-    private GetUpcomingWorkoutsRequest(String userId) {
-        this.userid = userId;
+    private GetUpcomingWorkoutsRequest(String email) {
+        this.email = email;
     }
 
     public String getUserid() {
-        return userid;
+        return email;
     }
 
     @Override
     public String toString() {
         return "GetUpcomingWorkoutsRequest{" +
-                "userid='" + userid + '\'' +
+                "email='" + email + '\'' +
                 '}';
     }
 
@@ -27,15 +27,15 @@ public class GetUpcomingWorkoutsRequest {
     }
 
     public static class Builder {
-        private String userId;
+        private String email;
 
-        public Builder withUserId(String userId) {
-            this.userId = userId;
+        public Builder withEmail(String email) {
+            this.email = email;
             return this;
         }
 
         public GetUpcomingWorkoutsRequest build() {
-            return new GetUpcomingWorkoutsRequest(userId);
+            return new GetUpcomingWorkoutsRequest(email);
         }
     }
 }
