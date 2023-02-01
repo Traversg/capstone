@@ -177,7 +177,7 @@ public class Workout {
         return isComplete;
     }
 
-    public void setComplete(boolean complete) {
+    public void setIsComplete(boolean complete) {
         isComplete = complete;
     }
 }

@@ -110,7 +110,7 @@ public class WorkoutModel {
         return deadliftReps;
     }
 
-    public boolean isComplete() {
+    public boolean getIsComplete() {
         return isComplete;
     }
 

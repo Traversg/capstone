@@ -27,25 +27,25 @@ public class UserDaoTest {
     @Test
     public void getUser_withUserId_callsMapperWithPartitionKey() {
         // GIVEN
-        String id = "id";
-        when(dynamoDBMapper.load(User.class, id)).thenReturn(new User());
+        String email = "name@email.com";
+        when(dynamoDBMapper.load(User.class, email)).thenReturn(new User());
 
         // WHEN
-        User user = userDao.getUser(id);
+        User user = userDao.getUser(email);
 
         // THEN
         assertNotNull(user);
-        verify(dynamoDBMapper).load(User.class, id);
+        verify(dynamoDBMapper).load(User.class, email);
     }
 
     @Test
     public void getUser_userIdNotFound_throwsUserNotFoundException() {
         // GIVEN
-        String nonexistentId = "nonexistentId";
-        when(dynamoDBMapper.load(User.class, nonexistentId)).thenReturn(null);
+        String nonexistentEmail = "nonExisistentEmail@email.com";
+        when(dynamoDBMapper.load(User.class, nonexistentEmail)).thenReturn(null);
 
         // WHEN + THEN
-        assertThrows(UserNotFoundException.class, () -> userDao.getUser(nonexistentId));
+        assertThrows(UserNotFoundException.class, () -> userDao.getUser(nonexistentEmail));
     }
 
     @Test

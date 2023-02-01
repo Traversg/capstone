@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
 
 import javax.inject.Inject;
@@ -46,5 +47,14 @@ public class WorkoutDao {
                 .withLimit(1);
         PaginatedQueryList<Workout> latestWorkout = dynamoDbMapper.query(Workout.class, queryExpression);
         return latestWorkout.get(0);
+    }
+
+    /**
+     * Saves (creates or updates) the given user.
+     *
+     * @param workout The user to save
+     */
+    public void saveWorkout(Workout workout) {
+        dynamoDbMapper.save(workout);
     }
 }

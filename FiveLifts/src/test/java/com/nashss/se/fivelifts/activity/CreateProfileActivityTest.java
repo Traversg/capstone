@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -55,7 +54,6 @@ public class CreateProfileActivityTest {
         // THEN
         verify(userDao).saveUser(any(User.class));
 
-        assertNotNull(result.getProfile().getId());
         assertEquals(expectedName, result.getProfile().getName());
         assertEquals(expectedEmail, result.getProfile().getEmail());
         assertEquals(expectedBodyWeight, result.getProfile().getBodyWeight());
