@@ -22,7 +22,7 @@ public class CreateProfileLambda
                 return input.fromUserClaims(claims ->
                     CreateProfileRequest.builder()
                         .withBarbellRow(unauthenticatedRequest.getBarbellRow())
-                        .withBench(unauthenticatedRequest.getBench())
+                        .withBenchPress(unauthenticatedRequest.getBenchPress())
                         .withDeadlift(unauthenticatedRequest.getDeadlift())
                         .withOverheadPress(unauthenticatedRequest.getOverheadPress())
                         .withSquat(unauthenticatedRequest.getSquat())

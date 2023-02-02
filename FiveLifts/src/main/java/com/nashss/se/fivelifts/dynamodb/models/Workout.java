@@ -1,7 +1,6 @@
 package com.nashss.se.fivelifts.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperFieldModel;
 import com.nashss.se.fivelifts.converters.LocalDateConverter;
 import com.nashss.se.fivelifts.converters.DateConverter;
 import com.nashss.se.fivelifts.converters.WorkoutTypeConverter;
@@ -22,14 +21,14 @@ public class Workout {
     private Date timeStarted;
     private Date timeEnded;
     private int squatWeight;
-    private int benchWeight;
-    private int ohpWeight;
-    private int rowWeight;
+    private int benchPressWeight;
+    private int overheadPressWeight;
+    private int barbellRowWeight;
     private int deadliftWeight;
     private List<Integer> squatReps;
-    private List<Integer> benchReps;
-    private List<Integer> ohpReps;
-    private List<Integer> rowReps;
+    private List<Integer> benchPressReps;
+    private List<Integer> overheadPressReps;
+    private List<Integer> barbellRowReps;
     private List<Integer> deadliftReps;
 
     @DynamoDBHashKey(attributeName = "email")
@@ -90,31 +89,31 @@ public class Workout {
         this.squatWeight = squatWeight;
     }
 
-    @DynamoDBAttribute(attributeName = "benchWeight")
-    public int getBenchWeight() {
-        return benchWeight;
+    @DynamoDBAttribute(attributeName = "benchPressWeight")
+    public int getBenchPressWeight() {
+        return benchPressWeight;
     }
 
-    public void setBenchWeight(int benchWeight) {
-        this.benchWeight = benchWeight;
+    public void setBenchPressWeight(int benchPressWeight) {
+        this.benchPressWeight = benchPressWeight;
     }
 
-    @DynamoDBAttribute(attributeName = "ohpWeight")
-    public int getOhpWeight() {
-        return ohpWeight;
+    @DynamoDBAttribute(attributeName = "overheadPressWeight")
+    public int getOverheadPressWeight() {
+        return overheadPressWeight;
     }
 
-    public void setOhpWeight(int ohpWeight) {
-        this.ohpWeight = ohpWeight;
+    public void setOverheadPressWeight(int overheadPressWeight) {
+        this.overheadPressWeight = overheadPressWeight;
     }
 
-    @DynamoDBAttribute(attributeName = "rowWeight")
-    public int getRowWeight() {
-        return rowWeight;
+    @DynamoDBAttribute(attributeName = "barbellRowWeight")
+    public int getBarbellRowWeight() {
+        return barbellRowWeight;
     }
 
-    public void setRowWeight(int rowWeight) {
-        this.rowWeight = rowWeight;
+    public void setBarbellRowWeight(int barbellRowWeight) {
+        this.barbellRowWeight = barbellRowWeight;
     }
 
     @DynamoDBAttribute(attributeName = "deadLiftWeight")
@@ -135,31 +134,31 @@ public class Workout {
         this.squatReps = squatReps;
     }
 
-    @DynamoDBAttribute(attributeName = "benchReps")
-    public List<Integer> getBenchReps() {
-        return benchReps;
+    @DynamoDBAttribute(attributeName = "benchPressReps")
+    public List<Integer> getBenchPressReps() {
+        return benchPressReps;
     }
 
-    public void setBenchReps(List<Integer> benchReps) {
-        this.benchReps = benchReps;
+    public void setBenchPressReps(List<Integer> benchPressReps) {
+        this.benchPressReps = benchPressReps;
     }
 
-    @DynamoDBAttribute(attributeName = "ohpReps")
-    public List<Integer> getOhpReps() {
-        return ohpReps;
+    @DynamoDBAttribute(attributeName = "overheadPressReps")
+    public List<Integer> getOverheadPressReps() {
+        return overheadPressReps;
     }
 
-    public void setOhpReps(List<Integer> ohpReps) {
-        this.ohpReps = ohpReps;
+    public void setOverheadPressReps(List<Integer> overheadPressReps) {
+        this.overheadPressReps = overheadPressReps;
     }
 
-    @DynamoDBAttribute(attributeName = "rowReps")
-    public List<Integer> getRowReps() {
-        return rowReps;
+    @DynamoDBAttribute(attributeName = "barbellRowReps")
+    public List<Integer> getBarbellRowReps() {
+        return barbellRowReps;
     }
 
-    public void setRowReps(List<Integer> rowReps) {
-        this.rowReps = rowReps;
+    public void setBarbellRowReps(List<Integer> barbellRowReps) {
+        this.barbellRowReps = barbellRowReps;
     }
 
     @DynamoDBAttribute(attributeName = "deadliftReps")

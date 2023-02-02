@@ -43,7 +43,7 @@ public class CreateProfileActivityTest {
                 .withBodyWeight(expectedBodyWeight)
                 .withDeadlift(expectedDeadlift)
                 .withSquat(expectedSquat)
-                .withBench(expectedBench)
+                .withBenchPress(expectedBench)
                 .withBarbellRow(expectedBarbellRow)
                 .withOverheadPress(expectedOHP)
                 .build();
@@ -59,7 +59,7 @@ public class CreateProfileActivityTest {
         assertEquals(expectedBodyWeight, result.getProfile().getBodyWeight());
         assertEquals(expectedDeadlift, result.getProfile().getDeadlift());
         assertEquals(expectedSquat, result.getProfile().getSquat());
-        assertEquals(expectedBench, result.getProfile().getBench());
+        assertEquals(expectedBench, result.getProfile().getBenchPress());
         assertEquals(expectedBarbellRow, result.getProfile().getBarbellRow());
         assertEquals(expectedOHP, result.getProfile().getOverheadPress());
     }

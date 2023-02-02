@@ -52,7 +52,7 @@ public class CreateProfileActivity {
         newUser.setBodyWeight(createProfileRequest.getBodyWeight());
         newUser.setBarbellRow(createProfileRequest.getBarbellRow());
         newUser.setDeadlift(createProfileRequest.getDeadlift());
-        newUser.setBench(createProfileRequest.getBench());
+        newUser.setBenchPress(createProfileRequest.getBenchPress());
         newUser.setOverheadPress(createProfileRequest.getOverheadPress());
         newUser.setSquat(createProfileRequest.getSquat());
 

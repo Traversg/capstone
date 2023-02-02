@@ -11,18 +11,18 @@ public class UserModel {
     private final double bodyWeight;
     private final int deadlift;
     private final int squat;
-    private final int bench;
+    private final int benchPress;
     private final int overheadPress;
     private final int barbellRow;
 
     private UserModel(String name, String email, double bodyWeight, int deadlift,
-                      int squat, int bench, int overheadPress, int barbellRow) {
+                      int squat, int benchPress, int overheadPress, int barbellRow) {
         this.name = name;
         this.email = email;
         this.bodyWeight = bodyWeight;
         this.deadlift = deadlift;
         this.squat = squat;
-        this.bench = bench;
+        this.benchPress = benchPress;
         this.overheadPress = overheadPress;
         this.barbellRow = barbellRow;
     }
@@ -47,8 +47,8 @@ public class UserModel {
         return squat;
     }
 
-    public int getBench() {
-        return bench;
+    public int getBenchPress() {
+        return benchPress;
     }
 
     public int getOverheadPress() {
@@ -88,7 +88,7 @@ public class UserModel {
         private double bodyWeight;
         private int deadlift;
         private int squat;
-        private int bench;
+        private int benchPress;
         private int overheadPress;
         private int barbellRow;
 
@@ -117,8 +117,8 @@ public class UserModel {
             return this;
         }
 
-        public Builder withBench(int bench) {
-            this.bench = bench;
+        public Builder withBenchPress(int benchPress) {
+            this.benchPress = benchPress;
             return this;
         }
 
@@ -134,7 +134,7 @@ public class UserModel {
 
         public UserModel build() {
             return new UserModel(name, email, bodyWeight, deadlift, squat,
-                    bench, overheadPress, barbellRow);
+                    benchPress, overheadPress, barbellRow);
         }
     }
 }

@@ -25,7 +25,7 @@ public class ModelConverterTest {
         user.setEmail("email");
         user.setBodyWeight(175.0);
         user.setSquat(225);
-        user.setBench(175);
+        user.setBenchPress(175);
         user.setDeadlift(275);
         user.setOverheadPress(125);
         user.setBarbellRow(150);
@@ -35,7 +35,7 @@ public class ModelConverterTest {
         assertEquals(user.getEmail(), userModel.getEmail());
         assertEquals(user.getBodyWeight(), userModel.getBodyWeight());
         assertEquals(user.getSquat(), userModel.getSquat());
-        assertEquals(user.getBench(), userModel.getBench());
+        assertEquals(user.getBenchPress(), userModel.getBenchPress());
         assertEquals(user.getDeadlift(), userModel.getDeadlift());
         assertEquals(user.getOverheadPress(), userModel.getOverheadPress());
         assertEquals(user.getBarbellRow(), userModel.getBarbellRow());
@@ -50,14 +50,14 @@ public class ModelConverterTest {
         workout.setTimeStarted(new Date());
         workout.setTimeEnded(new Date());
         workout.setSquatWeight(225);
-        workout.setBenchWeight(175);
+        workout.setBenchPressWeight(175);
         workout.setDeadliftWeight(275);
-        workout.setOhpWeight(125);
-        workout.setRowWeight(150);
+        workout.setOverheadPressWeight(125);
+        workout.setBarbellRowWeight(150);
         workout.setSquatReps(new ArrayList<>());
-        workout.setBenchReps(new ArrayList<>());
-        workout.setOhpReps(new ArrayList<>());
-        workout.setRowReps(new ArrayList<>());
+        workout.setBenchPressReps(new ArrayList<>());
+        workout.setOverheadPressReps(new ArrayList<>());
+        workout.setBarbellRowReps(new ArrayList<>());
         workout.setDeadliftReps(new ArrayList<>());
 
         WorkoutModel workoutModel = modelConverter.toWorkoutModel(workout);
@@ -67,14 +67,14 @@ public class ModelConverterTest {
         assertEquals(workout.getTimeStarted(), workoutModel.getTimeStarted());
         assertEquals(workout.getTimeEnded(), workoutModel.getTimeEnded());
         assertEquals(workout.getSquatWeight(), workoutModel.getSquatWeight());
-        assertEquals(workout.getBenchWeight(), workoutModel.getBenchWeight());
+        assertEquals(workout.getBenchPressWeight(), workoutModel.getBenchPressWeight());
         assertEquals(workout.getDeadliftWeight(), workoutModel.getDeadliftWeight());
-        assertEquals(workout.getOhpWeight(), workoutModel.getOhpWeight());
-        assertEquals(workout.getRowWeight(), workoutModel.getRowWeight());
+        assertEquals(workout.getOverheadPressWeight(), workoutModel.getOverheadPressWeight());
+        assertEquals(workout.getBarbellRowWeight(), workoutModel.getBarbellRowWeight());
         assertEquals(workout.getSquatReps(), workoutModel.getSquatReps());
-        assertEquals(workout.getBenchReps(), workoutModel.getBenchReps());
-        assertEquals(workout.getOhpReps(), workoutModel.getOhpReps());
-        assertEquals(workout.getRowReps(), workoutModel.getOhpReps());
+        assertEquals(workout.getBenchPressReps(), workoutModel.getBenchPressReps());
+        assertEquals(workout.getOverheadPressReps(), workoutModel.getOverheadPressReps());
+        assertEquals(workout.getBarbellRowReps(), workoutModel.getBarbellRowReps());
         assertEquals(workout.getDeadliftReps(), workoutModel.getDeadliftReps());
     }
 

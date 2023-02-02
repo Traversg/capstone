@@ -16,7 +16,7 @@ public class User {
     private double bodyWeight;
     private int deadlift;
     private int squat;
-    private int bench;
+    private int benchPress;
     private int overheadPress;
     private int barbellRow;
 
@@ -64,13 +64,13 @@ public class User {
         this.squat = squat;
     }
 
-    @DynamoDBAttribute(attributeName = "bench")
-    public int getBench() {
-        return bench;
+    @DynamoDBAttribute(attributeName = "benchPress")
+    public int getBenchPress() {
+        return benchPress;
     }
 
-    public void setBench(int bench) {
-        this.bench = bench;
+    public void setBenchPress(int benchPress) {
+        this.benchPress = benchPress;
     }
     @DynamoDBAttribute(attributeName = "overheadPress")
     public int getOverheadPress() {

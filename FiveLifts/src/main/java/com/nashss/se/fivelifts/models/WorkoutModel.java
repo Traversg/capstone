@@ -16,36 +16,36 @@ public class WorkoutModel {
     private final Date timeStarted;
     private final Date timeEnded;
     private final int squatWeight;
-    private final int benchWeight;
-    private final int ohpWeight;
-    private final int rowWeight;
+    private final int benchPressWeight;
+    private final int overheadPressWeight;
+    private final int barbellRowWeight;
     private final int deadliftWeight;
     private final List<Integer> squatReps;
-    private final List<Integer> benchReps;
-    private final List<Integer> ohpReps;
-    private final List<Integer> rowReps;
+    private final List<Integer> benchPressReps;
+    private final List<Integer> overheadPressReps;
+    private final List<Integer> barbellRowReps;
     private final List<Integer> deadliftReps;
 
     private WorkoutModel(String email, LocalDate date, WorkoutType workoutType, Date timeStarted,
-                    Date timeEnded, int squatWeight, int benchWeight, int ohpWeight,
-                    int rowWeight, int deadliftWeight, List<Integer> squatReps,
-                    List<Integer> benchReps, List<Integer> ohpReps, List<Integer> rowReps,
-                    List<Integer> deadliftReps) {
+                         Date timeEnded, int squatWeight, int benchPressWeight, int overheadPressWeight,
+                         int barbellRowWeight, int deadliftWeight, List<Integer> squatReps,
+                         List<Integer> benchPressReps, List<Integer> overheadPressReps, List<Integer> barbellRowReps,
+                         List<Integer> deadliftReps) {
         this.email = email;
         this.date = date;
         this.workoutType = workoutType;
         this.timeStarted = timeStarted;
         this.timeEnded = timeEnded;
         this.squatWeight = squatWeight;
-        this.benchWeight = benchWeight;
-        this.ohpWeight = ohpWeight;
-        this.rowWeight = rowWeight;
+        this.benchPressWeight = benchPressWeight;
+        this.overheadPressWeight = overheadPressWeight;
+        this.barbellRowWeight = barbellRowWeight;
         this.deadliftWeight = deadliftWeight;
         this.squatReps = squatReps;
-        this.benchReps = benchReps;
-        this.ohpReps = ohpReps;
+        this.benchPressReps = benchPressReps;
+        this.overheadPressReps = overheadPressReps;
         this.deadliftReps = deadliftReps;
-        this.rowReps = rowReps;
+        this.barbellRowReps = barbellRowReps;
     }
 
     public String getEmail() {
@@ -72,16 +72,16 @@ public class WorkoutModel {
         return squatWeight;
     }
 
-    public int getBenchWeight() {
-        return benchWeight;
+    public int getBenchPressWeight() {
+        return benchPressWeight;
     }
 
-    public int getOhpWeight() {
-        return ohpWeight;
+    public int getOverheadPressWeight() {
+        return overheadPressWeight;
     }
 
-    public int getRowWeight() {
-        return rowWeight;
+    public int getBarbellRowWeight() {
+        return barbellRowWeight;
     }
 
     public int getDeadliftWeight() {
@@ -92,16 +92,16 @@ public class WorkoutModel {
         return squatReps;
     }
 
-    public List<Integer> getBenchReps() {
-        return benchReps;
+    public List<Integer> getBenchPressReps() {
+        return benchPressReps;
     }
 
-    public List<Integer> getOhpReps() {
-        return ohpReps;
+    public List<Integer> getOverheadPressReps() {
+        return overheadPressReps;
     }
 
-    public List<Integer> getRowReps() {
-        return rowReps;
+    public List<Integer> getBarbellRowReps() {
+        return barbellRowReps;
     }
 
     public List<Integer> getDeadliftReps() {
@@ -120,14 +120,14 @@ public class WorkoutModel {
         private Date timeStarted;
         private Date timeEnded;
         private int squatWeight;
-        private int benchWeight;
-        private int ohpWeight;
-        private int rowWeight;
+        private int benchPressWeight;
+        private int overheadPressWeight;
+        private int barbellRowWeight;
         private int deadliftWeight;
         private List<Integer> squatReps;
-        private List<Integer> benchReps;
-        private List<Integer> ohpReps;
-        private List<Integer> rowReps;
+        private List<Integer> benchPressReps;
+        private List<Integer> overheadPressReps;
+        private List<Integer> barbellRowReps;
         private List<Integer> deadliftReps;
 
         public Builder withEmail(String email) {
@@ -160,18 +160,18 @@ public class WorkoutModel {
             return this;
         }
 
-        public Builder withBenchWeight(int benchWeight) {
-            this.benchWeight = benchWeight;
+        public Builder withBenchPressWeight(int benchPressWeight) {
+            this.benchPressWeight = benchPressWeight;
             return this;
         }
 
-        public Builder withOhpWeight(int ohpWeight) {
-            this.ohpWeight = ohpWeight;
+        public Builder withOverheadPressWeight(int overheadPressWeight) {
+            this.overheadPressWeight = overheadPressWeight;
             return this;
         }
 
-        public Builder withRowWeight(int rowWeight) {
-            this.rowWeight = rowWeight;
+        public Builder withBarbellRowWeight(int barbellRowWeight) {
+            this.barbellRowWeight = barbellRowWeight;
             return this;
         }
 
@@ -185,18 +185,18 @@ public class WorkoutModel {
             return this;
         }
 
-        public Builder withBenchReps(List<Integer> benchReps) {
-            this.benchReps = benchReps;
+        public Builder withBenchPressReps(List<Integer> benchPressReps) {
+            this.benchPressReps = benchPressReps;
             return this;
         }
 
-        public Builder withOhpReps(List<Integer> ohpReps) {
-            this.ohpReps = ohpReps;
+        public Builder withOverheadPressReps(List<Integer> overheadPressReps) {
+            this.overheadPressReps = overheadPressReps;
             return this;
         }
 
-        public Builder withRowReps(List<Integer> rowReps) {
-            this.rowReps = rowReps;
+        public Builder withBarbellRowReps(List<Integer> barbellRowReps) {
+            this.barbellRowReps = barbellRowReps;
             return this;
         }
 
@@ -207,8 +207,8 @@ public class WorkoutModel {
 
         public WorkoutModel build() {
             return new WorkoutModel(email, date, workoutType, timeStarted, timeEnded, squatWeight,
-                    benchWeight, ohpWeight, rowWeight, deadliftWeight, squatReps, benchReps, ohpReps,
-                    rowReps, deadliftReps);
+                    benchPressWeight, overheadPressWeight, barbellRowWeight, deadliftWeight, squatReps, benchPressReps, overheadPressReps,
+                    barbellRowReps, deadliftReps);
         }
     }
 }

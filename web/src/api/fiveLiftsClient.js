@@ -87,7 +87,7 @@ export default class FiveLiftsClient extends BindingClass {
                 const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
                 const response = await this.axiosClient.post(`user`, {
                     squat: squat,
-                    bench: benchPress,
+                    benchPress: benchPress,
                     overheadPress: overheadPress,
                     barbellRow: barbellRow,
                     deadlift: deadlift,
