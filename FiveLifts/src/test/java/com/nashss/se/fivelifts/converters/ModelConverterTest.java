@@ -5,11 +5,13 @@ import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import com.nashss.se.fivelifts.enums.WorkoutType;
 import com.nashss.se.fivelifts.models.UserModel;
 import com.nashss.se.fivelifts.models.WorkoutModel;
+
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -43,7 +45,7 @@ public class ModelConverterTest {
     void toWorkoutModel_withAllData_convertsWorkout() {
         Workout workout = new Workout();
         workout.setEmail("email");
-        workout.setDate(Calendar.getInstance());
+        workout.setWorkoutDate(LocalDate.now());
         workout.setWorkoutType(WorkoutType.WORKOUT_A);
         workout.setTimeStarted(new Date());
         workout.setTimeEnded(new Date());
@@ -57,11 +59,10 @@ public class ModelConverterTest {
         workout.setOhpReps(new ArrayList<>());
         workout.setRowReps(new ArrayList<>());
         workout.setDeadliftReps(new ArrayList<>());
-        workout.setIsComplete(true);
 
         WorkoutModel workoutModel = modelConverter.toWorkoutModel(workout);
         assertEquals(workout.getEmail(), workoutModel.getEmail());
-        assertEquals(workout.getDate(), workoutModel.getDate());
+        assertEquals(workout.getWorkoutDate(), workoutModel.getDate());
         assertEquals(workout.getWorkoutType(), workoutModel.getWorkoutType());
         assertEquals(workout.getTimeStarted(), workoutModel.getTimeStarted());
         assertEquals(workout.getTimeEnded(), workoutModel.getTimeEnded());
@@ -75,7 +76,6 @@ public class ModelConverterTest {
         assertEquals(workout.getOhpReps(), workoutModel.getOhpReps());
         assertEquals(workout.getRowReps(), workoutModel.getOhpReps());
         assertEquals(workout.getDeadliftReps(), workoutModel.getDeadliftReps());
-        assertEquals(workout.isComplete(), workoutModel.getIsComplete());
     }
 
 }

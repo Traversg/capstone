@@ -2,7 +2,7 @@ package com.nashss.se.fivelifts.models;
 
 import com.nashss.se.fivelifts.enums.WorkoutType;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class WorkoutModel {
     private final String email;
-    private final Calendar date;
+    private final LocalDate date;
     private final WorkoutType workoutType;
     private final Date timeStarted;
     private final Date timeEnded;
@@ -25,13 +25,12 @@ public class WorkoutModel {
     private final List<Integer> ohpReps;
     private final List<Integer> rowReps;
     private final List<Integer> deadliftReps;
-    private final boolean isComplete;
 
-    private WorkoutModel(String email, Calendar date, WorkoutType workoutType, Date timeStarted,
+    private WorkoutModel(String email, LocalDate date, WorkoutType workoutType, Date timeStarted,
                     Date timeEnded, int squatWeight, int benchWeight, int ohpWeight,
                     int rowWeight, int deadliftWeight, List<Integer> squatReps,
                     List<Integer> benchReps, List<Integer> ohpReps, List<Integer> rowReps,
-                    List<Integer> deadliftReps, boolean isComplete) {
+                    List<Integer> deadliftReps) {
         this.email = email;
         this.date = date;
         this.workoutType = workoutType;
@@ -47,14 +46,13 @@ public class WorkoutModel {
         this.ohpReps = ohpReps;
         this.deadliftReps = deadliftReps;
         this.rowReps = rowReps;
-        this.isComplete = isComplete;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public Calendar getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -110,10 +108,6 @@ public class WorkoutModel {
         return deadliftReps;
     }
 
-    public boolean getIsComplete() {
-        return isComplete;
-    }
-
     //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
         return new Builder();
@@ -121,7 +115,7 @@ public class WorkoutModel {
 
     public static class Builder {
         private String email;
-        private Calendar date;
+        private LocalDate date;
         private WorkoutType workoutType;
         private Date timeStarted;
         private Date timeEnded;
@@ -135,14 +129,13 @@ public class WorkoutModel {
         private List<Integer> ohpReps;
         private List<Integer> rowReps;
         private List<Integer> deadliftReps;
-        private boolean isComplete;
 
         public Builder withEmail(String email) {
             this.email = email;
             return this;
         }
 
-        public Builder withDate(Calendar date) {
+        public Builder withDate(LocalDate date) {
             this.date = date;
             return this;
         }
@@ -212,15 +205,10 @@ public class WorkoutModel {
             return this;
         }
 
-        public Builder withIsComplete(boolean isComplete) {
-            this.isComplete = isComplete;
-            return this;
-        }
-
         public WorkoutModel build() {
             return new WorkoutModel(email, date, workoutType, timeStarted, timeEnded, squatWeight,
                     benchWeight, ohpWeight, rowWeight, deadliftWeight, squatReps, benchReps, ohpReps,
-                    rowReps, deadliftReps, isComplete);
+                    rowReps, deadliftReps);
         }
     }
 }

@@ -1,15 +1,13 @@
 package com.nashss.se.fivelifts.dynamodb.models;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperFieldModel;
+import com.nashss.se.fivelifts.converters.LocalDateConverter;
 import com.nashss.se.fivelifts.converters.DateConverter;
-
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
+import com.nashss.se.fivelifts.converters.WorkoutTypeConverter;
 import com.nashss.se.fivelifts.enums.WorkoutType;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +17,7 @@ import java.util.List;
 @DynamoDBTable(tableName = "workouts")
 public class Workout {
     private String email;
-    private Calendar date;
+    private LocalDate workoutDate;
     private WorkoutType workoutType;
     private Date timeStarted;
     private Date timeEnded;
@@ -33,7 +31,6 @@ public class Workout {
     private List<Integer> ohpReps;
     private List<Integer> rowReps;
     private List<Integer> deadliftReps;
-    private boolean isComplete;
 
     @DynamoDBHashKey(attributeName = "email")
     public String getEmail() {
@@ -44,16 +41,17 @@ public class Workout {
         this.email = email;
     }
 
-    @DynamoDBTypeConverted(converter = DateConverter.class)
-    @DynamoDBRangeKey(attributeName = "date")
-    public Calendar getDate() {
-        return date;
+    @DynamoDBTypeConverted(converter = LocalDateConverter.class)
+    @DynamoDBRangeKey(attributeName = "workoutDate")
+    public LocalDate getWorkoutDate() {
+        return workoutDate;
     }
 
-    public void setDate(Calendar date) {
-        this.date = date;
+    public void setWorkoutDate(LocalDate workoutDate) {
+        this.workoutDate = workoutDate;
     }
 
+    @DynamoDBTypeConverted(converter = WorkoutTypeConverter.class)
     @DynamoDBAttribute(attributeName = "workoutType")
     public WorkoutType getWorkoutType() {
         return workoutType;
@@ -171,13 +169,5 @@ public class Workout {
 
     public void setDeadliftReps(List<Integer> deadliftReps) {
         this.deadliftReps = deadliftReps;
-    }
-
-    public boolean isComplete() {
-        return isComplete;
-    }
-
-    public void setIsComplete(boolean complete) {
-        isComplete = complete;
     }
 }

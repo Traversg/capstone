@@ -238,25 +238,25 @@ Resources:
             Path: /user
             Method: post
 
-GetUpcomingWorkoutsLambda:
-  Type: AWS::Serverless::Function
-  Properties:
-    Role: !GetAtt AccessRole.Arn
-    CodeUri: FiveLifts
-    Handler: com.nashss.se.fivelifts.lambda.GetUpcomingWorkoutsLambda::handleRequest
-    Runtime: java11
-    Architectures:
-      - x86_64
-    MemorySize: 512
-    Environment:
-      Variables:
-        JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-    Events:
-      MusicPlaylistService:
-        Type: Api
-        Properties:
-          Path: /workout
-          Method: get
+  GetUpcomingWorkoutsLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: FiveLifts
+      Handler: com.nashss.se.fivelifts.lambda.GetUpcomingWorkoutsLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        MusicPlaylistService:
+          Type: Api
+          Properties:
+            Path: /workout
+            Method: get
 
   #-----------------------------------------------------
   # DynamoDB Configuration
@@ -266,10 +266,10 @@ GetUpcomingWorkoutsLambda:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "id"
+        - AttributeName: "email"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "id"
+        - AttributeName: "email"
           KeyType: "HASH"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "users"
@@ -278,14 +278,14 @@ GetUpcomingWorkoutsLambda:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "userId"
+        - AttributeName: "email"
           AttributeType: "S"
-        - AttributeName: "date"
+        - AttributeName: "workoutDate"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "userId"
+        - AttributeName: "email"
           KeyType: "HASH"
-        - AttributeName: "date"
+        - AttributeName: "workoutDate"
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "workouts"

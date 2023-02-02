@@ -1,10 +1,14 @@
 package com.nashss.se.fivelifts.lambda;
 
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.nashss.se.fivelifts.activity.requests.GetUpcomingWorkoutsRequest;
 import com.nashss.se.fivelifts.activity.results.GetUpcomingWorkoutsResult;
 
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+
+/**
+ * Takes a GetUpcomingWorkoutsRequest and returns a LambdaResponse.
+ */
 public class GetUpcomingWorkoutsLambda
     extends LambdaActivityRunner<GetUpcomingWorkoutsRequest, GetUpcomingWorkoutsResult>
     implements RequestHandler<AuthenticatedLambdaRequest<GetUpcomingWorkoutsRequest>, LambdaResponse> {

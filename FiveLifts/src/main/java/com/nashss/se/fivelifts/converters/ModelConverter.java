@@ -37,7 +37,7 @@ public class ModelConverter {
     public WorkoutModel toWorkoutModel(Workout workout) {
         return WorkoutModel.builder()
                 .withEmail(workout.getEmail())
-                .withDate(workout.getDate())
+                .withDate(workout.getWorkoutDate())
                 .withWorkoutType(workout.getWorkoutType())
                 .withTimeStarted(workout.getTimeStarted())
                 .withTimeEnded(workout.getTimeEnded())
@@ -51,7 +51,6 @@ public class ModelConverter {
                 .withOhpReps(workout.getOhpReps())
                 .withRowReps(workout.getRowReps())
                 .withDeadliftReps(workout.getDeadliftReps())
-                .withIsComplete(workout.isComplete())
                 .build();
     }
 }

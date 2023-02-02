@@ -6,14 +6,15 @@ import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.Month;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WorkoutDaoTest {
     private static final String EMAIL = "TEST@EMAIL.COM";
-    private static Calendar oldDate;
-    private static Calendar mostRecentDate;
+    private static LocalDate oldDate;
+    private static LocalDate mostRecentDate;
     private DynamoDBMapper dynamoDBMapper;
 
     private WorkoutDao workoutDao;
@@ -23,13 +24,11 @@ public class WorkoutDaoTest {
         dynamoDBMapper = new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_EAST_2));
         workoutDao = new WorkoutDao(dynamoDBMapper);
 
-        oldDate = Calendar.getInstance();
-        oldDate.set(2022, Calendar.DECEMBER, 30);
+        oldDate = LocalDate.of(2022, Month.DECEMBER, 30);
+        mostRecentDate = LocalDate.of(2023, Month.JANUARY, 1);
 
-        mostRecentDate = Calendar.getInstance();
-        mostRecentDate.set(2023, Calendar.JANUARY, 1);
 
-        // make sure the ASINs we don't expect in db aren't there before tests begin
+        // make sure the EMAILs we don't expect in db aren't there before tests begin
         // (after getting a DynamoDBMapper)
         deleteTestData();
     }
@@ -39,32 +38,27 @@ public class WorkoutDaoTest {
         // GIVEN
         Workout oldest = new Workout();
         oldest.setEmail(EMAIL);
-        oldest.setIsComplete(true);
-
-        oldest.setDate(oldDate);
+        oldest.setWorkoutDate(oldDate);
+        workoutDao.saveWorkout(oldest);
 
         Workout mostRecent = new Workout();
         mostRecent.setEmail(EMAIL);
-        mostRecent.setIsComplete(true);
-        Calendar mostRecentDate = Calendar.getInstance();
-        mostRecent.setDate(mostRecentDate);
-
-        workoutDao.saveWorkout(oldest);
+        mostRecent.setWorkoutDate(mostRecentDate);
         workoutDao.saveWorkout(mostRecent);
 
         // WHEN
         Workout result = workoutDao.getLatestCompletedWorkout(EMAIL);
 
         // THEN
-        assertEquals(mostRecent.getDate(), result.getDate());
+        assertEquals(mostRecent.getWorkoutDate(), result.getWorkoutDate());
     }
 
     private void deleteTestData() {
         Workout workout = new Workout();
         workout.setEmail(EMAIL);
-        workout.setDate(oldDate);
+        workout.setWorkoutDate(oldDate);
         dynamoDBMapper.delete(workout);
-        workout.setDate(mostRecentDate);
-        dynamoDBMapper.delete(mostRecentDate);
+        workout.setWorkoutDate(mostRecentDate);
+        dynamoDBMapper.delete(workout);
     }
 }
