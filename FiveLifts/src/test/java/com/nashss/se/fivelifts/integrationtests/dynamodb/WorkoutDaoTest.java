@@ -1,7 +1,9 @@
-package com.nashss.se.fivelifts.dynamodb;
+package com.nashss.se.fivelifts.integrationtests.dynamodb;
 
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.nashss.se.fivelifts.dynamodb.DynamoDbClientProvider;
+import com.nashss.se.fivelifts.dynamodb.WorkoutDao;
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.Month;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WorkoutDaoTest {
     private static final String EMAIL = "TEST@EMAIL.COM";
@@ -34,23 +36,36 @@ public class WorkoutDaoTest {
     }
 
     @Test
-    void getLatestCompletedWorkout_withEmailAndQueryExpression_returnsMostRecentWorkout() {
+    void getMostRecentWorkout_withEmailWithWorkouts_returnsMostRecentWorkout() {
         // GIVEN
         Workout oldest = new Workout();
         oldest.setEmail(EMAIL);
         oldest.setWorkoutDate(oldDate);
-        workoutDao.saveWorkout(oldest);
 
         Workout mostRecent = new Workout();
         mostRecent.setEmail(EMAIL);
         mostRecent.setWorkoutDate(mostRecentDate);
+
         workoutDao.saveWorkout(mostRecent);
+        workoutDao.saveWorkout(oldest);
 
         // WHEN
-        Workout result = workoutDao.getLatestCompletedWorkout(EMAIL);
+        Workout result = workoutDao.getMostRecentWorkout(EMAIL);
 
         // THEN
         assertEquals(mostRecent.getWorkoutDate(), result.getWorkoutDate());
+    }
+
+    @Test
+    void getMostRecentWorkout_withEmailWithoutWorkouts_returnsNull() {
+        // GIVEN
+        deleteTestData();
+
+        // WHEN
+        Workout result = workoutDao.getMostRecentWorkout(EMAIL);
+
+        // THEN
+        assertNull(result);
     }
 
     private void deleteTestData() {

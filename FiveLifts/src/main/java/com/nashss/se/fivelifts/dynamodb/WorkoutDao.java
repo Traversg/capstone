@@ -7,8 +7,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
@@ -33,21 +31,25 @@ public class WorkoutDao {
     }
 
     /**
-     * Retrieves a Workout by email.
+     * Retrieves the most recent Workout by email.
      *
      * @param email The email to look up
-     * @return The corresponding User if found
+     * @return The corresponding Workout if found
      */
-    public Workout getLatestCompletedWorkout(String email) {
+    public Workout getMostRecentWorkout(String email) {
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":email", new AttributeValue().withS(email));
-        valueMap.put(":workoutDate", new AttributeValue().withS(LocalDate.now().plusDays(1).toString()));
         DynamoDBQueryExpression<Workout> queryExpression = new DynamoDBQueryExpression<Workout>()
-                .withKeyConditionExpression("email = :email and workoutDate < :workoutDate")
+                .withKeyConditionExpression("email = :email")
                 .withExpressionAttributeValues(valueMap)
                 .withScanIndexForward(false)
                 .withLimit(1);
         PaginatedQueryList<Workout> latestWorkout = dynamoDbMapper.query(Workout.class, queryExpression);
+
+        if (latestWorkout.isEmpty()) {
+            return null;
+        }
+
         return latestWorkout.get(0);
     }
 

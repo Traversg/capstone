@@ -1,5 +1,6 @@
-package com.nashss.se.fivelifts.activity;
+package com.nashss.se.fivelifts.unittests.activity;
 
+import com.nashss.se.fivelifts.activity.CreateProfileActivity;
 import com.nashss.se.fivelifts.activity.requests.CreateProfileRequest;
 import com.nashss.se.fivelifts.activity.results.CreateProfileResult;
 import com.nashss.se.fivelifts.dynamodb.UserDao;

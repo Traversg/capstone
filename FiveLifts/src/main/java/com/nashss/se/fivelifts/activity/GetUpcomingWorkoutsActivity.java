@@ -4,7 +4,9 @@ import com.nashss.se.fivelifts.activity.requests.GetUpcomingWorkoutsRequest;
 import com.nashss.se.fivelifts.activity.results.GetUpcomingWorkoutsResult;
 
 import com.nashss.se.fivelifts.converters.ModelConverter;
+import com.nashss.se.fivelifts.dynamodb.UserDao;
 import com.nashss.se.fivelifts.dynamodb.WorkoutDao;
+import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import com.nashss.se.fivelifts.enums.WorkoutType;
 import com.nashss.se.fivelifts.models.WorkoutModel;
@@ -17,6 +19,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.inject.Inject;
 
 /**
@@ -27,6 +30,7 @@ import javax.inject.Inject;
 public class GetUpcomingWorkoutsActivity {
     private final Logger log = LogManager.getLogger();
     private final WorkoutDao workoutDao;
+    private final UserDao userDao;
 
     /**
      * Instantiates a new GetUpcomingWorkoutsActivity object.
@@ -34,8 +38,9 @@ public class GetUpcomingWorkoutsActivity {
      * @param workoutDao WorkoutDao to access the workouts table.
      */
     @Inject
-    public GetUpcomingWorkoutsActivity(WorkoutDao workoutDao) {
+    public GetUpcomingWorkoutsActivity(WorkoutDao workoutDao, UserDao userDao) {
         this.workoutDao = workoutDao;
+        this.userDao = userDao;
     }
 
     /**
@@ -48,41 +53,41 @@ public class GetUpcomingWorkoutsActivity {
      * @return getUpcomingWorkoutResult result object containing the API defined {@link WorkoutModel}
      */
     public GetUpcomingWorkoutsResult handleRequest(GetUpcomingWorkoutsRequest getUpcomingWorkoutsRequest) {
-        Workout latestWorkout = workoutDao.getLatestCompletedWorkout(getUpcomingWorkoutsRequest.getEmail());
+        Workout mostRecentWorkout = workoutDao.getMostRecentWorkout(getUpcomingWorkoutsRequest.getEmail());
         List<WorkoutModel> upcomingWorkouts = new ArrayList<>();
-        WorkoutType latestWorkoutType = latestWorkout.getWorkoutType();
 
-        int latestSquatWeight = latestWorkout.getSquatWeight();
-        int latestBenchPressWeight = latestWorkout.getBenchPressWeight();
-        int latestDeadliftWeight = latestWorkout.getDeadliftWeight();
-        int latestOverheadPressWeight = latestWorkout.getOverheadPressWeight();
-        int latestBarbellRowWeight = latestWorkout.getBarbellRowWeight();
-        LocalDate dayToStart = dayToStartWorkout(latestWorkout.getWorkoutDate());
+        if (mostRecentWorkout == null) {
+            User user = userDao.getUser(getUpcomingWorkoutsRequest.getEmail());
+            int startingSquatWeight = user.getSquat();
+            int startingBenchPressWeight = user.getBenchPress();
+            int startingDeadliftWeight = user.getDeadlift();
+            int startingOverheadPress = user.getOverheadPress();
+            int startingBarbellRow = user.getBarbellRow();
+            LocalDate dayToStart = LocalDate.now();
 
-        if (latestWorkoutType == WorkoutType.WORKOUT_A) {
-            Workout workout1 = createWorkoutB(latestSquatWeight, latestOverheadPressWeight,
-                    latestDeadliftWeight, dayToStart);
-            Workout workout2 = createWorkoutA(workout1.getSquatWeight(), latestBenchPressWeight,
-                    latestBarbellRowWeight, dayToStart.plus(Period.ofDays(2)));
-            Workout workout3 = createWorkoutB(workout2.getSquatWeight(), workout1.getOverheadPressWeight(),
-                    workout1.getDeadliftWeight(), workout2.getWorkoutDate().plus(Period.ofDays(2)));
+            upcomingWorkouts = createABAWorkoutSchedule(startingSquatWeight, startingBenchPressWeight, startingBarbellRow,
+                    startingOverheadPress, startingDeadliftWeight, dayToStart);
+        } else {
+            WorkoutType mostRecentWorkoutType = mostRecentWorkout.getWorkoutType();
 
-            upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout1));
-            upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout2));
-            upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout3));
-        }
+            int mostRecentSquatWeight = mostRecentWorkout.getSquatWeight();
+            int mostRecentBenchPressWeight = mostRecentWorkout.getBenchPressWeight();
+            int mostRecentDeadliftWeight = mostRecentWorkout.getDeadliftWeight();
+            int mostRecentOverheadPressWeight = mostRecentWorkout.getOverheadPressWeight();
+            int mostRecentBarbellRowWeight = mostRecentWorkout.getBarbellRowWeight();
+            LocalDate dayToStart = dayToStartWorkout(mostRecentWorkout.getWorkoutDate());
 
-        if (latestWorkoutType == WorkoutType.WORKOUT_B) {
-            Workout workout1 = createWorkoutA(latestSquatWeight, latestBenchPressWeight,
-                    latestBarbellRowWeight, dayToStart);
-            Workout workout2 = createWorkoutB(workout1.getSquatWeight(), latestOverheadPressWeight,
-                    latestDeadliftWeight, dayToStart.plus(Period.ofDays(2)));
-            Workout workout3 = createWorkoutA(workout2.getSquatWeight(), workout1.getBenchPressWeight(),
-                    workout1.getBarbellRowWeight(), workout2.getWorkoutDate().plus(Period.ofDays(2)));
+            if (mostRecentWorkoutType == WorkoutType.WORKOUT_A) {
+                upcomingWorkouts = createBABWorkoutSchedule(mostRecentSquatWeight, mostRecentBenchPressWeight,
+                        mostRecentBarbellRowWeight, mostRecentOverheadPressWeight, mostRecentDeadliftWeight,
+                        dayToStart);
+            }
 
-            upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout1));
-            upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout2));
-            upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout3));
+            if (mostRecentWorkoutType == WorkoutType.WORKOUT_B) {
+                upcomingWorkouts = createABAWorkoutSchedule(mostRecentSquatWeight, mostRecentBenchPressWeight,
+                        mostRecentBarbellRowWeight, mostRecentOverheadPressWeight, mostRecentDeadliftWeight,
+                        dayToStart);
+            }
         }
 
         return GetUpcomingWorkoutsResult.builder()
@@ -90,9 +95,9 @@ public class GetUpcomingWorkoutsActivity {
                 .build();
     }
 
-    private LocalDate dayToStartWorkout(LocalDate dateOfLastCompleteWorkout) {
-        if (dateOfLastCompleteWorkout.plus(Period.ofDays(1)).getDayOfYear() == LocalDate.now().getDayOfYear()) {
-            return dateOfLastCompleteWorkout.plus(Period.ofDays(1));
+    private LocalDate dayToStartWorkout(LocalDate mostRecentWorkoutDate) {
+        if (mostRecentWorkoutDate.plusDays(1).getDayOfYear() == LocalDate.now().getDayOfYear()) {
+            return mostRecentWorkoutDate.plusDays(2);
         }
         return LocalDate.now();
     }
@@ -116,4 +121,45 @@ public class GetUpcomingWorkoutsActivity {
         workout.setWorkoutType(WorkoutType.WORKOUT_B);
         return workout;
     }
+
+    private List<WorkoutModel> createABAWorkoutSchedule(int mostRecentSquatWeight, int mostRecentBenchPressWeight,
+                                          int mostRecentBarbellRowWeight, int mostRecentOverheadPressWeight,
+                                          int mostRecentDeadliftWeight, LocalDate dayToStart) {
+        List<WorkoutModel> upcomingWorkouts = new ArrayList<>();
+
+        Workout workout1 = createWorkoutA(mostRecentSquatWeight, mostRecentBenchPressWeight,
+                mostRecentBarbellRowWeight, dayToStart);
+
+        Workout workout2 = createWorkoutB(workout1.getSquatWeight(), mostRecentOverheadPressWeight,
+                mostRecentDeadliftWeight, dayToStart.plusDays(2));
+
+        Workout workout3 = createWorkoutA(workout2.getSquatWeight(), workout1.getBenchPressWeight(),
+                workout1.getBarbellRowWeight(), workout2.getWorkoutDate().plusDays(2));
+
+        upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout1));
+        upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout2));
+        upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout3));
+
+        return upcomingWorkouts;
+    }
+
+    private List<WorkoutModel> createBABWorkoutSchedule(int mostRecentSquatWeight, int mostRecentBenchPressWeight,
+                                                        int mostRecentBarbellRowWeight, int mostRecentOverheadPressWeight,
+                                                        int mostRecentDeadliftWeight, LocalDate dayToStart) {
+        List<WorkoutModel> upcomingWorkouts = new ArrayList<>();
+
+        Workout workout1 = createWorkoutB(mostRecentSquatWeight, mostRecentOverheadPressWeight,
+                mostRecentDeadliftWeight, dayToStart);
+        Workout workout2 = createWorkoutA(workout1.getSquatWeight(), mostRecentBenchPressWeight,
+                mostRecentBarbellRowWeight, dayToStart.plusDays(2));
+        Workout workout3 = createWorkoutB(workout2.getSquatWeight(), workout1.getOverheadPressWeight(),
+                workout1.getDeadliftWeight(), workout2.getWorkoutDate().plusDays(2));
+
+        upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout1));
+        upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout2));
+        upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout3));
+
+        return upcomingWorkouts;
+    }
+
 }

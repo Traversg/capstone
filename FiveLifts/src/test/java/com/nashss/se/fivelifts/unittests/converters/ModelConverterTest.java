@@ -1,5 +1,6 @@
-package com.nashss.se.fivelifts.converters;
+package com.nashss.se.fivelifts.unittests.converters;
 
+import com.nashss.se.fivelifts.converters.ModelConverter;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import com.nashss.se.fivelifts.enums.WorkoutType;
