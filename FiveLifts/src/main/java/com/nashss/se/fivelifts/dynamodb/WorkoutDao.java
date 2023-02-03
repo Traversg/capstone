@@ -9,6 +9,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -36,7 +37,7 @@ public class WorkoutDao {
      * @param email The email to look up
      * @return The corresponding Workout if found
      */
-    public Workout getMostRecentWorkout(String email) {
+    public Optional<Workout> getMostRecentWorkout(String email) {
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":email", new AttributeValue().withS(email));
         DynamoDBQueryExpression<Workout> queryExpression = new DynamoDBQueryExpression<Workout>()
@@ -47,10 +48,10 @@ public class WorkoutDao {
         PaginatedQueryList<Workout> latestWorkout = dynamoDbMapper.query(Workout.class, queryExpression);
 
         if (latestWorkout.isEmpty()) {
-            return null;
+            return Optional.empty();
         }
 
-        return latestWorkout.get(0);
+        return Optional.of(latestWorkout.get(0));
     }
 
     /**

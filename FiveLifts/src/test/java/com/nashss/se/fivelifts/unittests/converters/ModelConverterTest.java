@@ -63,7 +63,7 @@ public class ModelConverterTest {
 
         WorkoutModel workoutModel = modelConverter.toWorkoutModel(workout);
         assertEquals(workout.getEmail(), workoutModel.getEmail());
-        assertEquals(workout.getWorkoutDate(), workoutModel.getDate());
+        assertEquals(workout.getWorkoutDate(), workoutModel.getWorkoutDate());
         assertEquals(workout.getWorkoutType(), workoutModel.getWorkoutType());
         assertEquals(workout.getTimeStarted(), workoutModel.getTimeStarted());
         assertEquals(workout.getTimeEnded(), workoutModel.getTimeEnded());

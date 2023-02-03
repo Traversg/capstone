@@ -1,7 +1,8 @@
 package com.nashss.se.fivelifts.converters;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
 import com.nashss.se.fivelifts.enums.WorkoutType;
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
 
 /**
  * Converts DynamoDB String Type into Data Type.

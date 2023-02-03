@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,22 +51,22 @@ public class WorkoutDaoTest {
         workoutDao.saveWorkout(oldest);
 
         // WHEN
-        Workout result = workoutDao.getMostRecentWorkout(EMAIL);
+        Optional<Workout> result = workoutDao.getMostRecentWorkout(EMAIL);
 
         // THEN
-        assertEquals(mostRecent.getWorkoutDate(), result.getWorkoutDate());
+        assertEquals(mostRecent.getWorkoutDate(), result.get().getWorkoutDate());
     }
 
     @Test
-    void getMostRecentWorkout_withEmailWithoutWorkouts_returnsNull() {
+    void getMostRecentWorkout_withEmailWithoutWorkouts_returnsEmptyOptional() {
         // GIVEN
         deleteTestData();
 
         // WHEN
-        Workout result = workoutDao.getMostRecentWorkout(EMAIL);
+        Optional<Workout> result = workoutDao.getMostRecentWorkout(EMAIL);
 
         // THEN
-        assertNull(result);
+        assertSame(Optional.empty(), result);
     }
 
     private void deleteTestData() {

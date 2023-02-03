@@ -61,7 +61,7 @@ User Table:
 
 Workout Table:
 - Email : Partition Key : String
-- Date : Sort Key : Datetime
+- WorkoutDate : Sort Key : Datetime
 - WorkoutType : Attribute : enum
 - TimeStarted : Attribute : TimeStamp
 - TimeEnded : Attribute : TimeStamp
@@ -75,7 +75,6 @@ Workout Table:
 - OHPReps : Attribute : int[]
 - RowReps : Attribute : int[]
 - DeadliftReps : Attribute : int[]
-- isComplete : Attribute : boolean
 
 Workout GSI Table:
 - UserId : Partition Key : String
@@ -89,8 +88,8 @@ Workout GSI Table:
 - Accepts data to update a `workout` including the number of reps, the exercise, and the user ID associated with the workout. Returns the corresponding `workout`.
 
 ### 6.2 Get Upcoming Workouts Endpoint
-- Accepts `GET` requests to /workout/:userId
-- Accepts a user ID and returns the corresponding Workouts.
+- Accepts `GET` requests to /workout
+- Accepts email from AWS Cognito and returns the corresponding Workouts.
 
 ### 6.3 Start Workout Endpoint
 - Accepts `POST` requests to /workout

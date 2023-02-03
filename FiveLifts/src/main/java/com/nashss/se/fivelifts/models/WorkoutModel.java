@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class WorkoutModel {
     private final String email;
-    private final LocalDate date;
+    private final LocalDate workoutDate;
     private final WorkoutType workoutType;
     private final Date timeStarted;
     private final Date timeEnded;
@@ -26,13 +26,13 @@ public class WorkoutModel {
     private final List<Integer> barbellRowReps;
     private final List<Integer> deadliftReps;
 
-    private WorkoutModel(String email, LocalDate date, WorkoutType workoutType, Date timeStarted,
+    private WorkoutModel(String email, LocalDate workoutDate, WorkoutType workoutType, Date timeStarted,
                          Date timeEnded, int squatWeight, int benchPressWeight, int overheadPressWeight,
                          int barbellRowWeight, int deadliftWeight, List<Integer> squatReps,
                          List<Integer> benchPressReps, List<Integer> overheadPressReps, List<Integer> barbellRowReps,
                          List<Integer> deadliftReps) {
         this.email = email;
-        this.date = date;
+        this.workoutDate = workoutDate;
         this.workoutType = workoutType;
         this.timeStarted = timeStarted;
         this.timeEnded = timeEnded;
@@ -52,8 +52,8 @@ public class WorkoutModel {
         return email;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getWorkoutDate() {
+        return workoutDate;
     }
 
     public WorkoutType getWorkoutType() {

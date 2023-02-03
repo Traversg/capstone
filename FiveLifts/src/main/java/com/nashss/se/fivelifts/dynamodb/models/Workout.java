@@ -1,10 +1,15 @@
 package com.nashss.se.fivelifts.dynamodb.models;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import com.nashss.se.fivelifts.converters.LocalDateConverter;
 import com.nashss.se.fivelifts.converters.DateConverter;
+import com.nashss.se.fivelifts.converters.LocalDateConverter;
 import com.nashss.se.fivelifts.converters.WorkoutTypeConverter;
 import com.nashss.se.fivelifts.enums.WorkoutType;
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 
 import java.time.LocalDate;
 import java.util.Date;
