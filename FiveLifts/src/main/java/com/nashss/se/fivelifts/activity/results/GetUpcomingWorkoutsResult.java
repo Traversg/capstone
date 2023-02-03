@@ -2,6 +2,7 @@ package com.nashss.se.fivelifts.activity.results;
 
 import com.nashss.se.fivelifts.models.WorkoutModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class GetUpcomingWorkoutsResult {
     }
 
     public List<WorkoutModel> getWorkouts() {
-        return workouts;
+        return new ArrayList<>(workouts);
     }
 
     @Override
@@ -34,7 +35,7 @@ public class GetUpcomingWorkoutsResult {
         private List<WorkoutModel> workouts;
 
         public Builder withWorkouts(List<WorkoutModel> workouts) {
-            this.workouts = workouts;
+            this.workouts = new ArrayList<>(workouts);
             return this;
         }
 

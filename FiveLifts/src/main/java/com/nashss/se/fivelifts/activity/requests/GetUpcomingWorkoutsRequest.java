@@ -1,8 +1,12 @@
 package com.nashss.se.fivelifts.activity.requests;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 /**
  * Implementation of the GetUpcomingWorkoutsRequest for the FiveLifts' GetUpcomingWorkouts API.
  */
+@JsonDeserialize(builder = GetUpcomingWorkoutsRequest.Builder.class)
 public class GetUpcomingWorkoutsRequest {
     private final String email;
 
@@ -26,6 +30,7 @@ public class GetUpcomingWorkoutsRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder
     public static class Builder {
         private String email;
 
