@@ -123,5 +123,13 @@ label, input {
     margin-top: 10px;
 }
 
+/* UPCOMING WORKOUTS PAGE */
 
+p {
+    color : #ffffff;
+}
 
+.workoutTypeAndDate {
+    display: flex;
+    justify-content: space-between;
+}

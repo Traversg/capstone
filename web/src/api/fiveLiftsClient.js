@@ -15,7 +15,7 @@ export default class FiveLiftsClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'createProfile'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'createProfile', 'getUpcomingWorkouts'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -82,26 +82,47 @@ export default class FiveLiftsClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The profile that has been created.
      */
-        async createProfile(squat, benchPress, overheadPress, barbellRow, deadlift, bodyWeight, errorCallback) {
-            try {
-                const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
-                const response = await this.axiosClient.post(`user`, {
-                    squat: squat,
-                    benchPress: benchPress,
-                    overheadPress: overheadPress,
-                    barbellRow: barbellRow,
-                    deadlift: deadlift,
-                    bodyWeight: bodyWeight
-                }, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                return response.data.profile;
-            } catch (error) {
-                this.handleError(error, errorCallback)
-            }
+    async createProfile(squat, benchPress, overheadPress, barbellRow, deadlift, bodyWeight, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can create profiles.");
+            const response = await this.axiosClient.post(`user`, {
+                squat: squat,
+                benchPress: benchPress,
+                overheadPress: overheadPress,
+                barbellRow: barbellRow,
+                deadlift: deadlift,
+                bodyWeight: bodyWeight
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.profile;
+        } catch (error) {
+            this.handleError(error, errorCallback)
         }
+    }
+
+    /**
+     * Gets upcoming workouts for the current user.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The upcoming workouts retrieved.
+     */
+    async getUpcomingWorkouts() {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can retrieve workouts.");
+            const response = await this.axiosClient.get('workouts', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.upcomingWorkouts;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+
 
     /**
      * Helper method to log the error and run any error functions.

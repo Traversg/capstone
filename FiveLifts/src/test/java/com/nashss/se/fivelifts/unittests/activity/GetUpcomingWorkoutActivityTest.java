@@ -90,7 +90,7 @@ public class GetUpcomingWorkoutActivityTest {
 
         // WHEN
         GetUpcomingWorkoutsResult result = getUpcomingWorkoutsActivity.handleRequest(request);
-        List<WorkoutModel> resultModels = result.getWorkouts();
+        List<WorkoutModel> resultModels = result.getUpcomingWorkouts();
 
         // THEN
         assertEquals(upcomingWorkouts.get(0).getWorkoutDate(), resultModels.get(0).getWorkoutDate());
@@ -159,7 +159,7 @@ public class GetUpcomingWorkoutActivityTest {
 
         // WHEN
         GetUpcomingWorkoutsResult result = getUpcomingWorkoutsActivity.handleRequest(request);
-        List<WorkoutModel> resultModels = result.getWorkouts();
+        List<WorkoutModel> resultModels = result.getUpcomingWorkouts();
 
         // THEN
         assertEquals(upcomingWorkouts.get(0).getWorkoutDate(), resultModels.get(0).getWorkoutDate());

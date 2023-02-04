@@ -62,7 +62,7 @@ public class GetUpcomingWorkoutsActivity {
                     () -> createUpcomingWorkoutsForNewUser(getUpcomingWorkoutsRequest));
 
         return GetUpcomingWorkoutsResult.builder()
-                .withWorkouts(upcomingWorkouts)
+                .withUpcomingWorkouts(upcomingWorkouts)
                 .build();
     }
 

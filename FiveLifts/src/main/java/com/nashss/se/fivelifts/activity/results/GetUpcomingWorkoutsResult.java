@@ -9,20 +9,20 @@ import java.util.List;
  * Implementation of the GetUpcomingWorkoutsResult for the FiveLifts' GetUpcomingWorkoutsResult API.
  */
 public class GetUpcomingWorkoutsResult {
-    private final List<WorkoutModel> workouts;
+    private final List<WorkoutModel> upcomingWorkouts;
 
-    private GetUpcomingWorkoutsResult(List<WorkoutModel> workouts) {
-        this.workouts = workouts;
+    private GetUpcomingWorkoutsResult(List<WorkoutModel> upcomingWorkouts) {
+        this.upcomingWorkouts = upcomingWorkouts;
     }
 
-    public List<WorkoutModel> getWorkouts() {
-        return new ArrayList<>(workouts);
+    public List<WorkoutModel> getUpcomingWorkouts() {
+        return new ArrayList<>(upcomingWorkouts);
     }
 
     @Override
     public String toString() {
         return "GetUpcomingWorkoutResult{" +
-                "workouts=" + workouts +
+                "upcomingWorkouts=" + upcomingWorkouts +
                 '}';
     }
 
@@ -32,15 +32,15 @@ public class GetUpcomingWorkoutsResult {
     }
 
     public static class Builder {
-        private List<WorkoutModel> workouts;
+        private List<WorkoutModel> upcomingWorkouts;
 
-        public Builder withWorkouts(List<WorkoutModel> workouts) {
-            this.workouts = new ArrayList<>(workouts);
+        public Builder withUpcomingWorkouts(List<WorkoutModel> upcomingWorkouts) {
+            this.upcomingWorkouts = new ArrayList<>(upcomingWorkouts);
             return this;
         }
 
         public GetUpcomingWorkoutsResult build() {
-            return new GetUpcomingWorkoutsResult(workouts);
+            return new GetUpcomingWorkoutsResult(upcomingWorkouts);
         }
     }
 }
