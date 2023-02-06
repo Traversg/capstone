@@ -6,7 +6,6 @@ import com.nashss.se.fivelifts.converters.ModelConverter;
 import com.nashss.se.fivelifts.dynamodb.UserDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.models.UserModel;
-import com.nashss.se.fivelifts.utils.FiveLiftsServiceUtils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +24,7 @@ public class CreateProfileActivity {
     /**
      * Instantiates a new CreateProfileActivity object.
      *
-     * @param userDao UserDap to access the playlists table.
+     * @param userDao UserDao to access the users table.
      */
     @Inject
     public CreateProfileActivity(UserDao userDao) {
@@ -38,8 +37,6 @@ public class CreateProfileActivity {
      * <p>
      * It then returns the newly created user profile.
      * <p>
-     * If the provided body weight and lift numbers are too large, throws an
-     * InvalidAttributeValueException
      *
      * If any provided weight fields are empty, throws an InvalidAttributeValueException
      * @param createProfileRequest request object containing the user name, body weight, and lift data
@@ -50,13 +47,12 @@ public class CreateProfileActivity {
         log.info("Received CreateProfileRequest {}", createProfileRequest);
 
         User newUser = new User();
-        newUser.setId(FiveLiftsServiceUtils.generateUserId());
         newUser.setName(createProfileRequest.getName());
         newUser.setEmail(createProfileRequest.getEmail());
         newUser.setBodyWeight(createProfileRequest.getBodyWeight());
         newUser.setBarbellRow(createProfileRequest.getBarbellRow());
         newUser.setDeadlift(createProfileRequest.getDeadlift());
-        newUser.setBench(createProfileRequest.getBench());
+        newUser.setBenchPress(createProfileRequest.getBenchPress());
         newUser.setOverheadPress(createProfileRequest.getOverheadPress());
         newUser.setSquat(createProfileRequest.getSquat());
 

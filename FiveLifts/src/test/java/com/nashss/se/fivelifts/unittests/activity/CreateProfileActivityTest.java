@@ -1,5 +1,6 @@
-package com.nashss.se.fivelifts.activity;
+package com.nashss.se.fivelifts.unittests.activity;
 
+import com.nashss.se.fivelifts.activity.CreateProfileActivity;
 import com.nashss.se.fivelifts.activity.requests.CreateProfileRequest;
 import com.nashss.se.fivelifts.activity.results.CreateProfileResult;
 import com.nashss.se.fivelifts.dynamodb.UserDao;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -44,7 +44,7 @@ public class CreateProfileActivityTest {
                 .withBodyWeight(expectedBodyWeight)
                 .withDeadlift(expectedDeadlift)
                 .withSquat(expectedSquat)
-                .withBench(expectedBench)
+                .withBenchPress(expectedBench)
                 .withBarbellRow(expectedBarbellRow)
                 .withOverheadPress(expectedOHP)
                 .build();
@@ -55,13 +55,12 @@ public class CreateProfileActivityTest {
         // THEN
         verify(userDao).saveUser(any(User.class));
 
-        assertNotNull(result.getProfile().getId());
         assertEquals(expectedName, result.getProfile().getName());
         assertEquals(expectedEmail, result.getProfile().getEmail());
         assertEquals(expectedBodyWeight, result.getProfile().getBodyWeight());
         assertEquals(expectedDeadlift, result.getProfile().getDeadlift());
         assertEquals(expectedSquat, result.getProfile().getSquat());
-        assertEquals(expectedBench, result.getProfile().getBench());
+        assertEquals(expectedBench, result.getProfile().getBenchPress());
         assertEquals(expectedBarbellRow, result.getProfile().getBarbellRow());
         assertEquals(expectedOHP, result.getProfile().getOverheadPress());
     }

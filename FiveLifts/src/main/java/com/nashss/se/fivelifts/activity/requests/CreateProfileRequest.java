@@ -13,18 +13,18 @@ public class CreateProfileRequest {
     private final double bodyWeight;
     private final int deadlift;
     private final int squat;
-    private final int bench;
+    private final int benchPress;
     private final int overheadPress;
     private final int barbellRow;
 
     private CreateProfileRequest(String name, String email, double bodyWeight, int deadlift, int squat,
-                                 int bench, int overheadPress, int barbellRow) {
+                                 int benchPress, int overheadPress, int barbellRow) {
         this.name = name;
         this.email = email;
         this.bodyWeight = bodyWeight;
         this.deadlift = deadlift;
         this.squat = squat;
-        this.bench = bench;
+        this.benchPress = benchPress;
         this.overheadPress = overheadPress;
         this.barbellRow = barbellRow;
     }
@@ -49,8 +49,8 @@ public class CreateProfileRequest {
         return squat;
     }
 
-    public int getBench() {
-        return bench;
+    public int getBenchPress() {
+        return benchPress;
     }
 
     public int getOverheadPress() {
@@ -69,7 +69,7 @@ public class CreateProfileRequest {
                 ", bodyWeight=" + bodyWeight + '\'' +
                 ", deadlift=" + deadlift + '\'' +
                 ", squat=" + squat + '\'' +
-                ", bench=" + bench + '\'' +
+                ", benchPress=" + benchPress + '\'' +
                 ", overheadPress=" + overheadPress + '\'' +
                 ", barbellRow=" + barbellRow +
                 '}';
@@ -87,7 +87,7 @@ public class CreateProfileRequest {
         private double bodyWeight;
         private int deadlift;
         private int squat;
-        private int bench;
+        private int benchPress;
         private int overheadPress;
         private int barbellRow;
 
@@ -117,8 +117,8 @@ public class CreateProfileRequest {
             return this;
         }
 
-        public Builder withBench(int bench) {
-            this.bench = bench;
+        public Builder withBenchPress(int benchPress) {
+            this.benchPress = benchPress;
             return this;
         }
 
@@ -134,7 +134,7 @@ public class CreateProfileRequest {
 
         public CreateProfileRequest build() {
             return new CreateProfileRequest(name, email, bodyWeight, deadlift, squat,
-                    bench, overheadPress, barbellRow);
+                    benchPress, overheadPress, barbellRow);
         }
 
     }

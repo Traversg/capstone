@@ -6,31 +6,25 @@ import java.util.Objects;
  * A model representation of a User object.
  */
 public class UserModel {
-    private final String id;
     private final String name;
     private final String email;
     private final double bodyWeight;
     private final int deadlift;
     private final int squat;
-    private final int bench;
+    private final int benchPress;
     private final int overheadPress;
     private final int barbellRow;
 
-    private UserModel(String id, String name, String email, double bodyWeight, int deadlift,
-                      int squat, int bench, int overheadPress, int barbellRow) {
-        this.id = id;
+    private UserModel(String name, String email, double bodyWeight, int deadlift,
+                      int squat, int benchPress, int overheadPress, int barbellRow) {
         this.name = name;
         this.email = email;
         this.bodyWeight = bodyWeight;
         this.deadlift = deadlift;
         this.squat = squat;
-        this.bench = bench;
+        this.benchPress = benchPress;
         this.overheadPress = overheadPress;
         this.barbellRow = barbellRow;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getName() {
@@ -53,8 +47,8 @@ public class UserModel {
         return squat;
     }
 
-    public int getBench() {
-        return bench;
+    public int getBenchPress() {
+        return benchPress;
     }
 
     public int getOverheadPress() {
@@ -74,13 +68,13 @@ public class UserModel {
             return false;
         }
         UserModel userModel = (UserModel) o;
-        return Objects.equals(id, userModel.id) && Objects.equals(name, userModel.name) &&
+        return Objects.equals(name, userModel.name) &&
                 Objects.equals(email, userModel.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email);
+        return Objects.hash(name, email);
     }
 
     //CHECKSTYLE:OFF:Builder
@@ -89,20 +83,14 @@ public class UserModel {
     }
 
     public static class Builder {
-        private String id;
         private String name;
         private String email;
         private double bodyWeight;
         private int deadlift;
         private int squat;
-        private int bench;
+        private int benchPress;
         private int overheadPress;
         private int barbellRow;
-
-        public Builder withId(String id) {
-            this.id = id;
-            return this;
-        }
 
         public Builder withName(String name) {
             this.name = name;
@@ -129,8 +117,8 @@ public class UserModel {
             return this;
         }
 
-        public Builder withBench(int bench) {
-            this.bench = bench;
+        public Builder withBenchPress(int benchPress) {
+            this.benchPress = benchPress;
             return this;
         }
 
@@ -145,8 +133,8 @@ public class UserModel {
         }
 
         public UserModel build() {
-            return new UserModel(id, name, email, bodyWeight, deadlift, squat,
-                    bench, overheadPress, barbellRow);
+            return new UserModel(name, email, bodyWeight, deadlift, squat,
+                    benchPress, overheadPress, barbellRow);
         }
     }
 }

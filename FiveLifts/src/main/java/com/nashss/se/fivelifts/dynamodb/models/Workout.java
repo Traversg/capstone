@@ -1,6 +1,9 @@
 package com.nashss.se.fivelifts.dynamodb.models;
 
 import com.nashss.se.fivelifts.converters.DateConverter;
+import com.nashss.se.fivelifts.converters.LocalDateConverter;
+import com.nashss.se.fivelifts.converters.WorkoutTypeConverter;
+import com.nashss.se.fivelifts.enums.WorkoutType;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
@@ -8,6 +11,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -16,43 +20,48 @@ import java.util.List;
  */
 @DynamoDBTable(tableName = "workouts")
 public class Workout {
-    private String userId;
-    private Date date;
-    private String workoutType;
+    private String email;
+    private LocalDate workoutDate;
+    private WorkoutType workoutType;
     private Date timeStarted;
     private Date timeEnded;
+    private int squatWeight;
+    private int benchPressWeight;
+    private int overheadPressWeight;
+    private int barbellRowWeight;
+    private int deadliftWeight;
     private List<Integer> squatReps;
-    private List<Integer> benchReps;
-    private List<Integer> ohpReps;
-    private List<Integer> rowReps;
+    private List<Integer> benchPressReps;
+    private List<Integer> overheadPressReps;
+    private List<Integer> barbellRowReps;
     private List<Integer> deadliftReps;
-    private boolean isComplete;
 
-    @DynamoDBHashKey(attributeName = "userId")
-    public String getUserId() {
-        return userId;
+    @DynamoDBHashKey(attributeName = "email")
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    @DynamoDBTypeConverted(converter = DateConverter.class)
-    @DynamoDBRangeKey(attributeName = "date")
-    public Date getDate() {
-        return date;
+    @DynamoDBTypeConverted(converter = LocalDateConverter.class)
+    @DynamoDBRangeKey(attributeName = "workoutDate")
+    public LocalDate getWorkoutDate() {
+        return workoutDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setWorkoutDate(LocalDate workoutDate) {
+        this.workoutDate = workoutDate;
     }
 
+    @DynamoDBTypeConverted(converter = WorkoutTypeConverter.class)
     @DynamoDBAttribute(attributeName = "workoutType")
-    public String getWorkoutType() {
+    public WorkoutType getWorkoutType() {
         return workoutType;
     }
 
-    public void setWorkoutType(String workoutType) {
+    public void setWorkoutType(WorkoutType workoutType) {
         this.workoutType = workoutType;
     }
 
@@ -76,6 +85,51 @@ public class Workout {
         this.timeEnded = timeEnded;
     }
 
+    @DynamoDBAttribute(attributeName = "squatWeight")
+    public int getSquatWeight() {
+        return squatWeight;
+    }
+
+    public void setSquatWeight(int squatWeight) {
+        this.squatWeight = squatWeight;
+    }
+
+    @DynamoDBAttribute(attributeName = "benchPressWeight")
+    public int getBenchPressWeight() {
+        return benchPressWeight;
+    }
+
+    public void setBenchPressWeight(int benchPressWeight) {
+        this.benchPressWeight = benchPressWeight;
+    }
+
+    @DynamoDBAttribute(attributeName = "overheadPressWeight")
+    public int getOverheadPressWeight() {
+        return overheadPressWeight;
+    }
+
+    public void setOverheadPressWeight(int overheadPressWeight) {
+        this.overheadPressWeight = overheadPressWeight;
+    }
+
+    @DynamoDBAttribute(attributeName = "barbellRowWeight")
+    public int getBarbellRowWeight() {
+        return barbellRowWeight;
+    }
+
+    public void setBarbellRowWeight(int barbellRowWeight) {
+        this.barbellRowWeight = barbellRowWeight;
+    }
+
+    @DynamoDBAttribute(attributeName = "deadLiftWeight")
+    public int getDeadliftWeight() {
+        return deadliftWeight;
+    }
+
+    public void setDeadliftWeight(int deadliftWeight) {
+        this.deadliftWeight = deadliftWeight;
+    }
+
     @DynamoDBAttribute(attributeName = "squatReps")
     public List<Integer> getSquatReps() {
         return squatReps;
@@ -85,31 +139,31 @@ public class Workout {
         this.squatReps = squatReps;
     }
 
-    @DynamoDBAttribute(attributeName = "benchReps")
-    public List<Integer> getBenchReps() {
-        return benchReps;
+    @DynamoDBAttribute(attributeName = "benchPressReps")
+    public List<Integer> getBenchPressReps() {
+        return benchPressReps;
     }
 
-    public void setBenchReps(List<Integer> benchReps) {
-        this.benchReps = benchReps;
+    public void setBenchPressReps(List<Integer> benchPressReps) {
+        this.benchPressReps = benchPressReps;
     }
 
-    @DynamoDBAttribute(attributeName = "ohpReps")
-    public List<Integer> getOhpReps() {
-        return ohpReps;
+    @DynamoDBAttribute(attributeName = "overheadPressReps")
+    public List<Integer> getOverheadPressReps() {
+        return overheadPressReps;
     }
 
-    public void setOhpReps(List<Integer> ohpReps) {
-        this.ohpReps = ohpReps;
+    public void setOverheadPressReps(List<Integer> overheadPressReps) {
+        this.overheadPressReps = overheadPressReps;
     }
 
-    @DynamoDBAttribute(attributeName = "rowReps")
-    public List<Integer> getRowReps() {
-        return rowReps;
+    @DynamoDBAttribute(attributeName = "barbellRowReps")
+    public List<Integer> getBarbellRowReps() {
+        return barbellRowReps;
     }
 
-    public void setRowReps(List<Integer> rowReps) {
-        this.rowReps = rowReps;
+    public void setBarbellRowReps(List<Integer> barbellRowReps) {
+        this.barbellRowReps = barbellRowReps;
     }
 
     @DynamoDBAttribute(attributeName = "deadliftReps")
@@ -119,13 +173,5 @@ public class Workout {
 
     public void setDeadliftReps(List<Integer> deadliftReps) {
         this.deadliftReps = deadliftReps;
-    }
-
-    public boolean isComplete() {
-        return isComplete;
-    }
-
-    public void setComplete(boolean complete) {
-        isComplete = complete;
     }
 }

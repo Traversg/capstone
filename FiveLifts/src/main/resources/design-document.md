@@ -50,8 +50,8 @@ U6. As a lifter, I want to see what my warmup weights are for each exercise.
 ## 5. Tables
 
 User Table:
-- Id : Partition Key : String
-- UserName : Attribute : String
+- Email : Partition Key: String
+- Name : Attribute : String
 - Weight : Attribute : double
 - Deadlift : Attribute  : int
 - Squat : Attribute : int
@@ -60,17 +60,21 @@ User Table:
 - Row : Attribute : int
 
 Workout Table:
-- UserId : Partition Key : String
-- Date : Sort Key : Datetime
+- Email : Partition Key : String
+- WorkoutDate : Sort Key : Datetime
 - WorkoutType : Attribute : enum
 - TimeStarted : Attribute : TimeStamp
 - TimeEnded : Attribute : TimeStamp
+- SquatWeight : Attribute : int
+- BenchWeight : Attribute : int
+- OhpWeight : Attribute : int
+- RowWeight : Attribute : int
+- DeadliftWeight : Attribute : int
 - SquatReps : Attribute : int[]
 - BenchReps : Attribute : int[]
 - OHPReps : Attribute : int[]
 - RowReps : Attribute : int[]
 - DeadliftReps : Attribute : int[]
-- isComplete : Attribute : boolean
 
 Workout GSI Table:
 - UserId : Partition Key : String
@@ -84,8 +88,8 @@ Workout GSI Table:
 - Accepts data to update a `workout` including the number of reps, the exercise, and the user ID associated with the workout. Returns the corresponding `workout`.
 
 ### 6.2 Get Upcoming Workouts Endpoint
-- Accepts `GET` requests to /workout/:userId
-- Accepts a user ID and returns the corresponding Workouts.
+- Accepts `GET` requests to /workout
+- Accepts email from AWS Cognito and returns the corresponding Workouts.
 
 ### 6.3 Start Workout Endpoint
 - Accepts `POST` requests to /workout

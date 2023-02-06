@@ -11,23 +11,22 @@ import java.util.Objects;
  */
 @DynamoDBTable(tableName = "users")
 public class User {
-    private String id;
     private String email;
     private String name;
     private double bodyWeight;
     private int deadlift;
     private int squat;
-    private int bench;
+    private int benchPress;
     private int overheadPress;
     private int barbellRow;
 
-    @DynamoDBHashKey(attributeName = "id")
-    public String getId() {
-        return id;
+    @DynamoDBHashKey(attributeName = "email")
+    public String getEmail() {
+        return email;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @DynamoDBAttribute(attributeName = "name")
@@ -37,15 +36,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @DynamoDBAttribute(attributeName = "email")
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @DynamoDBAttribute(attributeName = "bodyWeight")
@@ -74,13 +64,13 @@ public class User {
         this.squat = squat;
     }
 
-    @DynamoDBAttribute(attributeName = "bench")
-    public int getBench() {
-        return bench;
+    @DynamoDBAttribute(attributeName = "benchPress")
+    public int getBenchPress() {
+        return benchPress;
     }
 
-    public void setBench(int bench) {
-        this.bench = bench;
+    public void setBenchPress(int benchPress) {
+        this.benchPress = benchPress;
     }
     @DynamoDBAttribute(attributeName = "overheadPress")
     public int getOverheadPress() {
@@ -108,11 +98,11 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(name, user.name);
+        return Objects.equals(email, user.email) && Objects.equals(name, user.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, name);
+        return Objects.hash(email, name);
     }
 }

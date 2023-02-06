@@ -1,16 +1,17 @@
-package com.nashss.se.fivelifts.dynamodb;
+package com.nashss.se.fivelifts.unittests.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.nashss.se.fivelifts.dynamodb.UserDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.exceptions.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 public class UserDaoTest {
     @Mock
@@ -20,32 +21,32 @@ public class UserDaoTest {
 
     @BeforeEach
     public void setUp() {
-        initMocks(this);
+        MockitoAnnotations.openMocks(this);
         userDao = new UserDao(dynamoDBMapper);
     }
 
     @Test
     public void getUser_withUserId_callsMapperWithPartitionKey() {
         // GIVEN
-        String id = "id";
-        when(dynamoDBMapper.load(User.class, id)).thenReturn(new User());
+        String email = "name@email.com";
+        when(dynamoDBMapper.load(User.class, email)).thenReturn(new User());
 
         // WHEN
-        User user = userDao.getUser(id);
+        User user = userDao.getUser(email);
 
         // THEN
         assertNotNull(user);
-        verify(dynamoDBMapper).load(User.class, id);
+        verify(dynamoDBMapper).load(User.class, email);
     }
 
     @Test
     public void getUser_userIdNotFound_throwsUserNotFoundException() {
         // GIVEN
-        String nonexistentId = "nonexistentId";
-        when(dynamoDBMapper.load(User.class, nonexistentId)).thenReturn(null);
+        String nonexistentEmail = "nonExisistentEmail@email.com";
+        when(dynamoDBMapper.load(User.class, nonexistentEmail)).thenReturn(null);
 
         // WHEN + THEN
-        assertThrows(UserNotFoundException.class, () -> userDao.getUser(nonexistentId));
+        assertThrows(UserNotFoundException.class, () -> userDao.getUser(nonexistentEmail));
     }
 
     @Test
