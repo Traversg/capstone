@@ -30,30 +30,26 @@ class UpcomingWorkouts extends BindingClass {
 
     async displayUpcomingWorkouts() {
         const upcomingWorkouts = await this.client.getUpcomingWorkouts();
-        
-        const firstWorkout = upcomingWorkouts[0];
-        const secondWorkout = upcomingWorkouts[1];
-        const thirdWorkout = upcomingWorkouts[2];
 
         for (let workout in upcomingWorkouts) {
-            let workoutnumber = `workout${Number(workout) + 1}`;
+            let workoutNumber = `workout${Number(workout) + 1}`;
             let currentWorkout = upcomingWorkouts[workout];
-            //console.log(currentWorkout.workoutType);
-            let workoutType = workoutTypeDisplay(currentWorkout.workoutType);
-            //console.log(currentWorkout.workoutDate[1])
-            let displayDate = getDisplayDate(currentWorkout.workoutDate[0],
-                (currentWorkout.workoutDate[1] - 1), currentWorkout.workoutDate[2]);
-
-            let workoutCard = document.getElementById(workoutnumber);
-            workoutCard.innerHTML = `     
-            <div class="workoutTypeAndDate">
-                <p class="type">${workoutType}</p>
-                <p class="date">${displayDate}</p> 
-            </div>`;
+            if (currentWorkout.workoutType == 'WORKOUT_A') {
+                displayWorkoutA(currentWorkout, workoutNumber);
+            } else {
+                displayWorkoutB(currentWorkout, workoutNumber);
+            }
         }
     }
 }
 
+/**
+ * Helper function to display date in worded format.
+ * @param {*} year 
+ * @param {*} month 
+ * @param {*} day 
+ * @returns worded format
+ */
 function getDisplayDate(year, month, day) {
         const workoutDate = new Date(year, month, day);
         const dayOfWeekName = workoutDate.toLocaleDateString('default', {
@@ -66,15 +62,85 @@ function getDisplayDate(year, month, day) {
         return `${dayOfWeekName}, ${monthName} ${day}`
 }
 
-function workoutTypeDisplay(workoutType) {
-    let displayWorkoutType;
-    if (workoutType == 'WORKOUT_A') {
-        displayWorkoutType = 'Workout A';
-    } else {
-        displayWorkoutType = 'Workout B';
-    }
-    return displayWorkoutType;
-    
+/**
+ * Helper function to display Workout A.
+ * @param {*} workoutA 
+ * @param {*} workoutNumber 
+ */
+function displayWorkoutA(workoutA, workoutNumber) {
+    //console.log(currentWorkout.workoutDate[1])
+    let displayDate = getDisplayDate(workoutA.workoutDate[0],
+        (workoutA.workoutDate[1] - 1), workoutA.workoutDate[2]);
+
+    let workoutCard = document.getElementById(workoutNumber);
+    workoutCard.innerHTML = `     
+    <div class="workoutTypeAndDate">
+        <p class="type">Workout A</p>
+        <p class="date">${displayDate}</p> 
+    </div>
+    <div class="exercise">
+        <h3>Squat</h3>
+        <div class="weight">
+            <h3>5x5</h3>
+            <h3 class="setWeight">${workoutA.squatWeight}lbs</h3>
+        </div>
+    </div>
+    <hr>
+    <div class="exercise">
+        <h3>Bench Press</h3>
+        <div class="weight">
+            <h3>5x5</h3>
+            <h3 class="setWeight">${workoutA.benchPressWeight}lbs</h3>
+        </div>
+    </div>
+    <hr>
+    <div class="exercise">
+        <h3>Barbell Row</h3>
+        <div class="weight">
+            <h3>5x5</h3>
+            <h3 class="setWeight">${workoutA.barbellRowWeight}lbs</h3>
+        </div>
+    </div>`
+}
+
+/**
+ * Helper function to display Workout B.
+ * @param {*} workoutA 
+ * @param {*} workoutNumber 
+ */
+function displayWorkoutB(workoutB, workoutNumber) {
+    let displayDate = getDisplayDate(workoutB.workoutDate[0],
+        (workoutB.workoutDate[1] - 1), workoutB.workoutDate[2]);
+
+    let workoutCard = document.getElementById(workoutNumber);
+    workoutCard.innerHTML = `     
+    <div class="workoutTypeAndDate">
+        <p class="type">Workout B</p>
+        <p class="date">${displayDate}</p> 
+    </div>
+    <div class="exercise">
+        <h3>Squat</h3>
+        <div class="weight">
+            <h3>5x5</h3>
+            <h3 class="setWeight">${workoutB.squatWeight}lbs</h3>
+        </div>
+    </div>
+    <hr>
+    <div class="exercise">
+        <h3>Overhead Press</h3>
+        <div class="weight">
+            <h3>5x5</h3>
+            <h3 class="setWeight">${workoutB.overheadPressWeight}lbs</h3>
+        </div>
+    </div>
+    <hr>
+    <div class="exercise">
+        <h3>Deadlift</h3>
+        <div class="weight">
+            <h3>1x5</h3>
+            <h3 class="setWeight">${workoutB.deadliftWeight}lbs</h3>
+        </div>
+    </div>`
 }
 
 /**
