@@ -9,6 +9,7 @@ import com.nashss.se.fivelifts.models.WorkoutModel;
 
 import org.junit.jupiter.api.Test;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,8 +49,8 @@ public class ModelConverterTest {
         workout.setEmail("email");
         workout.setWorkoutDate(LocalDate.now());
         workout.setWorkoutType(WorkoutType.WORKOUT_A);
-        workout.setTimeStarted(new Date());
-        workout.setTimeEnded(new Date());
+        workout.setTimeStarted(Timestamp.valueOf(LocalDate.now().atTime(12, 30)));
+        workout.setTimeEnded(Timestamp.valueOf(LocalDate.now().atTime(13, 30)));
         workout.setSquatWeight(225);
         workout.setBenchPressWeight(175);
         workout.setDeadliftWeight(275);
@@ -60,6 +61,7 @@ public class ModelConverterTest {
         workout.setOverheadPressReps(new ArrayList<>());
         workout.setBarbellRowReps(new ArrayList<>());
         workout.setDeadliftReps(new ArrayList<>());
+        workout.setBodyWeight(170);
 
         WorkoutModel workoutModel = modelConverter.toWorkoutModel(workout);
         assertEquals(workout.getEmail(), workoutModel.getEmail());
@@ -77,6 +79,7 @@ public class ModelConverterTest {
         assertEquals(workout.getOverheadPressReps(), workoutModel.getOverheadPressReps());
         assertEquals(workout.getBarbellRowReps(), workoutModel.getBarbellRowReps());
         assertEquals(workout.getDeadliftReps(), workoutModel.getDeadliftReps());
+        assertEquals(workout.getBodyWeight(), workoutModel.getBodyWeight());
     }
 
 }

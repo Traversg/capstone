@@ -51,6 +51,7 @@ public class ModelConverter {
                 .withOverheadPressReps(workout.getOverheadPressReps())
                 .withBarbellRowReps(workout.getBarbellRowReps())
                 .withDeadliftReps(workout.getDeadliftReps())
+                .withBodyWeight(workout.getBodyWeight())
                 .build();
     }
 }

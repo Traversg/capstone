@@ -1,6 +1,6 @@
 package com.nashss.se.fivelifts.dynamodb.models;
 
-import com.nashss.se.fivelifts.converters.DateConverter;
+import com.nashss.se.fivelifts.converters.TimestampConverter;
 import com.nashss.se.fivelifts.converters.LocalDateConverter;
 import com.nashss.se.fivelifts.converters.WorkoutTypeConverter;
 import com.nashss.se.fivelifts.enums.WorkoutType;
@@ -11,8 +11,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,8 +23,8 @@ public class Workout {
     private String email;
     private LocalDate workoutDate;
     private WorkoutType workoutType;
-    private Date timeStarted;
-    private Date timeEnded;
+    private Timestamp timeStarted;
+    private Timestamp timeEnded;
     private int squatWeight;
     private int benchPressWeight;
     private int overheadPressWeight;
@@ -35,6 +35,8 @@ public class Workout {
     private List<Integer> overheadPressReps;
     private List<Integer> barbellRowReps;
     private List<Integer> deadliftReps;
+
+    private int bodyWeight;
 
     @DynamoDBHashKey(attributeName = "email")
     public String getEmail() {
@@ -65,23 +67,23 @@ public class Workout {
         this.workoutType = workoutType;
     }
 
-    @DynamoDBTypeConverted(converter = DateConverter.class)
+    @DynamoDBTypeConverted(converter = TimestampConverter.class)
     @DynamoDBAttribute(attributeName = "timeStarted")
-    public Date getTimeStarted() {
+    public Timestamp getTimeStarted() {
         return timeStarted;
     }
 
-    public void setTimeStarted(Date timeStarted) {
+    public void setTimeStarted(Timestamp timeStarted) {
         this.timeStarted = timeStarted;
     }
 
-    @DynamoDBTypeConverted(converter = DateConverter.class)
+    @DynamoDBTypeConverted(converter = TimestampConverter.class)
     @DynamoDBAttribute(attributeName = "timeEnded")
-    public Date getTimeEnded() {
+    public Timestamp getTimeEnded() {
         return timeEnded;
     }
 
-    public void setTimeEnded(Date timeEnded) {
+    public void setTimeEnded(Timestamp timeEnded) {
         this.timeEnded = timeEnded;
     }
 
@@ -173,5 +175,14 @@ public class Workout {
 
     public void setDeadliftReps(List<Integer> deadliftReps) {
         this.deadliftReps = deadliftReps;
+    }
+
+    @DynamoDBAttribute(attributeName = "bodyWeight")
+    public int getBodyWeight() {
+        return bodyWeight;
+    }
+
+    public void setBodyWeight(int bodyWeight) {
+        this.bodyWeight = bodyWeight;
     }
 }

@@ -26,11 +26,13 @@ public class WorkoutModel {
     private final List<Integer> barbellRowReps;
     private final List<Integer> deadliftReps;
 
+    private final int bodyWeight;
+
     private WorkoutModel(String email, LocalDate workoutDate, WorkoutType workoutType, Date timeStarted,
                          Date timeEnded, int squatWeight, int benchPressWeight, int overheadPressWeight,
                          int barbellRowWeight, int deadliftWeight, List<Integer> squatReps,
                          List<Integer> benchPressReps, List<Integer> overheadPressReps, List<Integer> barbellRowReps,
-                         List<Integer> deadliftReps) {
+                         List<Integer> deadliftReps, int bodyWeight) {
         this.email = email;
         this.workoutDate = workoutDate;
         this.workoutType = workoutType;
@@ -46,6 +48,7 @@ public class WorkoutModel {
         this.overheadPressReps = overheadPressReps;
         this.deadliftReps = deadliftReps;
         this.barbellRowReps = barbellRowReps;
+        this.bodyWeight = bodyWeight;
     }
 
     public String getEmail() {
@@ -108,6 +111,10 @@ public class WorkoutModel {
         return deadliftReps;
     }
 
+    public int getBodyWeight() {
+        return bodyWeight;
+    }
+
     //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
         return new Builder();
@@ -129,6 +136,7 @@ public class WorkoutModel {
         private List<Integer> overheadPressReps;
         private List<Integer> barbellRowReps;
         private List<Integer> deadliftReps;
+        private int bodyWeight;
 
         public Builder withEmail(String email) {
             this.email = email;
@@ -205,10 +213,15 @@ public class WorkoutModel {
             return this;
         }
 
+        public Builder withBodyWeight(int bodyWeight) {
+            this.bodyWeight = bodyWeight;
+            return this;
+        }
+
         public WorkoutModel build() {
             return new WorkoutModel(email, date, workoutType, timeStarted, timeEnded, squatWeight,
                     benchPressWeight, overheadPressWeight, barbellRowWeight, deadliftWeight, squatReps, benchPressReps, overheadPressReps,
-                    barbellRowReps, deadliftReps);
+                    barbellRowReps, deadliftReps, bodyWeight);
         }
     }
 }
