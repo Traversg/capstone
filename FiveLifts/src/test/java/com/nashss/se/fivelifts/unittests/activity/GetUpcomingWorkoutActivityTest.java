@@ -41,6 +41,7 @@ public class GetUpcomingWorkoutActivityTest {
 
     @Test
     public void handleRequest_withMostRecentWorkoutTypeB_returnsListOfABAWorkoutModel() {
+        // GIVEN
         String testEmail = "test@email.com";
 
         Workout mostRecentWorkout = new Workout();
@@ -112,6 +113,7 @@ public class GetUpcomingWorkoutActivityTest {
 
     @Test
     void handleRequest_withNull_returnsABAWorkoutModel() {
+        // GIVEN
         String testEmail = "test@email.com";
 
         User user = new User();
