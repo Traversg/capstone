@@ -15,7 +15,7 @@ export default class FiveLiftsClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'createProfile', 'getUpcomingWorkouts'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'createProfile', 'getUpcomingWorkouts', 'getIsCurrentUser'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -122,6 +122,24 @@ export default class FiveLiftsClient extends BindingClass {
         }
     }
 
+    /**
+     * Gets current or new status for the user.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns Status of user.
+     */
+    async getIsCurrentUser() {
+        try {
+            const token = await this.getTokenOrThrow("Only authenicated users can access user information.");
+            const response = await this.axiosClient.get('users', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.isCurrentUser;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
 
 
     /**

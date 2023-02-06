@@ -63,7 +63,7 @@ class StartingWeights extends BindingClass {
     redirectToWorkout() {
         const profile = this.dataStore.get('profile');
         if (profile != null) {
-            window.alert("Redirect to workout page.")
+            window.location.href = `/upcomingWorkouts.html`;
         }
     }
 }

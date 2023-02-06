@@ -4,7 +4,7 @@ import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
 /**
- * Logic needed for the starting weights page of the website.
+ * Logic needed for the upcoming workouts page of the website.
  */
 class UpcomingWorkouts extends BindingClass {
     constructor() {
