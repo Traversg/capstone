@@ -168,3 +168,15 @@ hr {
 .workout1 {
     border-left: #ff0024 solid 2px;
 }
+
+/* REDIRECT PAGE */
+
+.loading {
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+}
+
+.loadingBox {
+    margin: 250px;
+}

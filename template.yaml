@@ -81,7 +81,7 @@ Resources:
         - !If
           - DeployCloudFront
           - !Sub "https://${CloudfrontDistribution.DomainName}"
-          - http://localhost:8000
+          - http://localhost:8000/redirect.html
       LogoutURLs:
         - !If
           - DeployCloudFront
@@ -258,7 +258,7 @@ Resources:
             Path: /workouts
             Method: get
 
-  GetIsCurrentLambda:
+  GetIsCurrentUserLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn

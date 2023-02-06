@@ -5,6 +5,7 @@ import com.nashss.se.fivelifts.activity.results.GetIsCurrentUserResult;
 import com.nashss.se.fivelifts.dynamodb.UserDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.exceptions.UserNotFoundException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

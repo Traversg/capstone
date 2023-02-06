@@ -25,7 +25,8 @@ module.exports = {
   entry: {
     index: path.resolve(__dirname, 'src', 'pages', 'index.js'),
     startingWeights : path.resolve(__dirname, 'src', 'pages', 'startingWeights.js'),
-    upcomingWorkouts : path.resolve(__dirname, 'src', 'pages', 'upcomingWorkouts.js')
+    upcomingWorkouts : path.resolve(__dirname, 'src', 'pages', 'upcomingWorkouts.js'),
+    redirect: path.resolve(__dirname, 'src', 'pages', 'redirect.js')
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),
