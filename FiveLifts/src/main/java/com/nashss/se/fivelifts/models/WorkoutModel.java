@@ -2,8 +2,8 @@ package com.nashss.se.fivelifts.models;
 
 import com.nashss.se.fivelifts.enums.WorkoutType;
 
+import java.time.Duration;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,8 +13,7 @@ public class WorkoutModel {
     private final String email;
     private final LocalDate workoutDate;
     private final WorkoutType workoutType;
-    private final Date timeStarted;
-    private final Date timeEnded;
+    private final Duration totalWorkoutTime;
     private final int squatWeight;
     private final int benchPressWeight;
     private final int overheadPressWeight;
@@ -26,18 +25,17 @@ public class WorkoutModel {
     private final List<Integer> barbellRowReps;
     private final List<Integer> deadliftReps;
 
-    private final int bodyWeight;
+    private final double bodyWeight;
 
-    private WorkoutModel(String email, LocalDate workoutDate, WorkoutType workoutType, Date timeStarted,
-                         Date timeEnded, int squatWeight, int benchPressWeight, int overheadPressWeight,
+    private WorkoutModel(String email, LocalDate workoutDate, WorkoutType workoutType, Duration totalWorkoutTime,
+                         int squatWeight, int benchPressWeight, int overheadPressWeight,
                          int barbellRowWeight, int deadliftWeight, List<Integer> squatReps,
                          List<Integer> benchPressReps, List<Integer> overheadPressReps, List<Integer> barbellRowReps,
-                         List<Integer> deadliftReps, int bodyWeight) {
+                         List<Integer> deadliftReps, double bodyWeight) {
         this.email = email;
         this.workoutDate = workoutDate;
         this.workoutType = workoutType;
-        this.timeStarted = timeStarted;
-        this.timeEnded = timeEnded;
+        this.totalWorkoutTime = totalWorkoutTime;
         this.squatWeight = squatWeight;
         this.benchPressWeight = benchPressWeight;
         this.overheadPressWeight = overheadPressWeight;
@@ -63,12 +61,8 @@ public class WorkoutModel {
         return workoutType;
     }
 
-    public Date getTimeStarted() {
-        return timeStarted;
-    }
-
-    public Date getTimeEnded() {
-        return timeEnded;
+    public Duration getTotalWorkoutTime() {
+        return totalWorkoutTime;
     }
 
     public int getSquatWeight() {
@@ -111,7 +105,7 @@ public class WorkoutModel {
         return deadliftReps;
     }
 
-    public int getBodyWeight() {
+    public double getBodyWeight() {
         return bodyWeight;
     }
 
@@ -124,8 +118,7 @@ public class WorkoutModel {
         private String email;
         private LocalDate date;
         private WorkoutType workoutType;
-        private Date timeStarted;
-        private Date timeEnded;
+        private Duration totalWorkoutTime;
         private int squatWeight;
         private int benchPressWeight;
         private int overheadPressWeight;
@@ -136,7 +129,7 @@ public class WorkoutModel {
         private List<Integer> overheadPressReps;
         private List<Integer> barbellRowReps;
         private List<Integer> deadliftReps;
-        private int bodyWeight;
+        private double bodyWeight;
 
         public Builder withEmail(String email) {
             this.email = email;
@@ -153,13 +146,8 @@ public class WorkoutModel {
             return this;
         }
 
-        public Builder withTimeStarted(Date timeStarted) {
-            this.timeStarted = timeStarted;
-            return this;
-        }
-
-        public Builder withTimeEnded(Date timeEnded) {
-            this.timeEnded = timeEnded;
+        public Builder withTotalWorkoutTime(Duration totalWorkoutTime) {
+            this.totalWorkoutTime = totalWorkoutTime;
             return this;
         }
 
@@ -213,13 +201,13 @@ public class WorkoutModel {
             return this;
         }
 
-        public Builder withBodyWeight(int bodyWeight) {
+        public Builder withBodyWeight(double bodyWeight) {
             this.bodyWeight = bodyWeight;
             return this;
         }
 
         public WorkoutModel build() {
-            return new WorkoutModel(email, date, workoutType, timeStarted, timeEnded, squatWeight,
+            return new WorkoutModel(email, date, workoutType, totalWorkoutTime, squatWeight,
                     benchPressWeight, overheadPressWeight, barbellRowWeight, deadliftWeight, squatReps, benchPressReps, overheadPressReps,
                     barbellRowReps, deadliftReps, bodyWeight);
         }

@@ -1,9 +1,10 @@
 package com.nashss.se.fivelifts.lambda;
 
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.nashss.se.fivelifts.activity.requests.AddWorkoutRequest;
 import com.nashss.se.fivelifts.activity.results.AddWorkoutResult;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 /**
  * Takes a AddWorkoutRequest and returns a LambdaResponse.

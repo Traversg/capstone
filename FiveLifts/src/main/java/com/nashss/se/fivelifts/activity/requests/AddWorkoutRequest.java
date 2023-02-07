@@ -27,13 +27,13 @@ public class AddWorkoutRequest {
     private List<Integer> overheadPressReps;
     private List<Integer> barbellRowReps;
     private List<Integer> deadliftReps;
-    private int bodyWeight;
+    private double bodyWeight;
 
     private AddWorkoutRequest(String email, String workoutDate, String workoutType,
               String timeStarted, String timeEnded, int squatWeight, int benchPressWeight,
               int overheadPressWeight, int barbellRowWeight, int deadliftWeight, List<Integer> squatReps,
               List<Integer> benchPressReps, List<Integer> overheadPressReps, List<Integer> barbellRowReps,
-              List<Integer> deadliftReps, int bodyWeight) {
+              List<Integer> deadliftReps, double bodyWeight) {
         this.email = email;
         this.workoutDate = workoutDate;
         this.workoutType = workoutType;
@@ -41,7 +41,7 @@ public class AddWorkoutRequest {
         this.timeEnded = timeEnded;
         this.squatWeight = squatWeight;
         this.benchPressWeight = benchPressWeight;
-        this.overheadPressWeight =overheadPressWeight;
+        this.overheadPressWeight = overheadPressWeight;
         this.barbellRowWeight = barbellRowWeight;
         this.deadliftWeight = deadliftWeight;
         this.squatReps = squatReps;
@@ -112,7 +112,7 @@ public class AddWorkoutRequest {
         return copyToList(deadliftReps);
     }
 
-    public int getBodyWeight() {
+    public double getBodyWeight() {
         return bodyWeight;
     }
 
@@ -160,7 +160,7 @@ public class AddWorkoutRequest {
         private List<Integer> overheadPressReps;
         private List<Integer> barbellRowReps;
         private List<Integer> deadliftReps;
-        private int bodyWeight;
+        private double bodyWeight;
 
         public Builder withEmail(String email) {
             this.email = email;
@@ -237,7 +237,7 @@ public class AddWorkoutRequest {
             return this;
         }
 
-        public Builder withBodyWeight(int bodyWeight) {
+        public Builder withBodyWeight(double bodyWeight) {
             this.bodyWeight = bodyWeight;
             return this;
         }

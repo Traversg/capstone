@@ -10,13 +10,15 @@ import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import com.nashss.se.fivelifts.enums.WorkoutType;
 import com.nashss.se.fivelifts.models.WorkoutModel;
 import com.nashss.se.fivelifts.utils.Increments;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.inject.Inject;
-import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * Implementation of the AddWorkoutActivity for the FiveLifts' AddWorkout API.
@@ -58,12 +60,14 @@ public class AddWorkoutActivity {
         WorkoutType workoutType = (addWorkoutRequest.getWorkoutType().equals("Workout A")) ?
                 WorkoutType.WORKOUT_A : WorkoutType.WORKOUT_B;
 
+        LocalDateTime timeStarted = LocalDateTime.parse(addWorkoutRequest.getTimeStarted());
+        LocalDateTime timeEnded = LocalDateTime.parse(addWorkoutRequest.getTimeEnded());
+
         Workout workout = new Workout();
         workout.setEmail(addWorkoutRequest.getEmail());
         workout.setWorkoutDate(LocalDate.parse(addWorkoutRequest.getWorkoutDate()));
         workout.setWorkoutType(workoutType);
-        workout.setTimeStarted(Timestamp.valueOf(addWorkoutRequest.getTimeStarted()));
-        workout.setTimeEnded(Timestamp.valueOf(addWorkoutRequest.getTimeEnded()));
+        workout.setTotalWorkoutTime(Duration.between(timeStarted, timeEnded));
         workout.setSquatWeight(addWorkoutRequest.getSquatWeight());
         workout.setBenchPressWeight(addWorkoutRequest.getBenchPressWeight());
         workout.setOverheadPressWeight(addWorkoutRequest.getOverheadPressWeight());
@@ -76,13 +80,13 @@ public class AddWorkoutActivity {
         workout.setDeadliftReps(addWorkoutRequest.getDeadliftReps());
         workout.setBodyWeight(addWorkoutRequest.getBodyWeight());
 
-        User user = new User();
+        User user = userDao.getUser(addWorkoutRequest.getEmail());
         user.setBodyWeight(addWorkoutRequest.getBodyWeight());
         List<Integer> squatReps = addWorkoutRequest.getSquatReps();
         if (!squatReps.isEmpty()) {
-            if ((canIncrement(getReps(squatReps)))) {
-                user.setSquat(addWorkoutRequest.getSquatWeight()
-                        + Increments.squat());
+            if (canIncrement(getReps(squatReps))) {
+                user.setSquat(addWorkoutRequest.getSquatWeight() +
+                        Increments.squat());
             } else {
                 user.setSquat(addWorkoutRequest.getSquatWeight());
             }
@@ -97,7 +101,7 @@ public class AddWorkoutActivity {
             }
         }
 
-        List<Integer> overheadPressReps = addWorkoutRequest.getBenchPressReps();
+        List<Integer> overheadPressReps = addWorkoutRequest.getOverheadPressReps();
         if (!overheadPressReps.isEmpty()) {
             if (canIncrement(getReps(overheadPressReps))) {
                 user.setOverheadPress(addWorkoutRequest.getOverheadPressWeight() + Increments.overheadPress());
