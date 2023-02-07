@@ -1,4 +1,5 @@
 package com.nashss.se.fivelifts.dependency;
+import com.nashss.se.fivelifts.activity.AddWorkoutActivity;
 import com.nashss.se.fivelifts.activity.CreateProfileActivity;
 
 import com.nashss.se.fivelifts.activity.GetIsCurrentUserActivity;
@@ -32,4 +33,10 @@ public interface ServiceComponent {
      * @return GetUpcomingWorkoutsActivity
      */
     GetIsCurrentUserActivity provideGetIsCurrentUserActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return GetUpcomingWorkoutsActivity
+     */
+    AddWorkoutActivity provideAddWorkoutActivity();
 }

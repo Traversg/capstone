@@ -8,7 +8,6 @@ import com.nashss.se.fivelifts.dynamodb.WorkoutDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import com.nashss.se.fivelifts.enums.WorkoutType;
-import com.nashss.se.fivelifts.models.UserModel;
 import com.nashss.se.fivelifts.models.WorkoutModel;
 import com.nashss.se.fivelifts.utils.Increments;
 import org.apache.logging.log4j.LogManager;
@@ -56,7 +55,7 @@ public class AddWorkoutActivity {
     public AddWorkoutResult handleRequest(final AddWorkoutRequest addWorkoutRequest) {
         log.info("Received AddWorkoutRequest {}", addWorkoutRequest);
 
-        WorkoutType workoutType = (addWorkoutRequest.getWorkoutType().equals("A")) ?
+        WorkoutType workoutType = (addWorkoutRequest.getWorkoutType().equals("Workout A")) ?
                 WorkoutType.WORKOUT_A : WorkoutType.WORKOUT_B;
 
         Workout workout = new Workout();
