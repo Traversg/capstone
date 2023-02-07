@@ -56,10 +56,19 @@ public class GetUpcomingWorkoutsActivity {
         log.info("Received GetUpcomingWorkoutsRequest {}", getUpcomingWorkoutsRequest);
         Optional<Workout> mostRecentWorkoutOptional =
                 workoutDao.getMostRecentWorkout(getUpcomingWorkoutsRequest.getEmail());
+        List<WorkoutModel> upcomingWorkouts = new ArrayList<>();
 
-        List<WorkoutModel> upcomingWorkouts = mostRecentWorkoutOptional.map(
+        if (getUpcomingWorkoutsRequest.isCurrentWorkout() != null &&
+                getUpcomingWorkoutsRequest.isCurrentWorkout().equals("true")) {
+            if (mostRecentWorkoutOptional.isPresent()) {
+                Workout workout = mostRecentWorkoutOptional.get();
+                upcomingWorkouts.add(createUpcomingComingWorkoutsForCurrentUser(workout).get(0));
+            }
+        } else {
+            upcomingWorkouts = mostRecentWorkoutOptional.map(
                 this::createUpcomingComingWorkoutsForCurrentUser).orElseGet(
-                    () -> createUpcomingWorkoutsForNewUser(getUpcomingWorkoutsRequest));
+                () -> createUpcomingWorkoutsForNewUser(getUpcomingWorkoutsRequest));
+        }
 
         return GetUpcomingWorkoutsResult.builder()
                 .withUpcomingWorkouts(upcomingWorkouts)
