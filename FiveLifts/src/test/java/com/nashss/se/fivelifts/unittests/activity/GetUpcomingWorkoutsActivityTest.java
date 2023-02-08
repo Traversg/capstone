@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-public class GetUpcomingWorkoutActivityTest {
+public class GetUpcomingWorkoutsActivityTest {
     @Mock
     private UserDao userDao;
 
@@ -47,13 +47,16 @@ public class GetUpcomingWorkoutActivityTest {
         Workout mostRecentWorkout = new Workout();
         mostRecentWorkout.setEmail(testEmail);
         mostRecentWorkout.setWorkoutType(WorkoutType.WORKOUT_B);
-        mostRecentWorkout.setSquatWeight(225);
-        mostRecentWorkout.setBenchPressWeight(175);
-        mostRecentWorkout.setBarbellRowWeight(150);
-        mostRecentWorkout.setDeadliftWeight(275);
-        mostRecentWorkout.setOverheadPressWeight(125);
         mostRecentWorkout.setWorkoutDate(LocalDate.of(2023, Month.JANUARY, 1));
         when(workoutDao.getMostRecentWorkout(testEmail)).thenReturn(Optional.of(mostRecentWorkout));
+
+        User currentUser = new User();
+        currentUser.setSquat(225);
+        currentUser.setBenchPress(175);
+        currentUser.setBarbellRow(150);
+        currentUser.setDeadlift(275);
+        currentUser.setOverheadPress(125);
+        when(userDao.getUser(testEmail)).thenReturn(currentUser);
 
         Workout upcomingWorkout1 = new Workout();
         upcomingWorkout1.setWorkoutDate(LocalDate.now());
@@ -189,13 +192,16 @@ public class GetUpcomingWorkoutActivityTest {
         Workout mostRecentWorkout = new Workout();
         mostRecentWorkout.setEmail(testEmail);
         mostRecentWorkout.setWorkoutType(WorkoutType.WORKOUT_B);
-        mostRecentWorkout.setSquatWeight(225);
-        mostRecentWorkout.setBenchPressWeight(175);
-        mostRecentWorkout.setBarbellRowWeight(150);
-        mostRecentWorkout.setDeadliftWeight(275);
-        mostRecentWorkout.setOverheadPressWeight(125);
         mostRecentWorkout.setWorkoutDate(LocalDate.of(2023, Month.JANUARY, 1));
         when(workoutDao.getMostRecentWorkout(testEmail)).thenReturn(Optional.of(mostRecentWorkout));
+
+        User currentUser = new User();
+        currentUser.setSquat(225);
+        currentUser.setBenchPress(175);
+        currentUser.setBarbellRow(150);
+        currentUser.setDeadlift(275);
+        currentUser.setOverheadPress(125);
+        when(userDao.getUser(testEmail)).thenReturn(currentUser);
 
         Workout upcomingWorkout1 = new Workout();
         upcomingWorkout1.setWorkoutDate(LocalDate.now());
@@ -204,22 +210,6 @@ public class GetUpcomingWorkoutActivityTest {
         upcomingWorkout1.setBenchPressWeight(180);
         upcomingWorkout1.setBarbellRowWeight(155);
         WorkoutModel upcomingWorkoutModel1 = new ModelConverter().toWorkoutModel(upcomingWorkout1);
-
-/*        Workout upcomingWorkout2 = new Workout();
-        upcomingWorkout2.setWorkoutDate(upcomingWorkout1.getWorkoutDate().plusDays(2));
-        upcomingWorkout2.setWorkoutType(WorkoutType.WORKOUT_B);
-        upcomingWorkout2.setSquatWeight(235);
-        upcomingWorkout2.setOverheadPressWeight(130);
-        upcomingWorkout2.setDeadliftWeight(285);
-        WorkoutModel upcomingWorkoutModel2 = new ModelConverter().toWorkoutModel(upcomingWorkout2);
-
-        Workout upcomingWorkout3 = new Workout();
-        upcomingWorkout3.setWorkoutDate(upcomingWorkout2.getWorkoutDate().plusDays(2));
-        upcomingWorkout3.setWorkoutType(WorkoutType.WORKOUT_A);
-        upcomingWorkout3.setSquatWeight(240);
-        upcomingWorkout3.setBenchPressWeight(185);
-        upcomingWorkout3.setBarbellRowWeight(160);
-        WorkoutModel upcomingWorkoutModel3 = new ModelConverter().toWorkoutModel(upcomingWorkout3);*/
 
         List<WorkoutModel> upcomingWorkouts = new ArrayList<>();
         upcomingWorkouts.add(upcomingWorkoutModel1);

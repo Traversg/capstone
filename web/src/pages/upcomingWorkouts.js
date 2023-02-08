@@ -27,7 +27,6 @@ class UpcomingWorkouts extends BindingClass {
      * Method to run when mounted. Call the FiveLiftsService to get the
      * upcoming workouts.
      */
-
     async displayUpcomingWorkouts() {
         const upcomingWorkouts = await this.client.getUpcomingWorkouts();
 

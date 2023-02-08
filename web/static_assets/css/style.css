@@ -180,3 +180,10 @@ hr {
 .loadingBox {
     margin: 250px;
 }
+
+/* CURRENT WORKOUT PAGE */
+
+h3 {
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+}

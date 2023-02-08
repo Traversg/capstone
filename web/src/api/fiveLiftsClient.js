@@ -15,7 +15,8 @@ export default class FiveLiftsClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'createProfile', 'getUpcomingWorkouts', 'getIsCurrentUser'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'createProfile', 
+        'getUpcomingWorkouts', 'getIsCurrentUser', 'getCurrentWorkout'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -112,6 +113,20 @@ export default class FiveLiftsClient extends BindingClass {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve workouts.");
             const response = await this.axiosClient.get('workouts', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.upcomingWorkouts;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    async getCurrentWorkout() {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can retrieve workouts.");
+            const response = await this.axiosClient.get('workouts?currentWorkout=true', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
