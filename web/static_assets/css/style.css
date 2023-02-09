@@ -29,7 +29,8 @@ button {
     border-radius: 4px;
     font-size: 30px;
     font-family: 'Anton', sans-serif;
-    width: 500px;
+    width: 550px;
+    margin-top: 10px;
 }
 
 .button-group {
@@ -43,7 +44,26 @@ button {
 .main {
     display: flex;
     justify-content: center;
-    margin-top: 250px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.description {
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 50px;
+}
+.description a {
+    color: #ffffff;
+}
+
+.descriptionCard {
+    margin-right: 100px;
+    margin-left: 100px;
+    background-color: #1c1c1e;
+    padding: 25px 50px;
+    border-radius: 8px;
+    width: 450px;
 }
 
 /* STARTING WEIGHTS PAGE */
@@ -52,6 +72,12 @@ button {
     background-color: #1c1c1e;
     border-radius: 8px;
     width: 500px;
+}
+
+.welcome {
+    color: #ffffff;
+    font-family: 'Anton', sans-serif;
+    font-size: 48px;
 }
 
 .starting-weights-card h3 {
