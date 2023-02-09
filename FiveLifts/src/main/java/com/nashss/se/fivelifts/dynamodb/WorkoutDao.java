@@ -1,6 +1,7 @@
 package com.nashss.se.fivelifts.dynamodb;
 
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
+import com.nashss.se.fivelifts.exceptions.WorkoutNotFoundException;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -69,7 +70,15 @@ public class WorkoutDao {
                 .withExpressionAttributeValues(valueMap)
                 .withScanIndexForward(false)
                 .withLimit(20);
-        return dynamoDbMapper.query(Workout.class, queryExpression);
+        PaginatedQueryList<Workout> workoutHistory = dynamoDbMapper.query(Workout.class, queryExpression);
+
+        if (workoutHistory.isEmpty()) {
+            throw new WorkoutNotFoundException(String.format(
+                    "Could not find workouts associated with email '%s'", email
+            ));
+        }
+
+        return workoutHistory;
     }
 
     /**

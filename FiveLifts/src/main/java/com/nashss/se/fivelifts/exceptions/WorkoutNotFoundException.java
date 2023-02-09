@@ -4,14 +4,13 @@ package com.nashss.se.fivelifts.exceptions;
  * Exception to throw when a given email is not found
  * in the database.
  */
-public class UserNotFoundException extends RuntimeException {
-
-    private static final long serialVersionUID = -1829396159250159492L;
+public class WorkoutNotFoundException extends RuntimeException {
+    private static final long serialVersionUID = -2362970293434662394L;
 
     /**
      * Exception with no message or cause.
      */
-    public UserNotFoundException() {
+    public WorkoutNotFoundException() {
         super();
     }
 
@@ -19,7 +18,7 @@ public class UserNotFoundException extends RuntimeException {
      * Exception with a message, but no cause.
      * @param message A descriptive message for this exception.
      */
-    public UserNotFoundException(String message) {
+    public WorkoutNotFoundException(String message) {
         super(message);
     }
 
@@ -27,7 +26,7 @@ public class UserNotFoundException extends RuntimeException {
      * Exception with no message, but with a cause.
      * @param cause The original throwable resulting in this exception.
      */
-    public UserNotFoundException(Throwable cause) {
+    public WorkoutNotFoundException(Throwable cause) {
         super(cause);
     }
 
@@ -36,7 +35,7 @@ public class UserNotFoundException extends RuntimeException {
      * @param message A descriptive message for this exception.
      * @param cause The original throwable resulting in this exception.
      */
-    public UserNotFoundException(String message, Throwable cause) {
+    public WorkoutNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 }
