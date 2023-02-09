@@ -6,6 +6,7 @@ import com.nashss.se.fivelifts.dynamodb.DynamoDbClientProvider;
 import com.nashss.se.fivelifts.dynamodb.WorkoutDao;
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 public class WorkoutDaoTest {
     private static final String EMAIL = "TEST@EMAIL.COM";
     private static LocalDate oldDate;

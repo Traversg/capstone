@@ -9,19 +9,26 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = GetUpcomingWorkoutsRequest.Builder.class)
 public class GetUpcomingWorkoutsRequest {
     private final String email;
+    private final String currentWorkout;
 
-    private GetUpcomingWorkoutsRequest(String email) {
+    private GetUpcomingWorkoutsRequest(String email, String currentWorkout) {
         this.email = email;
+        this.currentWorkout = currentWorkout;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public String isCurrentWorkout() {
+        return currentWorkout;
+    }
+
     @Override
     public String toString() {
         return "GetUpcomingWorkoutsRequest{" +
                 "email='" + email + '\'' +
+                ", currentWorkout=" + currentWorkout +
                 '}';
     }
 
@@ -33,14 +40,20 @@ public class GetUpcomingWorkoutsRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String email;
+        private String currentWorkout;
 
         public Builder withEmail(String email) {
             this.email = email;
             return this;
         }
 
+        public Builder withCurrentWorkout(String currentWorkout) {
+            this.currentWorkout = currentWorkout;
+            return this;
+        }
+
         public GetUpcomingWorkoutsRequest build() {
-            return new GetUpcomingWorkoutsRequest(email);
+            return new GetUpcomingWorkoutsRequest(email, currentWorkout);
         }
     }
 }

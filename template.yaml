@@ -278,6 +278,25 @@ Resources:
             Path: /users
             Method: get
 
+  AddWorkoutLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: FiveLifts
+      Handler: com.nashss.se.fivelifts.lambda.AddWorkoutLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        FiveLiftsService:
+          Type: Api
+          Properties:
+            Path: /workouts
+            Method: post
   #-----------------------------------------------------
   # DynamoDB Configuration
   #-----------------------------------------------------

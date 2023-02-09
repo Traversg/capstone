@@ -21,7 +21,7 @@ U4. As a lifter, I want to enter how many reps I did for each set, so I can trac
 
 U5. As lifter, I want to be able to keep track of my body weight, so I can see if I'm gaining too much weight or not enough weight.
 
-U6. As a lifter, I want to see my upcoming workouts calculated for the week, so I don't have to caculate each future workout.
+U6. As a lifter, I want to see my upcoming workouts calculated for the week, so I don't have to calculate each future workout.
 
 U7. As a lifter, I want a timer to start after my set, so I know how long to rest between my sets.
 

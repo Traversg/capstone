@@ -39,8 +39,7 @@ public class ModelConverter {
                 .withEmail(workout.getEmail())
                 .withDate(workout.getWorkoutDate())
                 .withWorkoutType(workout.getWorkoutType())
-                .withTimeStarted(workout.getTimeStarted())
-                .withTimeEnded(workout.getTimeEnded())
+                .withTotalWorkoutTime(workout.getTotalWorkoutTime())
                 .withSquatWeight(workout.getSquatWeight())
                 .withBenchPressWeight(workout.getBenchPressWeight())
                 .withOverheadPressWeight(workout.getOverheadPressWeight())
@@ -51,6 +50,7 @@ public class ModelConverter {
                 .withOverheadPressReps(workout.getOverheadPressReps())
                 .withBarbellRowReps(workout.getBarbellRowReps())
                 .withDeadliftReps(workout.getDeadliftReps())
+                .withBodyWeight(workout.getBodyWeight())
                 .build();
     }
 }

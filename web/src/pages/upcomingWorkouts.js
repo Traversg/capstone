@@ -9,7 +9,7 @@ import DataStore from '../util/DataStore';
 class UpcomingWorkouts extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'displayUpcomingWorkouts'], this);
+        this.bindClassMethods(['mount', 'displayUpcomingWorkouts', 'startWorkout'], this);
         this.dataStore = new DataStore();
         this.header = new Header(this.dataStore);
     }
@@ -18,6 +18,7 @@ class UpcomingWorkouts extends BindingClass {
      * Add the header to the page and load the MusicPlaylistClient.
      */
     mount() {
+        document.getElementById('startWorkoutButton').addEventListener('click', this.startWorkout);
         this.header.addHeaderToPage();
         this.client = new FiveLiftsClient();
         this.displayUpcomingWorkouts();
@@ -27,7 +28,6 @@ class UpcomingWorkouts extends BindingClass {
      * Method to run when mounted. Call the FiveLiftsService to get the
      * upcoming workouts.
      */
-
     async displayUpcomingWorkouts() {
         const upcomingWorkouts = await this.client.getUpcomingWorkouts();
 
@@ -40,6 +40,10 @@ class UpcomingWorkouts extends BindingClass {
                 displayWorkoutB(currentWorkout, workoutNumber);
             }
         }
+    }
+
+    async startWorkout() {
+        window.location.href = `/currentWorkout.html`;
     }
 }
 

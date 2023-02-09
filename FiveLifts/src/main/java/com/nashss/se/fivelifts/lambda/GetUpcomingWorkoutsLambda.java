@@ -16,10 +16,17 @@ public class GetUpcomingWorkoutsLambda
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetUpcomingWorkoutsRequest> input, Context context) {
         return super.runActivity(
-            () -> input.fromUserClaims(claims ->
-                GetUpcomingWorkoutsRequest.builder()
-                    .withEmail(claims.get("email"))
-                    .build()),
+            () -> {
+                GetUpcomingWorkoutsRequest queryRequest = input.fromQuery(query ->
+                        GetUpcomingWorkoutsRequest.builder()
+                                .withCurrentWorkout(query.get("currentWorkout"))
+                                .build());
+                return input.fromUserClaims(claims ->
+                        GetUpcomingWorkoutsRequest.builder()
+                                .withEmail(claims.get("email"))
+                                .withCurrentWorkout(queryRequest.isCurrentWorkout())
+                                .build());
+            },
             (request, serviceComponent) ->
                 serviceComponent.provideGetUpcomingWorkoutsActivity().handleRequest(request)
         );

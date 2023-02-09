@@ -1,6 +1,6 @@
 package com.nashss.se.fivelifts.dynamodb.models;
 
-import com.nashss.se.fivelifts.converters.DateConverter;
+import com.nashss.se.fivelifts.converters.DurationConverter;
 import com.nashss.se.fivelifts.converters.LocalDateConverter;
 import com.nashss.se.fivelifts.converters.WorkoutTypeConverter;
 import com.nashss.se.fivelifts.enums.WorkoutType;
@@ -11,8 +11,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 
+import java.time.Duration;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,8 +23,7 @@ public class Workout {
     private String email;
     private LocalDate workoutDate;
     private WorkoutType workoutType;
-    private Date timeStarted;
-    private Date timeEnded;
+    private Duration totalWorkoutTime;
     private int squatWeight;
     private int benchPressWeight;
     private int overheadPressWeight;
@@ -35,6 +34,8 @@ public class Workout {
     private List<Integer> overheadPressReps;
     private List<Integer> barbellRowReps;
     private List<Integer> deadliftReps;
+
+    private double bodyWeight;
 
     @DynamoDBHashKey(attributeName = "email")
     public String getEmail() {
@@ -65,26 +66,15 @@ public class Workout {
         this.workoutType = workoutType;
     }
 
-    @DynamoDBTypeConverted(converter = DateConverter.class)
-    @DynamoDBAttribute(attributeName = "timeStarted")
-    public Date getTimeStarted() {
-        return timeStarted;
+    @DynamoDBTypeConverted(converter = DurationConverter.class)
+    @DynamoDBAttribute(attributeName = "totalWorkoutTime")
+    public Duration getTotalWorkoutTime() {
+        return totalWorkoutTime;
     }
 
-    public void setTimeStarted(Date timeStarted) {
-        this.timeStarted = timeStarted;
+    public void setTotalWorkoutTime(Duration totalWorkoutTime) {
+        this.totalWorkoutTime = totalWorkoutTime;
     }
-
-    @DynamoDBTypeConverted(converter = DateConverter.class)
-    @DynamoDBAttribute(attributeName = "timeEnded")
-    public Date getTimeEnded() {
-        return timeEnded;
-    }
-
-    public void setTimeEnded(Date timeEnded) {
-        this.timeEnded = timeEnded;
-    }
-
     @DynamoDBAttribute(attributeName = "squatWeight")
     public int getSquatWeight() {
         return squatWeight;
@@ -173,5 +163,14 @@ public class Workout {
 
     public void setDeadliftReps(List<Integer> deadliftReps) {
         this.deadliftReps = deadliftReps;
+    }
+
+    @DynamoDBAttribute(attributeName = "bodyWeight")
+    public double getBodyWeight() {
+        return bodyWeight;
+    }
+
+    public void setBodyWeight(double bodyWeight) {
+        this.bodyWeight = bodyWeight;
     }
 }

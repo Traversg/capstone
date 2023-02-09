@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-public class GetUpcomingWorkoutActivityTest {
+public class GetUpcomingWorkoutsActivityTest {
     @Mock
     private UserDao userDao;
 
@@ -47,13 +47,16 @@ public class GetUpcomingWorkoutActivityTest {
         Workout mostRecentWorkout = new Workout();
         mostRecentWorkout.setEmail(testEmail);
         mostRecentWorkout.setWorkoutType(WorkoutType.WORKOUT_B);
-        mostRecentWorkout.setSquatWeight(225);
-        mostRecentWorkout.setBenchPressWeight(175);
-        mostRecentWorkout.setBarbellRowWeight(150);
-        mostRecentWorkout.setDeadliftWeight(275);
-        mostRecentWorkout.setOverheadPressWeight(125);
         mostRecentWorkout.setWorkoutDate(LocalDate.of(2023, Month.JANUARY, 1));
         when(workoutDao.getMostRecentWorkout(testEmail)).thenReturn(Optional.of(mostRecentWorkout));
+
+        User currentUser = new User();
+        currentUser.setSquat(225);
+        currentUser.setBenchPress(175);
+        currentUser.setBarbellRow(150);
+        currentUser.setDeadlift(275);
+        currentUser.setOverheadPress(125);
+        when(userDao.getUser(testEmail)).thenReturn(currentUser);
 
         Workout upcomingWorkout1 = new Workout();
         upcomingWorkout1.setWorkoutDate(LocalDate.now());
@@ -112,7 +115,7 @@ public class GetUpcomingWorkoutActivityTest {
     }
 
     @Test
-    void handleRequest_withNull_returnsABAWorkoutModel() {
+    void handleRequest_withEmptyOptional_returnsABAWorkoutModel() {
         // GIVEN
         String testEmail = "test@email.com";
 
@@ -122,8 +125,8 @@ public class GetUpcomingWorkoutActivityTest {
         user.setBarbellRow(150);
         user.setDeadlift(275);
         user.setOverheadPress(125);
-        when(workoutDao.getMostRecentWorkout(testEmail)).thenReturn(Optional.empty());
         when(userDao.getUser(testEmail)).thenReturn(user);
+        when(workoutDao.getMostRecentWorkout(testEmail)).thenReturn(Optional.empty());
 
         Workout upcomingWorkout1 = new Workout();
         upcomingWorkout1.setWorkoutDate(LocalDate.now());
@@ -179,5 +182,52 @@ public class GetUpcomingWorkoutActivityTest {
         assertEquals(upcomingWorkouts.get(2).getSquatWeight(), resultModels.get(2).getSquatWeight());
         assertEquals(upcomingWorkouts.get(2).getBenchPressWeight(), resultModels.get(2).getBenchPressWeight());
         assertEquals(upcomingWorkouts.get(2).getBarbellRowWeight(), resultModels.get(2).getBarbellRowWeight());
+    }
+
+    @Test
+    void handleRequest_withIsCurrentWorkoutIsTrue_returnFirstWorkout() {
+        // GIVEN
+        String testEmail = "test@email.com";
+
+        Workout mostRecentWorkout = new Workout();
+        mostRecentWorkout.setEmail(testEmail);
+        mostRecentWorkout.setWorkoutType(WorkoutType.WORKOUT_B);
+        mostRecentWorkout.setWorkoutDate(LocalDate.of(2023, Month.JANUARY, 1));
+        when(workoutDao.getMostRecentWorkout(testEmail)).thenReturn(Optional.of(mostRecentWorkout));
+
+        User currentUser = new User();
+        currentUser.setSquat(225);
+        currentUser.setBenchPress(175);
+        currentUser.setBarbellRow(150);
+        currentUser.setDeadlift(275);
+        currentUser.setOverheadPress(125);
+        when(userDao.getUser(testEmail)).thenReturn(currentUser);
+
+        Workout upcomingWorkout1 = new Workout();
+        upcomingWorkout1.setWorkoutDate(LocalDate.now());
+        upcomingWorkout1.setWorkoutType(WorkoutType.WORKOUT_A);
+        upcomingWorkout1.setSquatWeight(230);
+        upcomingWorkout1.setBenchPressWeight(180);
+        upcomingWorkout1.setBarbellRowWeight(155);
+        WorkoutModel upcomingWorkoutModel1 = new ModelConverter().toWorkoutModel(upcomingWorkout1);
+
+        List<WorkoutModel> upcomingWorkouts = new ArrayList<>();
+        upcomingWorkouts.add(upcomingWorkoutModel1);
+
+        GetUpcomingWorkoutsRequest request = GetUpcomingWorkoutsRequest.builder()
+                .withEmail(testEmail)
+                .withCurrentWorkout("true")
+                .build();
+
+        // WHEN
+        GetUpcomingWorkoutsResult result = getUpcomingWorkoutsActivity.handleRequest(request);
+        List<WorkoutModel> resultModels = result.getUpcomingWorkouts();
+
+        // THEN
+        assertEquals(upcomingWorkouts.get(0).getWorkoutDate(), resultModels.get(0).getWorkoutDate());
+        assertEquals(upcomingWorkouts.get(0).getWorkoutType(), resultModels.get(0).getWorkoutType());
+        assertEquals(upcomingWorkouts.get(0).getSquatWeight(), resultModels.get(0).getSquatWeight());
+        assertEquals(upcomingWorkouts.get(0).getBenchPressWeight(), resultModels.get(0).getBenchPressWeight());
+        assertEquals(upcomingWorkouts.get(0).getBarbellRowWeight(), resultModels.get(0).getBarbellRowWeight());
     }
 }

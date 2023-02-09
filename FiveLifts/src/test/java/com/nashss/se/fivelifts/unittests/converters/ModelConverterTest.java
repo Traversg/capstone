@@ -9,6 +9,8 @@ import com.nashss.se.fivelifts.models.WorkoutModel;
 
 import org.junit.jupiter.api.Test;
 
+import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,8 +50,7 @@ public class ModelConverterTest {
         workout.setEmail("email");
         workout.setWorkoutDate(LocalDate.now());
         workout.setWorkoutType(WorkoutType.WORKOUT_A);
-        workout.setTimeStarted(new Date());
-        workout.setTimeEnded(new Date());
+        workout.setTotalWorkoutTime(Duration.ofMinutes(60));
         workout.setSquatWeight(225);
         workout.setBenchPressWeight(175);
         workout.setDeadliftWeight(275);
@@ -60,13 +61,13 @@ public class ModelConverterTest {
         workout.setOverheadPressReps(new ArrayList<>());
         workout.setBarbellRowReps(new ArrayList<>());
         workout.setDeadliftReps(new ArrayList<>());
+        workout.setBodyWeight(170);
 
         WorkoutModel workoutModel = modelConverter.toWorkoutModel(workout);
         assertEquals(workout.getEmail(), workoutModel.getEmail());
         assertEquals(workout.getWorkoutDate(), workoutModel.getWorkoutDate());
         assertEquals(workout.getWorkoutType(), workoutModel.getWorkoutType());
-        assertEquals(workout.getTimeStarted(), workoutModel.getTimeStarted());
-        assertEquals(workout.getTimeEnded(), workoutModel.getTimeEnded());
+        assertEquals(workout.getTotalWorkoutTime(), workoutModel.getTotalWorkoutTime());
         assertEquals(workout.getSquatWeight(), workoutModel.getSquatWeight());
         assertEquals(workout.getBenchPressWeight(), workoutModel.getBenchPressWeight());
         assertEquals(workout.getDeadliftWeight(), workoutModel.getDeadliftWeight());
@@ -77,6 +78,7 @@ public class ModelConverterTest {
         assertEquals(workout.getOverheadPressReps(), workoutModel.getOverheadPressReps());
         assertEquals(workout.getBarbellRowReps(), workoutModel.getBarbellRowReps());
         assertEquals(workout.getDeadliftReps(), workoutModel.getDeadliftReps());
+        assertEquals(workout.getBodyWeight(), workoutModel.getBodyWeight());
     }
 
 }
