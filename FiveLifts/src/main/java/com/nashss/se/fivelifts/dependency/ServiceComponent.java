@@ -1,9 +1,5 @@
 package com.nashss.se.fivelifts.dependency;
-import com.nashss.se.fivelifts.activity.AddWorkoutActivity;
-import com.nashss.se.fivelifts.activity.CreateProfileActivity;
-
-import com.nashss.se.fivelifts.activity.GetIsCurrentUserActivity;
-import com.nashss.se.fivelifts.activity.GetUpcomingWorkoutsActivity;
+import com.nashss.se.fivelifts.activity.*;
 
 import dagger.Component;
 
@@ -30,13 +26,19 @@ public interface ServiceComponent {
 
     /**
      * Provides the relevant activity.
-     * @return GetUpcomingWorkoutsActivity
+     * @return GetIsCurrentUserActivity
      */
     GetIsCurrentUserActivity provideGetIsCurrentUserActivity();
 
     /**
      * Provides the relevant activity.
-     * @return GetUpcomingWorkoutsActivity
+     * @return AddWorkoutActivity
      */
     AddWorkoutActivity provideAddWorkoutActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return GetWorkoutHistoryActivity
+     */
+    GetWorkoutHistoryActivity provideGetWorkoutHistoryActivity();
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 /**
- * Implementation of the GetUpcomingWorkoutsRequest for the FiveLifts' GetUpcomingWorkouts API.
+ * Implementation of the GetWorkoutHistoryRequest for the FiveLifts' GetWorkoutHistory API.
  */
 @JsonDeserialize(builder = GetWorkoutHistoryRequest.Builder.class)
 public class GetWorkoutHistoryRequest {
