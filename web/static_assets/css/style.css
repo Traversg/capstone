@@ -51,6 +51,7 @@ button {
 .starting-weights-card {
     background-color: #1c1c1e;
     border-radius: 8px;
+    width: 500px;
 }
 
 .starting-weights-card h3 {
@@ -79,6 +80,7 @@ input {
     outline: none;
     background-color: #757575;
     color: #ffffff;
+    border-style: solid;
 
 }
 
@@ -114,12 +116,14 @@ label, input {
     border-radius: 4px;
     font-family: 'Anton', sans-serif;
     margin-top: 10px;
+    width: 500px;
 }
 
 .cardAndButton {
     display: flex;
     flex-direction: column;
-    margin: 0px 500px;
+    justify-content: center;
+    align-items: center;
 }
 
 /* UPCOMING WORKOUTS PAGE */
@@ -152,10 +156,11 @@ h3 {
 }
 
 .workout1, .workout2, .workout3 {
-    margin: 25px 350px;
     background: #1c1c1e;
     padding: 25px;
     border-radius: 8px;
+    width: 500px;
+    margin-bottom: 25px;
 }
 
 hr {
@@ -167,6 +172,26 @@ hr {
 
 .workout1 {
     border-left: #ff0024 solid 2px;
+}
+
+.upcomingWorkoutsCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.startWorkout {
+    display: flex;
+    justify-content: center;
+}
+
+.startWorkoutButton {
+    font-size: 24px;
+    padding: 10px 118px;
+    border-radius: 4px;
+    font-family: 'Anton', sans-serif;
+    width: 550px;
 }
 
 /* REDIRECT PAGE */
@@ -186,4 +211,69 @@ hr {
 h3 {
     color: #ffffff;
     font-family: 'Open Sans', sans-serif;
+}
+
+.exercise {
+    display: flex;
+    justify-content: space-between;
+}
+
+.repInputs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.currentWorkoutCard {
+    display: flex;
+    justify-content: center;
+}
+
+.current-workout-form {
+    margin-top: 50px;
+    background-color: #1c1c1e;
+    padding: 25px;
+    border-radius: 8px;
+}
+
+.repInputs input {
+    margin-right: 10px;
+    width: 15px;
+    background-color: #ff0024;
+    border: 2px solid #ff0024;
+}
+
+.repInputs input:last-child {
+    margin-right: 0px;
+}
+
+.repInputs input:focus {
+    border: 2px solid #ffffff;
+}
+
+.bodyWeight input {
+    background-color: #ff0024;
+    border: 2px solid #ff0024;
+}
+
+.bodyWeight input:focus {
+    border: 2px solid #ffffff;
+}
+
+.workoutForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.finishWorkoutButton {
+    display: flex;
+    justify-content: center;
+}
+
+.workoutSubmitButton {
+    font-size: 24px;
+    padding: 10px 118px;
+    border-radius: 4px;
+    font-family: 'Anton', sans-serif;
+    margin-top: 10px;
 }

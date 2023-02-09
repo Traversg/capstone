@@ -16,7 +16,7 @@ export default class FiveLiftsClient extends BindingClass {
         super();
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'createProfile', 
-        'getUpcomingWorkouts', 'getIsCurrentUser', 'getCurrentWorkout'];
+        'getUpcomingWorkouts', 'getIsCurrentUser', 'getCurrentWorkout', 'addWorkout'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -123,6 +123,11 @@ export default class FiveLiftsClient extends BindingClass {
         }
     }
 
+    /**
+     * Gets current workout for the current user.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The current workout retrieved.
+     */
     async getCurrentWorkout() {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve workouts.");
@@ -151,6 +156,59 @@ export default class FiveLiftsClient extends BindingClass {
                 }
             });
             return response.data.isCurrentUser;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+     /**
+     * Adds a completed workout owned by the current user.
+     * @param workoutDate the workoutDate of the workout.
+     * @param workoutType the workoutType of the workout.
+     * @param timeStarted the time the workout started.
+     * @param timeEnded the time the workout ended.
+     * @param squatWeight the weight of each squat set in the workout.
+     * @param benchPressWeight the weight of each bench press set in the workout.
+     * @param overheadPressWeight the weight of each overhead press set in the workout.
+     * @param barbellRowWeight the weight of each barbell row set in the workout.
+     * @param deadliftWeight the weight of each deadlift set in the workout.
+     * @param squatReps the amount of reps in each squat set in the workout.
+     * @param benchPressReps the amount of reps in each bench press set in the workout.
+     * @param overheadPressReps the amount of reps in each overhead press set in the workout.
+     * @param barbellRowReps the amount of reps in each barbell row set in the workout.
+     * @param deadliftReps the amount of reps in each deadlift set in the workout.
+     * @param bodyWeight the body weight of the user measured during the workout.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The workout that has been added.
+     */
+    async addWorkout(workoutDate, workoutType, timeStarted, timeEnded, squatWeight,
+        benchPressWeight, overheadPressWeight, barbellRowWeight, deadliftWeight,
+        squatReps, benchPressReps, overheadPressReps, barbellRowReps, deadliftReps,
+        bodyWeight, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can create profiles.");
+            const response = await this.axiosClient.post(`workouts`, {
+                workoutDate: workoutDate,
+                workoutType: workoutType,
+                timeStarted: timeStarted,
+                timeEnded: timeEnded,
+                squatWeight: squatWeight,
+                benchPressWeight: benchPressWeight,
+                overheadPressWeight: overheadPressWeight,
+                barbellRowWeight: barbellRowWeight,
+                deadliftWeight: deadliftWeight,
+                squatReps: squatReps,
+                benchPressReps: benchPressReps,
+                overheadPressReps: overheadPressReps,
+                barbellRowReps: barbellRowReps,
+                deadliftReps: deadliftReps,
+                bodyWeight: bodyWeight
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.workout;
         } catch (error) {
             this.handleError(error, errorCallback)
         }

@@ -76,7 +76,8 @@ public class GetUpcomingWorkoutsActivity {
     }
 
     private LocalDate dayToStartWorkout(LocalDate mostRecentWorkoutDate) {
-        if (mostRecentWorkoutDate.plusDays(1).getDayOfYear() == LocalDate.now().getDayOfYear()) {
+        if (mostRecentWorkoutDate.plusDays(1).getDayOfYear() == LocalDate.now().getDayOfYear() ||
+                mostRecentWorkoutDate.getDayOfYear() == LocalDate.now().getDayOfYear()) {
             return mostRecentWorkoutDate.plusDays(2);
         }
         return LocalDate.now();
