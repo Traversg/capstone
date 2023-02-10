@@ -36,9 +36,12 @@ class CurrentWorkout extends BindingClass {
         this.dataStore.set('currentWorkout', currentWorkout[0]);
         const currentWorkoutType = currentWorkout[0].workoutType;
         this.dataStore.set('currentWorkoutType', currentWorkoutType);
+        let workoutTitle = document.getElementById('currentWorkoutTitle');
         if (currentWorkoutType == 'WORKOUT_A') {
+            workoutTitle.innerText = 'WORKOUT A';
             displayWorkoutA(currentWorkout[0]);
         } else {
+            workoutTitle.innerText = 'WORKOUT B';
             displayWorkoutB(currentWorkout[0]);
         }
     }

@@ -16,7 +16,7 @@ export default class FiveLiftsClient extends BindingClass {
         super();
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'createProfile', 
-        'getUpcomingWorkouts', 'getIsCurrentUser', 'getCurrentWorkout', 'addWorkout'];
+        'getUpcomingWorkouts', 'getIsCurrentUser', 'getCurrentWorkout', 'addWorkout', 'getWorkoutHistory'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -160,6 +160,25 @@ export default class FiveLiftsClient extends BindingClass {
             this.handleError(error, errorCallback)
         }
     }
+
+    /**
+     * Gets workout history for the user.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns workout history.
+     */
+        async getWorkoutHistory() {
+            try {
+                const token = await this.getTokenOrThrow("Only authenicated users can access user information.");
+                const response = await this.axiosClient.get('workoutHistory', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                return response.data.workoutHistory;
+            } catch (error) {
+                this.handleError(error, errorCallback)
+            }
+        }
 
      /**
      * Adds a completed workout owned by the current user.

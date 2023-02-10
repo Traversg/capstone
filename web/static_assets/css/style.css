@@ -1,3 +1,9 @@
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
 .background {
     background-color: #000000;
 }
@@ -10,8 +16,33 @@ button {
 
 #header {
     display: flex;
-    justify-content: center;
     padding: 25px;
+    background-color: #ff0024;
+    margin-bottom: 25px;
+    justify-content: space-between;
+}
+
+ul {
+    display: flex;
+    color: #ffffff;
+    font-family: 'Anton', sans-serif;
+    list-style-type: none;
+}
+
+li {
+    margin-right: 15px;
+    margin-top: 15px;
+}
+
+li a {
+    color :#ffffff;
+    text-decoration: none;
+}
+
+.logoutButton {
+    font-family: 'Anton', sans-serif;
+    font-size: 16px;
+    padding: 0;
 }
 
 .header_home {
@@ -19,7 +50,7 @@ button {
     text-decoration: none;
     font-family: 'Anton', sans-serif;
     font-size: 48px;
-
+    margin-left: 25px;
 }
 
 /* INDEX PAGE */
@@ -152,6 +183,11 @@ label, input {
     align-items: center;
 }
 
+.startingWeightsTitle {
+    color: #ffffff;
+    font-family: 'Anton', sans-serif;
+}
+
 /* UPCOMING WORKOUTS PAGE */
 
 p, h3 {
@@ -207,6 +243,11 @@ hr {
     flex-direction: column;
 }
 
+.upcomingWorkoutsTitle {
+    color: #ffffff;
+    font-family: 'Anton', sans-serif;
+}
+
 .startWorkout {
     display: flex;
     justify-content: center;
@@ -252,6 +293,7 @@ h3 {
 .currentWorkoutCard {
     display: flex;
     justify-content: center;
+    margin-top: -55px;
 }
 
 .current-workout-form {
@@ -302,4 +344,38 @@ h3 {
     border-radius: 4px;
     font-family: 'Anton', sans-serif;
     margin-top: 10px;
+}
+
+.currentWorkoutTitle {
+    color: #ffffff;
+    font-family: 'Anton', sans-serif;
+}
+
+.workoutForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* WORKOUT HISTORY PAGE */
+
+.workout {
+    background: #1c1c1e;
+    padding: 25px;
+    border-radius: 8px;
+    width: 500px;
+    margin-bottom: 25px;
+}
+
+.workoutHistoryCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.workoutHistoryTitle {
+    color: #ffffff;
+    font-family: 'Anton', sans-serif;
 }

@@ -315,7 +315,7 @@ Resources:
         FiveLiftsService:
           Type: Api
           Properties:
-            Path: /workouts
+            Path: /workoutHistory
             Method: get
   #-----------------------------------------------------
   # DynamoDB Configuration
