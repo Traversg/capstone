@@ -1,7 +1,5 @@
 import FiveLiftsClient from '../api/fiveLiftsClient';
-import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
-import DataStore from '../util/DataStore';
 
 /**
  * Logic needed for the create playlist page of the website.
@@ -9,11 +7,7 @@ import DataStore from '../util/DataStore';
 class Index extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'login', 'redirectToWorkout', 'createProfile', 'redirectToCreateProfile'], this);
-        this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.redirectToWorkout);
-        this.dataStore.addChangeListener(this.redirectToCreateProfile);
-        this.header = new Header(this.dataStore);
+        this.bindClassMethods(['mount', 'login', 'redirectLoggedInUser'], this);
     }
 
     /**
@@ -21,11 +15,8 @@ class Index extends BindingClass {
      */
     mount() {
         document.getElementById('login').addEventListener('click', this.login);
-        document.getElementById('create-profile').addEventListener('click', this.createProfile)
-
-        this.header.addHeaderToPage();
-
         this.client = new FiveLiftsClient();
+        this.redirectLoggedInUser();
     }
 
     /**
@@ -34,32 +25,18 @@ class Index extends BindingClass {
      */
     async login() {
         document.getElementById('login').addEventListener('click', this.client.login);
-        this.redirectToWorkout;
     }
 
     /**
-     * When the user has logged in, redirect to their workout page.
+     * Method to run user when mounted. Call the FiveLiftsService to see if the
+     * user is already logged in.
      */
-    async redirectToWorkout() {
-        // TODO
-        window.alert("Redirect to workout page.")
-    }
+    async redirectLoggedInUser() {
+        const isCurrentUser = await this.client.getIsCurrentUser();
 
-    /**
-     * Method to run when the create profile button is pressed. Call the FiveLiftsService to login
-     * the user.
-     */
-    async createProfile() {
-        document.getElementById('create-profile').addEventListener('click', this.client.login);
-        this.redirectToCreateProfile;
-    }
-
-    /**
-     * When the user has created a login information, redirect to create profile page.
-     */
-    async redirectToCreateProfile() {
-        // TODO
-        window.alert("Redirect to create profile page.")
+        if (isCurrentUser) {
+            window.location.href = `/upcomingWorkouts.html`;
+        }
     }
 }
 

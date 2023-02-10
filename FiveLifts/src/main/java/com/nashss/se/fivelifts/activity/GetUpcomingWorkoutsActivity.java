@@ -60,12 +60,15 @@ public class GetUpcomingWorkoutsActivity {
 
         List<WorkoutModel> upcomingWorkouts = new ArrayList<>();
 
-        WorkoutModel currentWorkout = createUpcomingWorkouts(mostRecentWorkoutOptional, getUpcomingWorkoutsRequest).get(0);
+        WorkoutModel currentWorkout = createUpcomingWorkouts(mostRecentWorkoutOptional,
+                getUpcomingWorkoutsRequest).get(0);
         upcomingWorkouts.add(currentWorkout);
 
         if (getUpcomingWorkoutsRequest.isCurrentWorkout() == null) {
-            WorkoutModel workout2 = createUpcomingWorkouts(mostRecentWorkoutOptional, getUpcomingWorkoutsRequest).get(1);
-            WorkoutModel workout3 = createUpcomingWorkouts(mostRecentWorkoutOptional, getUpcomingWorkoutsRequest).get(2);
+            WorkoutModel workout2 = createUpcomingWorkouts(mostRecentWorkoutOptional,
+                    getUpcomingWorkoutsRequest).get(1);
+            WorkoutModel workout3 = createUpcomingWorkouts(mostRecentWorkoutOptional,
+                    getUpcomingWorkoutsRequest).get(2);
             upcomingWorkouts.add(workout2);
             upcomingWorkouts.add(workout3);
         }
@@ -146,7 +149,8 @@ public class GetUpcomingWorkoutsActivity {
         return upcomingWorkouts;
     }
 
-    private List<WorkoutModel> createUpcomingWorkouts(Optional<Workout> mostRecentWorkout, GetUpcomingWorkoutsRequest request) {
+    private List<WorkoutModel> createUpcomingWorkouts(Optional<Workout> mostRecentWorkout,
+                                                      GetUpcomingWorkoutsRequest request) {
         User userProfile = userDao.getUser(request.getEmail());
         int squatWeight = userProfile.getSquat();
         int benchPressWeight = userProfile.getBenchPress();

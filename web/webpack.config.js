@@ -27,7 +27,8 @@ module.exports = {
     startingWeights : path.resolve(__dirname, 'src', 'pages', 'startingWeights.js'),
     upcomingWorkouts : path.resolve(__dirname, 'src', 'pages', 'upcomingWorkouts.js'),
     redirect: path.resolve(__dirname, 'src', 'pages', 'redirect.js'),
-    currentWorkout: path.resolve(__dirname, 'src', 'pages', 'currentWorkout')
+    currentWorkout: path.resolve(__dirname, 'src', 'pages', 'currentWorkout'),
+    workoutHistory: path.resolve(__dirname, 'src', 'pages', 'workoutHistory')
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),
