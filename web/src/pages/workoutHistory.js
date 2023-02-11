@@ -31,12 +31,11 @@ class WorkoutHistory extends BindingClass {
         const upcomingWorkouts = await this.client.getWorkoutHistory();
 
         for (let workout in upcomingWorkouts) {
-            let workoutNumber = workout + 1;
             let currentWorkout = upcomingWorkouts[workout];
             if (currentWorkout.workoutType == 'WORKOUT_A') {
-                displayWorkoutA(currentWorkout, workoutNumber);
+                displayWorkoutA(currentWorkout);
             } else {
-                displayWorkoutB(currentWorkout, workoutNumber);
+                displayWorkoutB(currentWorkout);
             }
         }
     }
@@ -66,13 +65,14 @@ function getDisplayDate(year, month, day) {
  * @param {*} workoutA 
  * @param {*} workoutNumber 
  */
-function displayWorkoutA(workoutA, workoutNumber) {
+function displayWorkoutA(workoutA) {
     let displayDate = getDisplayDate(workoutA.workoutDate[0],
         (workoutA.workoutDate[1] - 1), workoutA.workoutDate[2]);
 
-    let workoutCard = document.getElementById('workoutNumber');
-    let workoutBlock = workoutCard.innerHTML = ` 
-    <div class="workout">    
+    let workoutCard = document.getElementById('workoutHistory');
+    let workoutBlock = document.createElement('div');
+    workoutBlock.classList.add('workout');
+    workoutBlock.innerHTML = `   
         <div class="workoutTypeAndDate">
             <p class="type">Workout A</p>
             <p class="date">${displayDate}</p> 
@@ -100,7 +100,11 @@ function displayWorkoutA(workoutA, workoutNumber) {
                 <h3 class="setWeight">${workoutA.barbellRowWeight}lbs</h3>
             </div>
         </div>
-    </div>`;
+        <hr>
+        <div class="bodyWeightHistory">
+            <h3>Body Weight</h3>
+            <h3 class="setWeight">${workoutA.bodyWeight}lbs</h3>
+        </div>`;
     workoutCard.appendChild(workoutBlock);
 }
 
@@ -109,13 +113,14 @@ function displayWorkoutA(workoutA, workoutNumber) {
  * @param {*} workoutA 
  * @param {*} workoutNumber 
  */
-function displayWorkoutB(workoutB, workoutNumber) {
+function displayWorkoutB(workoutB) {
     let displayDate = getDisplayDate(workoutB.workoutDate[0],
         (workoutB.workoutDate[1] - 1), workoutB.workoutDate[2]);
         
     let workoutCard = document.getElementById('workoutHistory');
-    let workoutBlock = workoutCard.innerHTML = `
-    <div class="workout">        
+    let workoutBlock = document.createElement('div');
+    workoutBlock.classList.add('workout');
+    workoutBlock.innerHTML = `    
         <div class="workoutTypeAndDate">
             <p class="type">Workout B</p>
             <p class="date">${displayDate}</p> 
@@ -143,7 +148,11 @@ function displayWorkoutB(workoutB, workoutNumber) {
                 <h3 class="setWeight">${workoutB.deadliftWeight}lbs</h3>
             </div>
         </div>
-    </div>`
+        <hr>
+        <div class="bodyWeightHistory">
+            <h3>Body Weight</h3>
+            <h3 class="setWeight">${workoutB.bodyWeight}lbs</h3>
+        </div>`;
     workoutCard.appendChild(workoutBlock);
 }
 

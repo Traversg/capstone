@@ -9,8 +9,7 @@ export default class Header extends BindingClass {
         super();
 
         const methodsToBind = [
-            'addHeaderToPage', 'createSiteTitle',
-        ];
+            'addHeaderToPage', 'createSiteTitle'];
         this.bindClassMethods(methodsToBind, this);
 
         this.client = new FiveLiftsClient();
@@ -36,8 +35,7 @@ export default class Header extends BindingClass {
         </ul>`;
         header.appendChild(navBar);
         // header.appendChild(userInfo);
-
-        
+        document.getElementById('logout').addEventListener('click', this.client.logout);
     }
 
     createSiteTitle() {
@@ -51,10 +49,6 @@ export default class Header extends BindingClass {
         siteTitle.appendChild(homeButton);
 
         return siteTitle;
-    }
-
-    async logOut() {
-        document.getElementById('logout').addEventListener('click', this.client.logout);
     }
 
 

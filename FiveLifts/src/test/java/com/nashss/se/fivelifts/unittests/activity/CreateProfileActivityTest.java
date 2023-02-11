@@ -65,5 +65,88 @@ public class CreateProfileActivityTest {
         assertEquals(expectedOHP, result.getProfile().getOverheadPress());
     }
 
+    @Test
+    public void handleRequest_withBelowMinimumWeights_createsAndSavesProfileWith45lbsforEachLift() {
+        // GIVEN
+        String expectedName = "expectedName";
+        String expectedEmail = "expectedEmail";
+        double expectedBodyWeight = 175.0;
+        int expectedWeight = 45;
+        int deadlift = 25;
+        int squat = 25;
+        int bench = 20;
+        int barbellRow = 20;
+        int overheadPress = 15;
 
+        CreateProfileRequest request = CreateProfileRequest.builder()
+                .withName(expectedName)
+                .withEmail(expectedEmail)
+                .withBodyWeight(expectedBodyWeight)
+                .withDeadlift(deadlift)
+                .withSquat(squat)
+                .withBenchPress(bench)
+                .withBarbellRow(barbellRow)
+                .withOverheadPress(overheadPress)
+                .build();
+
+        // WHEN
+        CreateProfileResult result = createProfileActivity.handleRequest(request);
+
+        // THEN
+        verify(userDao).saveUser(any(User.class));
+
+        assertEquals(expectedName, result.getProfile().getName());
+        assertEquals(expectedEmail, result.getProfile().getEmail());
+        assertEquals(expectedBodyWeight, result.getProfile().getBodyWeight());
+        assertEquals(expectedWeight, result.getProfile().getDeadlift());
+        assertEquals(expectedWeight, result.getProfile().getSquat());
+        assertEquals(expectedWeight, result.getProfile().getBenchPress());
+        assertEquals(expectedWeight, result.getProfile().getBarbellRow());
+        assertEquals(expectedWeight, result.getProfile().getOverheadPress());
+    }
+
+    @Test
+    public void handleRequest_withStartingWeightsNotDivisibleBy5_returnsRoundedDownStartingWeights() {
+        // GIVEN
+        String expectedName = "expectedName";
+        String expectedEmail = "expectedEmail";
+        double expectedBodyWeight = 175.0;
+        int deadlift = 303;
+        int squat = 278;
+        int bench = 174;
+        int barbellRow = 159;
+        int overheadPress = 147;
+
+        int expectedDeadlift = 300;
+        int expectedSquat = 275;
+        int expectedBench = 170;
+        int expectedBarbellRow = 155;
+        int expectedOverheadPress = 145;
+
+        CreateProfileRequest request = CreateProfileRequest.builder()
+                .withName(expectedName)
+                .withEmail(expectedEmail)
+                .withBodyWeight(expectedBodyWeight)
+                .withDeadlift(deadlift)
+                .withSquat(squat)
+                .withBenchPress(bench)
+                .withBarbellRow(barbellRow)
+                .withOverheadPress(overheadPress)
+                .build();
+
+        // WHEN
+        CreateProfileResult result = createProfileActivity.handleRequest(request);
+
+        // THEN
+        verify(userDao).saveUser(any(User.class));
+
+        assertEquals(expectedName, result.getProfile().getName());
+        assertEquals(expectedEmail, result.getProfile().getEmail());
+        assertEquals(expectedBodyWeight, result.getProfile().getBodyWeight());
+        assertEquals(expectedDeadlift, result.getProfile().getDeadlift());
+        assertEquals(expectedSquat, result.getProfile().getSquat());
+        assertEquals(expectedBench, result.getProfile().getBenchPress());
+        assertEquals(expectedBarbellRow, result.getProfile().getBarbellRow());
+        assertEquals(expectedOverheadPress, result.getProfile().getOverheadPress());
+    }
 }
