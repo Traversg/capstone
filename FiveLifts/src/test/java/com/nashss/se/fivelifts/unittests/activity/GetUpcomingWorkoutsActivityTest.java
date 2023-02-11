@@ -131,25 +131,25 @@ public class GetUpcomingWorkoutsActivityTest {
         Workout upcomingWorkout1 = new Workout();
         upcomingWorkout1.setWorkoutDate(LocalDate.now());
         upcomingWorkout1.setWorkoutType(WorkoutType.WORKOUT_A);
-        upcomingWorkout1.setSquatWeight(230);
-        upcomingWorkout1.setBenchPressWeight(180);
-        upcomingWorkout1.setBarbellRowWeight(155);
+        upcomingWorkout1.setSquatWeight(225);
+        upcomingWorkout1.setBenchPressWeight(175);
+        upcomingWorkout1.setBarbellRowWeight(150);
         WorkoutModel upcomingWorkoutModel1 = new ModelConverter().toWorkoutModel(upcomingWorkout1);
 
         Workout upcomingWorkout2 = new Workout();
         upcomingWorkout2.setWorkoutDate(upcomingWorkout1.getWorkoutDate().plusDays(2));
         upcomingWorkout2.setWorkoutType(WorkoutType.WORKOUT_B);
-        upcomingWorkout2.setSquatWeight(235);
-        upcomingWorkout2.setOverheadPressWeight(130);
-        upcomingWorkout2.setDeadliftWeight(285);
+        upcomingWorkout2.setSquatWeight(230);
+        upcomingWorkout2.setOverheadPressWeight(125);
+        upcomingWorkout2.setDeadliftWeight(275);
         WorkoutModel upcomingWorkoutModel2 = new ModelConverter().toWorkoutModel(upcomingWorkout2);
 
         Workout upcomingWorkout3 = new Workout();
         upcomingWorkout3.setWorkoutDate(upcomingWorkout2.getWorkoutDate().plusDays(2));
         upcomingWorkout3.setWorkoutType(WorkoutType.WORKOUT_A);
-        upcomingWorkout3.setSquatWeight(240);
-        upcomingWorkout3.setBenchPressWeight(185);
-        upcomingWorkout3.setBarbellRowWeight(160);
+        upcomingWorkout3.setSquatWeight(235);
+        upcomingWorkout3.setBenchPressWeight(180);
+        upcomingWorkout3.setBarbellRowWeight(155);
         WorkoutModel upcomingWorkoutModel3 = new ModelConverter().toWorkoutModel(upcomingWorkout3);
 
         List<WorkoutModel> upcomingWorkouts = new ArrayList<>();
