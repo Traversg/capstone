@@ -38,7 +38,8 @@ public class CreateProfileActivity {
      * It then returns the newly created user profile.
      * <p>
      *
-     * If any provided weight fields are empty, throws an InvalidAttributeValueException
+     * If user enters starting weights below 45lbs they will be set to 45lbs.
+     * If user enters starting weights not divisible by 5, weight will be rounded down.
      * @param createProfileRequest request object containing the user name, body weight, and lift data
      *                              associated with it
      * @return createProfileResult result object containing the API defined {@link UserModel}
@@ -46,15 +47,22 @@ public class CreateProfileActivity {
     public CreateProfileResult handleRequest(final CreateProfileRequest createProfileRequest) {
         log.info("Received CreateProfileRequest {}", createProfileRequest);
 
+        int MINIMUM_WEIGHT = 45;
+        int startingBarbellRowWeight = createProfileRequest.getBarbellRow();
+        int startingDeadliftWeight = createProfileRequest.getDeadlift();
+        int startingBenchPressWeight = createProfileRequest.getBenchPress();
+        int startingOverheadPressWeight = createProfileRequest.getOverheadPress();
+        int startingSquatWeight = createProfileRequest.getSquat();
+
         User newUser = new User();
         newUser.setName(createProfileRequest.getName());
         newUser.setEmail(createProfileRequest.getEmail());
         newUser.setBodyWeight(createProfileRequest.getBodyWeight());
-        newUser.setBarbellRow(createProfileRequest.getBarbellRow());
-        newUser.setDeadlift(createProfileRequest.getDeadlift());
-        newUser.setBenchPress(createProfileRequest.getBenchPress());
-        newUser.setOverheadPress(createProfileRequest.getOverheadPress());
-        newUser.setSquat(createProfileRequest.getSquat());
+        newUser.setBarbellRow(Math.max(roundDown(startingBarbellRowWeight), MINIMUM_WEIGHT));
+        newUser.setDeadlift(Math.max(roundDown(startingDeadliftWeight), MINIMUM_WEIGHT));
+        newUser.setBenchPress(Math.max(roundDown(startingBenchPressWeight), MINIMUM_WEIGHT));
+        newUser.setOverheadPress(Math.max(roundDown(startingOverheadPressWeight), MINIMUM_WEIGHT));
+        newUser.setSquat(Math.max(roundDown(startingSquatWeight), MINIMUM_WEIGHT));
 
         userDao.saveUser(newUser);
 
@@ -62,5 +70,14 @@ public class CreateProfileActivity {
         return CreateProfileResult.builder()
                 .withProfile(userModel)
                 .build();
+    }
+
+    public int roundDown(int lift) {
+        int remainder = lift % 5;
+        if (remainder == 0) {
+            return lift;
+        } else {
+            return lift - remainder;
+        }
     }
 }

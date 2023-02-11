@@ -10,7 +10,7 @@ class CurrentWorkout extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'displayCurrentWorkout', 'finishWorkout', 'finishWorkoutA',
-            'finishWorkoutB'], this);
+            'finishWorkoutB', 'startTimer'], this);
         this.dataStore = new DataStore();
         this.header = new Header(this.dataStore);
     }
@@ -20,6 +20,7 @@ class CurrentWorkout extends BindingClass {
      */
     mount() {
         document.getElementById('workoutSubmitButton').addEventListener('click', this.finishWorkout);
+        document.getElementById('timerButton').addEventListener('click', this.startTimer);
         this.header.addHeaderToPage();
         this.client = new FiveLiftsClient();
         this.displayCurrentWorkout();
@@ -55,14 +56,15 @@ class CurrentWorkout extends BindingClass {
         this.dataStore.set('finishTime', finshTime);
 
         const submitButton = document.getElementById('workoutSubmitButton');
-        submitButton.innerText = "Adding...";
+        submitButton.innerText = "Adding Workout...";
 
         const workoutType = this.dataStore.get('currentWorkoutType');
         if (workoutType == 'WORKOUT_A') {
-            const completedWorkout = finishWorkoutA();
+            const completedWorkout = this.finishWorkoutA();
             this.dataStore.set('completedWorkout', completedWorkout);
         } else {
             const completedWorkout = this.finishWorkoutB();
+            this.dataStore.set('completedWorkout', completedWorkout);
         }
 
         this.redirectToUpcomingWorkouts();
@@ -135,6 +137,25 @@ class CurrentWorkout extends BindingClass {
         if (completedWorkout != null) {
             window.location.href = `/upcomingWorkouts.html`;
         }
+    }
+
+    async startTimer() {
+        const timerButton = document.getElementById('timerButton');
+        timerButton.disabled = true;
+        timerButton.style.backgroundColor = "rgb(255,0,36,0.5)";
+        let second = 0;
+        const timerBlock = document.getElementById('timerDisplay');
+        let timer = setInterval(function() {
+            timerBlock.classList.remove('hidden');
+            document.getElementById('timerSeconds').innerHTML = upTimer(++second % 60);
+            document.getElementById('timerMinutes').innerHTML = upTimer(parseInt(second / 60, 10));
+            if (second === 180) {
+                clearInterval(timer);
+                timerButton.disabled = false;
+                timerButton.style.backgroundColor = "rgb(255,0,36)";
+                timerBlock.classList.add('hidden');
+            }
+        }, 1000);
     }
 }
 
@@ -277,7 +298,11 @@ function displayWorkoutB(workoutB) {
             autofocus>
     </div>
     </form>
-</div>`
+</div>`;
+}
+
+function upTimer(count) {
+    return count > 9 ? count : "0" + count;
 }
 
 function getDateString() {
@@ -286,7 +311,11 @@ function getDateString() {
     const month = currentDate.getMonth();
     const date = currentDate.getDate();
     
-    return `${year}-0${Number(month) + 1}-0${date}`;
+    if (date < 10) {
+        return `${year}-0${Number(month) + 1}-0${date}`;
+    } else {
+        return `${year}-0${Number(month) + 1}-${date}`
+    }
 }
 
 function getTimeString(time) {
@@ -298,7 +327,11 @@ function getTimeString(time) {
     const second = time.getSeconds();
     const milliseconds = time.getMilliseconds();
 
-    return `${year}-0${Number(month) + 1}-0${date}T${hour}:${minute}:${second}.${milliseconds}`;
+    if (date < 10) {
+        return `${year}-0${Number(month) + 1}-0${date}T${hour}:${minute}:${second}.${milliseconds}`
+    } else {
+        return `${year}-0${Number(month) + 1}-${date}T${hour}:${minute}:${second}.${milliseconds}`;
+    }
 }
 
 function getSquatReps() {

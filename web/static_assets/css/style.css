@@ -22,19 +22,19 @@ button {
     justify-content: space-between;
 }
 
-ul {
+#header ul {
     display: flex;
     color: #ffffff;
     font-family: 'Anton', sans-serif;
     list-style-type: none;
 }
 
-li {
+#header li {
     margin-right: 15px;
     margin-top: 15px;
 }
 
-li a {
+#header li a {
     color :#ffffff;
     text-decoration: none;
 }
@@ -333,17 +333,21 @@ h3 {
     justify-content: center;
 }
 
-.finishWorkoutButton {
+.finishWorkoutButton, .timer {
     display: flex;
     justify-content: center;
 }
 
-.workoutSubmitButton {
+.workoutSubmitButton, .timerButton {
     font-size: 24px;
     padding: 10px 118px;
     border-radius: 4px;
     font-family: 'Anton', sans-serif;
     margin-top: 10px;
+}
+
+.timerButton {
+    padding: 10px 110px;
 }
 
 .currentWorkoutTitle {
@@ -356,6 +360,20 @@ h3 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+span {
+    color: #ffffff;
+    font-family: 'Anton', sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+#timerDisplay {
+    margin-top: -15px;
+    color: #ffffff;
 }
 
 /* WORKOUT HISTORY PAGE */
@@ -378,4 +396,9 @@ h3 {
 .workoutHistoryTitle {
     color: #ffffff;
     font-family: 'Anton', sans-serif;
+}
+
+.bodyWeightHistory {
+    display: flex;
+    justify-content: space-between;
 }
