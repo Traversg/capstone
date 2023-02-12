@@ -60,10 +60,10 @@ class CurrentWorkout extends BindingClass {
 
         const workoutType = this.dataStore.get('currentWorkoutType');
         if (workoutType == 'WORKOUT_A') {
-            const completedWorkout = this.finishWorkoutA();
+            const completedWorkout = await this.finishWorkoutA();
             this.dataStore.set('completedWorkout', completedWorkout);
         } else {
-            const completedWorkout = this.finishWorkoutB();
+            const completedWorkout = await this.finishWorkoutB();
             this.dataStore.set('completedWorkout', completedWorkout);
         }
 
@@ -92,7 +92,7 @@ class CurrentWorkout extends BindingClass {
         const deadliftReps = [];
         const bodyWeight = document.getElementById('body-weight').value;
     
-        const workout = await this.client.addWorkout(date, workoutType, timeStarted,
+        return await this.client.addWorkout(date, workoutType, timeStarted,
             timeEnded, squatWeight, benchPressWeight, overheadPressWeight, barbellRowWeight,
             deadliftWeight, squatReps, benchPressReps, overheadPressReps,
             barbellRowReps, deadliftReps, bodyWeight, (error) => {
@@ -123,7 +123,7 @@ class CurrentWorkout extends BindingClass {
         const deadliftReps = getDeadliftReps();
         const bodyWeight = document.getElementById('body-weight').value;
     
-        const workout = await this.client.addWorkout(date, workoutType, timeStarted,
+        return await this.client.addWorkout(date, workoutType, timeStarted,
             timeEnded, squatWeight, benchPressWeight, overheadPressWeight, barbellRowWeight,
             deadliftWeight, squatReps, benchPressReps, overheadPressReps,
             barbellRowReps, deadliftReps, bodyWeight, (error) => {
