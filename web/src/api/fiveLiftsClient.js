@@ -63,6 +63,10 @@ export default class FiveLiftsClient extends BindingClass {
         this.authenticator.logout();
     }
 
+    async isLoggedIn() {
+        return await this.authenticator.isUserLoggedIn();
+    }
+
     async getTokenOrThrow(unauthenticatedErrorMessage) {
         const isLoggedIn = await this.authenticator.isUserLoggedIn();
         if (!isLoggedIn) {
@@ -109,7 +113,7 @@ export default class FiveLiftsClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The upcoming workouts retrieved.
      */
-    async getUpcomingWorkouts() {
+    async getUpcomingWorkouts(errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve workouts.");
             const response = await this.axiosClient.get('workouts', {
@@ -128,7 +132,7 @@ export default class FiveLiftsClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The current workout retrieved.
      */
-    async getCurrentWorkout() {
+    async getCurrentWorkout(errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve workouts.");
             const response = await this.axiosClient.get('workouts?currentWorkout=true', {
@@ -147,7 +151,7 @@ export default class FiveLiftsClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns Status of user.
      */
-    async getIsCurrentUser() {
+    async getIsCurrentUser(errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenicated users can access user information.");
             const response = await this.axiosClient.get('users', {
@@ -157,7 +161,7 @@ export default class FiveLiftsClient extends BindingClass {
             });
             return response.data.isCurrentUser;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 

@@ -8,6 +8,8 @@ import com.nashss.se.fivelifts.dynamodb.WorkoutDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import com.nashss.se.fivelifts.enums.WorkoutType;
+import com.nashss.se.fivelifts.exceptions.RepsLessThanZeroException;
+import com.nashss.se.fivelifts.exceptions.TooManyRepsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -205,5 +208,61 @@ public class AddWorkoutActivityTest {
         assertEquals(expectedIncrementedSquat, user.getSquat());
         assertEquals(expectedIncrementedOverheadPress, user.getOverheadPress());
         assertEquals(expectedIncrementedDeadlift, user.getDeadlift());
+    }
+
+    @Test
+    public void handleRequest_withRepMoreThanFive_throwsTooManyRepsException() {
+        // GIVEN
+        String expectedEmail = "expectedEmail";
+        List<Integer> squatReps = List.of(5,5,5,5,5);
+        List<Integer> benchPressReps = new ArrayList<>();
+        List<Integer> barbellRowReps = new ArrayList<>();
+        List<Integer> deadliftReps = List.of(5);
+        List<Integer> overheadPressWithSixReps = List.of(6,5,5,5,5);
+
+        AddWorkoutRequest request = AddWorkoutRequest.builder()
+                .withEmail(expectedEmail)
+                .withDeadliftWeight(300)
+                .withSquatWeight(225)
+                .withBenchPressWeight(175)
+                .withBarbellRowWeight(150)
+                .withOverheadPressWeight(125)
+                .withSquatReps(squatReps)
+                .withBenchPressReps(benchPressReps)
+                .withBarbellRowReps(barbellRowReps)
+                .withDeadliftReps(deadliftReps)
+                .withOverheadPressReps(overheadPressWithSixReps)
+                .build();
+
+        // THEN
+        assertThrows(TooManyRepsException.class, () -> addWorkoutActivity.handleRequest(request));
+    }
+
+    @Test
+    public void handleRequest_withRepLessThanZero_throwsLessThanZeroException() {
+        // GIVEN
+        String expectedEmail = "expectedEmail";
+        List<Integer> squatReps = List.of(5,5,5,5,5);
+        List<Integer> benchPressReps = new ArrayList<>();
+        List<Integer> barbellRowReps = new ArrayList<>();
+        List<Integer> deadliftReps = List.of(5);
+        List<Integer> overheadPressWithLessThanZeroReps = List.of(-1,5,5,5,5);
+
+        AddWorkoutRequest request = AddWorkoutRequest.builder()
+                .withEmail(expectedEmail)
+                .withDeadliftWeight(300)
+                .withSquatWeight(225)
+                .withBenchPressWeight(175)
+                .withBarbellRowWeight(150)
+                .withOverheadPressWeight(125)
+                .withSquatReps(squatReps)
+                .withBenchPressReps(benchPressReps)
+                .withBarbellRowReps(barbellRowReps)
+                .withDeadliftReps(deadliftReps)
+                .withOverheadPressReps(overheadPressWithLessThanZeroReps)
+                .build();
+
+        // THEN
+        assertThrows(RepsLessThanZeroException.class, () -> addWorkoutActivity.handleRequest(request));
     }
 }

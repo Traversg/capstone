@@ -21,6 +21,10 @@ class UpcomingWorkouts extends BindingClass {
         document.getElementById('startWorkoutButton').addEventListener('click', this.startWorkout);
         this.header.addHeaderToPage();
         this.client = new FiveLiftsClient();
+        const isLoggedIn = this.isLoggedIn;
+        if (!isLoggedIn) {
+            window.location.href = `/index.html`;
+        }
         this.displayUpcomingWorkouts();
     }
 
@@ -44,6 +48,10 @@ class UpcomingWorkouts extends BindingClass {
 
     async startWorkout() {
         window.location.href = `/currentWorkout.html`;
+    }
+
+    async isLoggedIn() {
+        this.client.isLoggedIn;
     }
 }
 

@@ -16,7 +16,7 @@ class Index extends BindingClass {
     mount() {
         document.getElementById('login').addEventListener('click', this.login);
         this.client = new FiveLiftsClient();
-        this.redirectLoggedInUser();
+        //this.redirectLoggedInUser();
     }
 
     /**
@@ -32,9 +32,9 @@ class Index extends BindingClass {
      * user is already logged in.
      */
     async redirectLoggedInUser() {
-        const isCurrentUser = await this.client.getIsCurrentUser();
+        const isLoggedIn = this.client.isLoggedIn();
 
-        if (isCurrentUser) {
+        if (isLoggedIn) {
             window.location.href = `/upcomingWorkouts.html`;
         }
     }

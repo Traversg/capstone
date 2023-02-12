@@ -19,11 +19,17 @@ class StartingWeights extends BindingClass {
      * Add the header to the page and load the MusicPlaylistClient.
      */
     mount() {
-        document.getElementById('starting-weights-button').addEventListener('click', this.submit);
-
-        this.header.addHeaderToPage();
-
         this.client = new FiveLiftsClient();
+        const loggedIn = this.client.isLoggedIn();
+        if (!loggedIn) {
+            window.location.href = `/index.html`;
+        }
+        const currentUser = this.client.getIsCurrentUser();
+        if (currentUser) {
+            window.location.href = `/upcomingWorkouts.html`
+        }
+        document.getElementById('starting-weights-button').addEventListener('click', this.submit);
+        this.header.addHeaderToPage();
     }
 
     /**
