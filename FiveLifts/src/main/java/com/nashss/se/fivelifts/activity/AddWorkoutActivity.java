@@ -8,6 +8,7 @@ import com.nashss.se.fivelifts.dynamodb.WorkoutDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import com.nashss.se.fivelifts.enums.WorkoutType;
+import com.nashss.se.fivelifts.exceptions.BodyWeightLessThanZeroException;
 import com.nashss.se.fivelifts.exceptions.RepsLessThanZeroException;
 import com.nashss.se.fivelifts.exceptions.TooManyRepsException;
 import com.nashss.se.fivelifts.models.WorkoutModel;
@@ -54,12 +55,25 @@ public class AddWorkoutActivity {
      * <p>
      * If any reps in reps is more than six throws {@link TooManyRepsException}
      * If any rep in reps is less than zero throws {@link RepsLessThanZeroException}
+     * If body weight entered is less than zero throws {@link BodyWeightLessThanZeroException}
+     * If body weight entered is zero, set body weight to previously entered body weight.
      * @param addWorkoutRequest request object containing the user name, body weight, reps, and lift data
      *                              associated with it
      * @return addWorkoutResult result object containing the API defined {@link WorkoutModel}
      */
     public AddWorkoutResult handleRequest(final AddWorkoutRequest addWorkoutRequest) {
         log.info("Received AddWorkoutRequest {}", addWorkoutRequest);
+
+        double bodyWeight = addWorkoutRequest.getBodyWeight();
+        User user = userDao.getUser(addWorkoutRequest.getEmail());
+
+        if (bodyWeight == 0) {
+            bodyWeight = user.getBodyWeight();
+        }
+
+        if (bodyWeight < 0) {
+            throw new BodyWeightLessThanZeroException("Body Weight cannot be less than zero.");
+        }
 
         List<List<Integer>> repslist = new ArrayList<>();
 
@@ -110,10 +124,9 @@ public class AddWorkoutActivity {
         workout.setOverheadPressReps(overheadPressReps);
         workout.setBarbellRowReps(barbellRowReps);
         workout.setDeadliftReps(deadliftReps);
-        workout.setBodyWeight(addWorkoutRequest.getBodyWeight());
+        workout.setBodyWeight(bodyWeight);
 
-        User user = userDao.getUser(addWorkoutRequest.getEmail());
-        user.setBodyWeight(addWorkoutRequest.getBodyWeight());
+        user.setBodyWeight(bodyWeight);
 
         if (!squatReps.isEmpty()) {
             if (canIncrement(getReps(squatReps))) {

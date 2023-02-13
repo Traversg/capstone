@@ -17,12 +17,12 @@ class UpcomingWorkouts extends BindingClass {
     /**
      * Add the header to the page and load the MusicPlaylistClient.
      */
-    mount() {
+    async mount() {
         document.getElementById('startWorkoutButton').addEventListener('click', this.startWorkout);
         this.header.addHeaderToPage();
         this.client = new FiveLiftsClient();
-        this.isCurrentUser();
-        //this.isLoggedIn();
+        await this.isCurrentUser();
+        await this.isLoggedIn();
     }
 
     /**

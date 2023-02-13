@@ -18,11 +18,11 @@ class WorkoutHistory extends BindingClass {
     /**
      * Add the header to the page and load the MusicPlaylistClient.
      */
-    mount() {
+    async mount() {
         this.header.addHeaderToPage();
         this.client = new FiveLiftsClient();
-        //this.isLoggedIn();
-        this.isCurrentUser();
+        await this.isLoggedIn();
+        await this.isCurrentUser();
         this.displayWorkoutHistory();
     }
 

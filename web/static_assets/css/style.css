@@ -393,6 +393,11 @@ span {
     color: #ffffff;
 }
 
+#currentWorkoutNonUserPopUp {
+    display: flex;
+    flex-direction: column;
+}
+
 /* WORKOUT HISTORY PAGE */
 
 .workout {

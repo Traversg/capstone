@@ -18,10 +18,10 @@ class StartingWeights extends BindingClass {
     /**
      * Add the header to the page and load the FiveListServiceClient.
      */
-    mount() {
+    async mount() {
         this.client = new FiveLiftsClient();
-        //this.isLoggedIn();
-        this.isCurrentUser();
+        await this.isLoggedIn();
+        await this.isCurrentUser();
         document.getElementById('starting-weights-button').addEventListener('click', this.submit);
         this.header.addHeaderToPage();
     }
