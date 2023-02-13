@@ -9,7 +9,8 @@ import DataStore from '../util/DataStore';
 class WorkoutHistory extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'displayWorkoutHistory'], this);
+        this.bindClassMethods(['mount', 'displayWorkoutHistory', 'isLoggedIn', 
+        'isCurrentUser'], this);
         this.dataStore = new DataStore();
         this.header = new Header(this.dataStore);
     }
@@ -20,6 +21,8 @@ class WorkoutHistory extends BindingClass {
     mount() {
         this.header.addHeaderToPage();
         this.client = new FiveLiftsClient();
+        //this.isLoggedIn();
+        this.isCurrentUser();
         this.displayWorkoutHistory();
     }
 
@@ -38,6 +41,32 @@ class WorkoutHistory extends BindingClass {
                 displayWorkoutB(currentWorkout);
             }
         }
+    }
+
+    async isLoggedIn() {
+        const isLoggedIn = await this.client.isLoggedIn();
+
+        if (!isLoggedIn) {
+            window.location.href = `/index.html`;
+        }
+    }
+
+    async isCurrentUser() {
+        const currentUser =  await this.client.getIsCurrentUser();
+        if (!currentUser) {
+            const workoutHistoryCard = document.getElementById('workoutHistoryCard');
+            workoutHistoryCard.innerHTML = `
+            <h1 class="notCurrentUser">Please enter your starting weights first.</h1>
+            <button class="startingWeightsButton" id="startingWeightsButton" type="button">ENTER STARTING WEIGHTS</button>
+            `;
+            document.getElementById('startingWeightsButton').addEventListener('click', this.redirectToStartingWeights);
+        } else {
+            this.displayUpcomingWorkouts();
+        }
+    }
+
+    redirectToStartingWeights() {
+        window.location.href = `/startingWeights.html`;
     }
 }
 

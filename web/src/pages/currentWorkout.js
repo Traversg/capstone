@@ -97,7 +97,7 @@ class CurrentWorkout extends BindingClass {
             deadliftWeight, squatReps, benchPressReps, overheadPressReps,
             barbellRowReps, deadliftReps, bodyWeight, (error) => {
                 const errorBlock = document.getElementById('errorMessage');
-                errorBlock.innerText = `Error ${error.message}`;
+                errorBlock.innerText = `${error.message}`;
         });
     }
 
@@ -128,7 +128,8 @@ class CurrentWorkout extends BindingClass {
             deadliftWeight, squatReps, benchPressReps, overheadPressReps,
             barbellRowReps, deadliftReps, bodyWeight, (error) => {
                 const errorBlock = document.getElementById('errorMessage');
-                errorBlock.innerText = `Error ${error.message}`;
+                errorBlock.innerText = `${error.message}`;
+                document.getElementById('workoutSubmitButton').innerText = 'FINISH WORKOUT';
         });
     }
 

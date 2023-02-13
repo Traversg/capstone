@@ -64,7 +64,7 @@ export default class FiveLiftsClient extends BindingClass {
     }
 
     async isLoggedIn() {
-        return await this.authenticator.isUserLoggedIn();
+        this.authenticator.isUserLoggedIn();
     }
 
     async getTokenOrThrow(unauthenticatedErrorMessage) {
