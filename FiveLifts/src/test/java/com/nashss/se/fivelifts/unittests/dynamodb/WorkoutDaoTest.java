@@ -1,7 +1,6 @@
 package com.nashss.se.fivelifts.unittests.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.nashss.se.fivelifts.dynamodb.WorkoutDao;
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,9 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class WorkoutDaoTest {
     @Mock
@@ -34,5 +31,17 @@ public class WorkoutDaoTest {
 
         // THEN
         verify(dynamoDBMapper).save(workout);
+    }
+
+    @Test
+    public void deleteWorkout_callsMapperWithUser() {
+        // GIVEN
+        Workout workout = new Workout();
+
+        // WHEN
+        workoutDao.deleteWorkout(workout);
+
+        // THEN
+        verify(dynamoDBMapper).delete(workout);
     }
 }

@@ -1,5 +1,8 @@
 package com.nashss.se.fivelifts.exceptions;
 
+/**
+ * Exception to throw when too many reps have been entered.
+ */
 public class TooManyRepsException extends RuntimeException {
     private static final long serialVersionUID = 7673232630757112432L;
 

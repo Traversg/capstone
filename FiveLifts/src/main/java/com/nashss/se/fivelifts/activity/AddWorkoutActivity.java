@@ -211,6 +211,6 @@ public class AddWorkoutActivity {
 
     private boolean repsLessThan0(List<Integer> reps) {
         return reps.stream()
-                .anyMatch(rep-> rep < 0);
+                .anyMatch(rep -> rep < 0);
     }
 }

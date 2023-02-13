@@ -1,6 +1,9 @@
 package com.nashss.se.fivelifts.exceptions;
 
-public class BodyWeightLessThanZeroException extends RuntimeException{
+/**
+ * Exception to throw when a body weight is less than zero.
+ */
+public class BodyWeightLessThanZeroException extends RuntimeException {
     private static final long serialVersionUID = 6392413315905251750L;
 
     /**

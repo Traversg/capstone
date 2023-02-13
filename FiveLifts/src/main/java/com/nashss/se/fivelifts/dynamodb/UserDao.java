@@ -51,4 +51,13 @@ public class UserDao {
     public void saveUser(User user) {
         dynamoDbMapper.save(user);
     }
+
+    /**
+     * Delete the given user.
+     *
+     * @param user The user to delete
+     */
+    public void deleteUser(User user) {
+        dynamoDbMapper.delete(user);
+    }
 }

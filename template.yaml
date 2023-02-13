@@ -317,6 +317,28 @@ Resources:
           Properties:
             Path: /workoutHistory
             Method: get
+
+  DeleteUserProfileAndWorkoutHistoryLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: FiveLifts
+      Handler: com.nashss.se.fivelifts.lambda.DeleteUserProfileAndWorkoutHistoryLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        FiveLiftsService:
+          Type: Api
+          Properties:
+            Path: /resetProfile
+            Method: delete
+
+
   #-----------------------------------------------------
   # DynamoDB Configuration
   #-----------------------------------------------------
