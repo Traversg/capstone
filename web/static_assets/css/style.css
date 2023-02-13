@@ -261,6 +261,19 @@ hr {
     width: 550px;
 }
 
+.notCurrentUser {
+    color: #ffffff;
+    margin-top: 250px;
+}
+
+.startingWeightsButton {
+    font-size: 24px;
+    padding: 10px 118px;
+    border-radius: 4px;
+    font-family: 'Anton', sans-serif;
+    width: 550px;
+}
+
 /* REDIRECT PAGE */
 
 .loading {
@@ -376,6 +389,15 @@ span {
     color: #ffffff;
 }
 
+#errorMessage {
+    color: #ffffff;
+}
+
+#currentWorkoutNonUserPopUp {
+    display: flex;
+    flex-direction: column;
+}
+
 /* WORKOUT HISTORY PAGE */
 
 .workout {
@@ -391,6 +413,7 @@ span {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    color: #ffffff;
 }
 
 .workoutHistoryTitle {

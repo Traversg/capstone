@@ -5,6 +5,7 @@ import com.nashss.se.fivelifts.activity.results.CreateProfileResult;
 import com.nashss.se.fivelifts.converters.ModelConverter;
 import com.nashss.se.fivelifts.dynamodb.UserDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
+import com.nashss.se.fivelifts.exceptions.BodyWeightLessThanZeroException;
 import com.nashss.se.fivelifts.models.UserModel;
 
 import org.apache.logging.log4j.LogManager;
@@ -53,11 +54,16 @@ public class CreateProfileActivity {
         int startingBenchPressWeight = createProfileRequest.getBenchPress();
         int startingOverheadPressWeight = createProfileRequest.getOverheadPress();
         int startingSquatWeight = createProfileRequest.getSquat();
+        double bodyWeight = createProfileRequest.getBodyWeight();
+
+        if (bodyWeight < 0) {
+            throw new BodyWeightLessThanZeroException("Body Weight cannot be less than zero.");
+        }
 
         User newUser = new User();
         newUser.setName(createProfileRequest.getName());
         newUser.setEmail(createProfileRequest.getEmail());
-        newUser.setBodyWeight(createProfileRequest.getBodyWeight());
+        newUser.setBodyWeight(bodyWeight);
         newUser.setBarbellRow(Math.max(roundDown(startingBarbellRowWeight), MINIMUM_WEIGHT));
         newUser.setDeadlift(Math.max(roundDown(startingDeadliftWeight), MINIMUM_WEIGHT));
         newUser.setBenchPress(Math.max(roundDown(startingBenchPressWeight), MINIMUM_WEIGHT));

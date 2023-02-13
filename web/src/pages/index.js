@@ -7,7 +7,7 @@ import BindingClass from '../util/bindingClass';
 class Index extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'login', 'redirectLoggedInUser'], this);
+        this.bindClassMethods(['mount', 'login', 'redirectCurrentUser'], this);
     }
 
     /**
@@ -16,7 +16,7 @@ class Index extends BindingClass {
     mount() {
         document.getElementById('login').addEventListener('click', this.login);
         this.client = new FiveLiftsClient();
-        this.redirectLoggedInUser();
+        this.redirectCurrentUser();
     }
 
     /**
@@ -31,7 +31,7 @@ class Index extends BindingClass {
      * Method to run user when mounted. Call the FiveLiftsService to see if the
      * user is already logged in.
      */
-    async redirectLoggedInUser() {
+    async redirectCurrentUser() {
         const isCurrentUser = await this.client.getIsCurrentUser();
 
         if (isCurrentUser) {

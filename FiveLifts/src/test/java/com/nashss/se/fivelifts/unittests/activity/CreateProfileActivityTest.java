@@ -5,11 +5,13 @@ import com.nashss.se.fivelifts.activity.requests.CreateProfileRequest;
 import com.nashss.se.fivelifts.activity.results.CreateProfileResult;
 import com.nashss.se.fivelifts.dynamodb.UserDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
+import com.nashss.se.fivelifts.exceptions.BodyWeightLessThanZeroException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -148,5 +150,32 @@ public class CreateProfileActivityTest {
         assertEquals(expectedBench, result.getProfile().getBenchPress());
         assertEquals(expectedBarbellRow, result.getProfile().getBarbellRow());
         assertEquals(expectedOverheadPress, result.getProfile().getOverheadPress());
+    }
+
+    @Test
+    public void handleRequest_withBodyWeightLessThanZero_throwBodyWeightLessThanZeroException() {
+        // GIVEN
+        String name = "expectedName";
+        String email = "expectedEmail";
+        double bodyWeight = -1;
+        int deadlift = 303;
+        int squat = 278;
+        int bench = 174;
+        int barbellRow = 159;
+        int overheadPress = 147;
+
+        CreateProfileRequest request = CreateProfileRequest.builder()
+                .withName(name)
+                .withEmail(email)
+                .withBodyWeight(bodyWeight)
+                .withDeadlift(deadlift)
+                .withSquat(squat)
+                .withBenchPress(bench)
+                .withBarbellRow(barbellRow)
+                .withOverheadPress(overheadPress)
+                .build();
+
+        // WHEN + THEN
+        assertThrows(BodyWeightLessThanZeroException.class, () -> createProfileActivity.handleRequest(request));
     }
 }

@@ -10,7 +10,7 @@ class CurrentWorkout extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'displayCurrentWorkout', 'finishWorkout', 'finishWorkoutA',
-            'finishWorkoutB', 'startTimer'], this);
+            'finishWorkoutB', 'startTimer', 'isLoggedIn', 'isCurrentUser'], this);
         this.dataStore = new DataStore();
         this.header = new Header(this.dataStore);
     }
@@ -18,12 +18,13 @@ class CurrentWorkout extends BindingClass {
     /**
      * Add the header to the page and load the MusicPlaylistClient.
      */
-    mount() {
+    async mount() {
         document.getElementById('workoutSubmitButton').addEventListener('click', this.finishWorkout);
         document.getElementById('timerButton').addEventListener('click', this.startTimer);
         this.header.addHeaderToPage();
         this.client = new FiveLiftsClient();
-        this.displayCurrentWorkout();
+        await this.isLoggedIn();
+        await this.isCurrentUser();
         const startTime = new Date();
         this.dataStore.set('startTime', startTime);
     }
@@ -60,10 +61,10 @@ class CurrentWorkout extends BindingClass {
 
         const workoutType = this.dataStore.get('currentWorkoutType');
         if (workoutType == 'WORKOUT_A') {
-            const completedWorkout = this.finishWorkoutA();
+            const completedWorkout = await this.finishWorkoutA();
             this.dataStore.set('completedWorkout', completedWorkout);
         } else {
-            const completedWorkout = this.finishWorkoutB();
+            const completedWorkout = await this.finishWorkoutB();
             this.dataStore.set('completedWorkout', completedWorkout);
         }
 
@@ -92,12 +93,12 @@ class CurrentWorkout extends BindingClass {
         const deadliftReps = [];
         const bodyWeight = document.getElementById('body-weight').value;
     
-        const workout = await this.client.addWorkout(date, workoutType, timeStarted,
+        return await this.client.addWorkout(date, workoutType, timeStarted,
             timeEnded, squatWeight, benchPressWeight, overheadPressWeight, barbellRowWeight,
             deadliftWeight, squatReps, benchPressReps, overheadPressReps,
             barbellRowReps, deadliftReps, bodyWeight, (error) => {
                 const errorBlock = document.getElementById('errorMessage');
-                errorBlock.innerText = `Error ${error.message}`;
+                errorBlock.innerText = `${error.message}`;
         });
     }
 
@@ -123,12 +124,14 @@ class CurrentWorkout extends BindingClass {
         const deadliftReps = getDeadliftReps();
         const bodyWeight = document.getElementById('body-weight').value;
     
-        const workout = await this.client.addWorkout(date, workoutType, timeStarted,
+        return await this.client.addWorkout(date, workoutType, timeStarted,
             timeEnded, squatWeight, benchPressWeight, overheadPressWeight, barbellRowWeight,
             deadliftWeight, squatReps, benchPressReps, overheadPressReps,
             barbellRowReps, deadliftReps, bodyWeight, (error) => {
                 const errorBlock = document.getElementById('errorMessage');
-                errorBlock.innerText = `Error ${error.message}`;
+                errorBlock.classList.remove('hidden');
+                errorBlock.innerText = `${error.message}`;
+                document.getElementById('workoutSubmitButton').innerText = 'FINISH WORKOUT';
         });
     }
 
@@ -157,6 +160,34 @@ class CurrentWorkout extends BindingClass {
             }
         }, 1000);
     }
+
+    async isLoggedIn() {
+        const isLoggedIn = await this.client.isLoggedIn();
+
+        if (!isLoggedIn) {
+            window.location.href = `/index.html`;
+        }
+    }
+
+    async isCurrentUser() {
+        const currentUser =  await this.client.getIsCurrentUser();
+        if (!currentUser) {
+            const currentWorkoutCard = document.getElementById('currentWorkoutCard');
+            const timerButton = document.getElementById('timer');
+            const finishWorkoutButton = document.getElementById('finishWorkoutButton');
+            timerButton.classList.add('hidden');
+            finishWorkoutButton.classList.add('hidden');
+            currentWorkoutCard.innerHTML = `
+            <div id="currentWorkoutNonUserPopUp">
+                <h1 class="notCurrentUser">Please enter your starting weights first.</h1>
+                <button class="startingWeightsButton" id="startingWeightsButton" type="button">ENTER STARTING WEIGHTS</button>
+            </div>
+            `;
+            document.getElementById('startingWeightsButton').addEventListener('click', this.redirectToStartingWeights);
+        } else {
+            this.displayCurrentWorkout();
+        }
+    }
 }
 
 function displayWorkoutA(workoutA) {
@@ -172,15 +203,15 @@ function displayWorkoutA(workoutA) {
         </div>
         <div class="reps">
             <div class="repInputs">
-                <input type="number" required class="validated-field" id="squatSet1" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="squatSet1" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="squatSet2" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="squatSet2" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="squatSet3" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="squatSet3" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="squatSet4" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="squatSet4" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="squatSet5" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="squatSet5" min="1" max="5" placeholder="0" 
                 autofocus>
             </div>
         </div>
@@ -193,15 +224,15 @@ function displayWorkoutA(workoutA) {
         </div>
         <div class="reps">
             <div class="repInputs">
-                <input type="number" required class="validated-field" id="benchPressSet1" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="benchPressSet1" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="benchPressSet2" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="benchPressSet2" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="benchPressSet3" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="benchPressSet3" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="benchPressSet4" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="benchPressSet4" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="benchPressSet5" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="benchPressSet5" min="1" max="5" placeholder="0" 
                 autofocus>
             </div>
         </div>
@@ -214,15 +245,15 @@ function displayWorkoutA(workoutA) {
         </div>
         <div class="reps">
         <div class="repInputs">
-            <input type="number" required class="validated-field" id="barbellRowSet1" min="1" max="5" placeholder="5" 
+            <input type="number" required class="validated-field" id="barbellRowSet1" min="1" max="5" placeholder="0" 
             autofocus>
-            <input type="number" required class="validated-field" id="barbellRowSet2" min="1" max="5" placeholder="5" 
+            <input type="number" required class="validated-field" id="barbellRowSet2" min="1" max="5" placeholder="0" 
             autofocus>
-            <input type="number" required class="validated-field" id="barbellRowSet3" min="1" max="5" placeholder="5" 
+            <input type="number" required class="validated-field" id="barbellRowSet3" min="1" max="5" placeholder="0" 
             autofocus>
-            <input type="number" required class="validated-field" id="barbellRowSet4" min="1" max="5" placeholder="5" 
+            <input type="number" required class="validated-field" id="barbellRowSet4" min="1" max="5" placeholder="0" 
             autofocus>
-            <input type="number" required class="validated-field" id="barbellRowSet5" min="1" max="5" placeholder="5" 
+            <input type="number" required class="validated-field" id="barbellRowSet5" min="1" max="5" placeholder="0" 
             autofocus>
         </div>
         <div class="bodyWeight">
@@ -247,15 +278,15 @@ function displayWorkoutB(workoutB) {
         </div>
         <div class="reps">
             <div class="repInputs">
-                <input type="number" required class="validated-field" id="squatSet1" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="squatSet1" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="squatSet2" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="squatSet2" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="squatSet3" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="squatSet3" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="squatSet4" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="squatSet4" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="squatSet5" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="squatSet5" min="1" max="5" placeholder="0" 
                 autofocus>
             </div>
         </div>
@@ -268,15 +299,15 @@ function displayWorkoutB(workoutB) {
         </div>
         <div class="reps">
             <div class="repInputs">
-                <input type="number" required class="validated-field" id="overheadPressSet1" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="overheadPressSet1" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="overheadPressSet2" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="overheadPressSet2" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="overheadPressSet3" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="overheadPressSet3" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="overheadPressSet4" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="overheadPressSet4" min="1" max="5" placeholder="0" 
                 autofocus>
-                <input type="number" required class="validated-field" id="overheadPressSet5" min="1" max="5" placeholder="5" 
+                <input type="number" required class="validated-field" id="overheadPressSet5" min="1" max="5" placeholder="0" 
                 autofocus>
             </div>
         </div>
@@ -289,7 +320,7 @@ function displayWorkoutB(workoutB) {
         </div>
         <div class="reps">
         <div class="repInputs">
-            <input type="number" required class="validated-field" id="deadliftSet1" min="1" max="5" placeholder="5" 
+            <input type="number" required class="validated-field" id="deadliftSet1" min="1" max="5" placeholder="0" 
             autofocus>
         </div>
         <div class="bodyWeight">

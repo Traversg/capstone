@@ -8,6 +8,11 @@ import com.nashss.se.fivelifts.dynamodb.WorkoutDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import com.nashss.se.fivelifts.enums.WorkoutType;
+import com.nashss.se.fivelifts.exceptions.BodyWeightLessThanZeroException;
+import com.nashss.se.fivelifts.exceptions.RepsLessThanZeroException;
+import com.nashss.se.fivelifts.exceptions.TooManyRepsException;
+import com.nashss.se.fivelifts.metrics.MetricsConstants;
+import com.nashss.se.fivelifts.metrics.MetricsPublisher;
 import com.nashss.se.fivelifts.models.WorkoutModel;
 import com.nashss.se.fivelifts.utils.Increments;
 
@@ -17,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -29,17 +35,20 @@ public class AddWorkoutActivity {
     private final Logger log = LogManager.getLogger();
     private final UserDao userDao;
     private final WorkoutDao workoutDao;
+    private final MetricsPublisher metricsPublisher;
 
     /**
      * Instantiates a new AddWorkoutActivity object.
      *
      * @param userDao UserDao to access the users table.
      * @param workoutDao WorkoutDao to access the workouts table.
+     * @param metricsPublisher used to record metrics.
      */
     @Inject
-    public AddWorkoutActivity(WorkoutDao workoutDao, UserDao userDao) {
+    public AddWorkoutActivity(WorkoutDao workoutDao, UserDao userDao, MetricsPublisher metricsPublisher) {
         this.userDao = userDao;
         this.workoutDao = workoutDao;
+        this.metricsPublisher = metricsPublisher;
     }
 
     /**
@@ -49,13 +58,61 @@ public class AddWorkoutActivity {
      * <p>
      * It then returns the newly added workout.
      * <p>
-     *
+     * If any reps in reps is more than six throws {@link TooManyRepsException}
+     * If any rep in reps is less than zero throws {@link RepsLessThanZeroException}
+     * If body weight entered is less than zero throws {@link BodyWeightLessThanZeroException}
+     * If body weight entered is zero, set body weight to previously entered body weight.
      * @param addWorkoutRequest request object containing the user name, body weight, reps, and lift data
      *                              associated with it
      * @return addWorkoutResult result object containing the API defined {@link WorkoutModel}
      */
     public AddWorkoutResult handleRequest(final AddWorkoutRequest addWorkoutRequest) {
         log.info("Received AddWorkoutRequest {}", addWorkoutRequest);
+
+        double bodyWeight = addWorkoutRequest.getBodyWeight();
+        User user = userDao.getUser(addWorkoutRequest.getEmail());
+
+        if (bodyWeight == 0) {
+            bodyWeight = user.getBodyWeight();
+        }
+
+        if (bodyWeight < 0) {
+            metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_BODYWEIGHTLESSTHANZERO_COUNT, 1);
+            throw new BodyWeightLessThanZeroException("Body Weight cannot be less than zero.");
+        }
+        metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_BODYWEIGHTLESSTHANZERO_COUNT, 0);
+
+        List<List<Integer>> repslist = new ArrayList<>();
+
+        List<Integer> squatReps = addWorkoutRequest.getSquatReps();
+        List<Integer> benchPressReps = addWorkoutRequest.getBenchPressReps();
+        List<Integer> barbellRowReps = addWorkoutRequest.getBarbellRowReps();
+        List<Integer> overheadPressReps = addWorkoutRequest.getOverheadPressReps();
+        List<Integer> deadliftReps = addWorkoutRequest.getDeadliftReps();
+
+        repslist.add(squatReps);
+        repslist.add(benchPressReps);
+        repslist.add(barbellRowReps);
+        repslist.add(overheadPressReps);
+        repslist.add(deadliftReps);
+
+        boolean isMoreThanFive = repslist.stream()
+                .anyMatch(this::repsMoreThanFive);
+
+        boolean isLessThanZero = repslist.stream()
+                .anyMatch(this::repsLessThan0);
+
+        if (isMoreThanFive) {
+            metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_TOOMANYREPSEXCEPTION_COUNT, 1);
+            throw new TooManyRepsException("Reps entered cannot be more than five.");
+        }
+        metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_TOOMANYREPSEXCEPTION_COUNT, 0);
+
+        if (isLessThanZero) {
+            metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_REPSLESSTHANZEROEXCEPTION_COUNT, 1);
+            throw new RepsLessThanZeroException("Reps entered cannot be less than zero.");
+        }
+        metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_REPSLESSTHANZEROEXCEPTION_COUNT, 0);
 
         WorkoutType workoutType = (addWorkoutRequest.getWorkoutType().equals("Workout A")) ?
                 WorkoutType.WORKOUT_A : WorkoutType.WORKOUT_B;
@@ -73,16 +130,15 @@ public class AddWorkoutActivity {
         workout.setOverheadPressWeight(addWorkoutRequest.getOverheadPressWeight());
         workout.setBarbellRowWeight(addWorkoutRequest.getBarbellRowWeight());
         workout.setDeadliftWeight(addWorkoutRequest.getDeadliftWeight());
-        workout.setSquatReps(addWorkoutRequest.getSquatReps());
-        workout.setBenchPressReps(addWorkoutRequest.getBenchPressReps());
-        workout.setOverheadPressReps(addWorkoutRequest.getOverheadPressReps());
-        workout.setBarbellRowReps(addWorkoutRequest.getBarbellRowReps());
-        workout.setDeadliftReps(addWorkoutRequest.getDeadliftReps());
-        workout.setBodyWeight(addWorkoutRequest.getBodyWeight());
+        workout.setSquatReps(squatReps);
+        workout.setBenchPressReps(benchPressReps);
+        workout.setOverheadPressReps(overheadPressReps);
+        workout.setBarbellRowReps(barbellRowReps);
+        workout.setDeadliftReps(deadliftReps);
+        workout.setBodyWeight(bodyWeight);
 
-        User user = userDao.getUser(addWorkoutRequest.getEmail());
-        user.setBodyWeight(addWorkoutRequest.getBodyWeight());
-        List<Integer> squatReps = addWorkoutRequest.getSquatReps();
+        user.setBodyWeight(bodyWeight);
+
         if (!squatReps.isEmpty()) {
             if (canIncrement(getReps(squatReps))) {
                 user.setSquat(addWorkoutRequest.getSquatWeight() +
@@ -92,7 +148,6 @@ public class AddWorkoutActivity {
             }
         }
 
-        List<Integer> benchPressReps = addWorkoutRequest.getBenchPressReps();
         if (!benchPressReps.isEmpty()) {
             if (canIncrement(getReps(benchPressReps))) {
                 user.setBenchPress(addWorkoutRequest.getBenchPressWeight() + Increments.benchPress());
@@ -101,7 +156,6 @@ public class AddWorkoutActivity {
             }
         }
 
-        List<Integer> overheadPressReps = addWorkoutRequest.getOverheadPressReps();
         if (!overheadPressReps.isEmpty()) {
             if (canIncrement(getReps(overheadPressReps))) {
                 user.setOverheadPress(addWorkoutRequest.getOverheadPressWeight() + Increments.overheadPress());
@@ -110,7 +164,6 @@ public class AddWorkoutActivity {
             }
         }
 
-        List<Integer> barbellRowReps = addWorkoutRequest.getBarbellRowReps();
         if (!barbellRowReps.isEmpty()) {
             if (canIncrement(getReps(barbellRowReps))) {
                 user.setBarbellRow(addWorkoutRequest.getBarbellRowWeight() + Increments.barbellRow());
@@ -119,7 +172,6 @@ public class AddWorkoutActivity {
             }
         }
 
-        List<Integer> deadliftReps = addWorkoutRequest.getDeadliftReps();
         if (!deadliftReps.isEmpty()) {
             if (canIncrementDeadlift(getReps(deadliftReps))) {
                 user.setDeadlift(addWorkoutRequest.getDeadliftWeight() + Increments.deadlift());
@@ -150,5 +202,15 @@ public class AddWorkoutActivity {
         return reps.stream()
                 .mapToInt(Integer::intValue)
                 .sum();
+    }
+
+    private boolean repsMoreThanFive(List<Integer> reps) {
+        return reps.stream()
+                .anyMatch(rep -> rep > 5);
+    }
+
+    private boolean repsLessThan0(List<Integer> reps) {
+        return reps.stream()
+                .anyMatch(rep-> rep < 0);
     }
 }

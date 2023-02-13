@@ -9,7 +9,7 @@ import DataStore from '../util/DataStore';
 class UpcomingWorkouts extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'displayUpcomingWorkouts', 'startWorkout'], this);
+        this.bindClassMethods(['mount', 'displayUpcomingWorkouts', 'isCurrentUser', 'isLoggedIn'], this);
         this.dataStore = new DataStore();
         this.header = new Header(this.dataStore);
     }
@@ -17,11 +17,12 @@ class UpcomingWorkouts extends BindingClass {
     /**
      * Add the header to the page and load the MusicPlaylistClient.
      */
-    mount() {
+    async mount() {
         document.getElementById('startWorkoutButton').addEventListener('click', this.startWorkout);
         this.header.addHeaderToPage();
         this.client = new FiveLiftsClient();
-        this.displayUpcomingWorkouts();
+        await this.isCurrentUser();
+        await this.isLoggedIn();
     }
 
     /**
@@ -42,8 +43,34 @@ class UpcomingWorkouts extends BindingClass {
         }
     }
 
-    async startWorkout() {
+    async isCurrentUser() {
+        const currentUser =  await this.client.getIsCurrentUser();
+        if (!currentUser) {
+            const upcomingWorkoutsCard = document.getElementById('upcomingWorkoutsCard');
+            upcomingWorkoutsCard.innerHTML = `
+            <h1 class="notCurrentUser">Please enter your starting weights first.</h1>
+            <button class="startingWeightsButton" id="startingWeightsButton" type="button">ENTER STARTING WEIGHTS</button>
+            `;
+            document.getElementById('startingWeightsButton').addEventListener('click', this.redirectToStartingWeights);
+        } else {
+            this.displayUpcomingWorkouts();
+        }
+    }
+
+    async isLoggedIn() {
+        const isLoggedIn = await this.client.isLoggedIn();
+
+        if (!isLoggedIn) {
+            window.location.href = `/index.html`;
+        }
+    }
+
+    startWorkout() {
         window.location.href = `/currentWorkout.html`;
+    }
+
+    redirectToStartingWeights() {
+        window.location.href = `/startingWeights.html`;
     }
 }
 
@@ -62,7 +89,6 @@ function getDisplayDate(year, month, day) {
         const monthName = workoutDate.toLocaleDateString(`default`, {
             month: 'long'
         });
-        // console.log(monthName);
         return `${dayOfWeekName}, ${monthName} ${day}`
 }
 
@@ -72,7 +98,6 @@ function getDisplayDate(year, month, day) {
  * @param {*} workoutNumber 
  */
 function displayWorkoutA(workoutA, workoutNumber) {
-    //console.log(currentWorkout.workoutDate[1])
     let displayDate = getDisplayDate(workoutA.workoutDate[0],
         (workoutA.workoutDate[1] - 1), workoutA.workoutDate[2]);
 

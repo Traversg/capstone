@@ -9,21 +9,21 @@ import DataStore from '../util/DataStore';
 class StartingWeights extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'redirectToWorkout'], this);
+        this.bindClassMethods(['mount', 'submit', 'isLoggedIn', 'isCurrentUser'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.redirectToWorkout);
         this.header = new Header(this.dataStore);
     }
 
     /**
-     * Add the header to the page and load the MusicPlaylistClient.
+     * Add the header to the page and load the FiveListServiceClient.
      */
-    mount() {
-        document.getElementById('starting-weights-button').addEventListener('click', this.submit);
-
-        this.header.addHeaderToPage();
-
+    async mount() {
         this.client = new FiveLiftsClient();
+        await this.isLoggedIn();
+        await this.isCurrentUser();
+        document.getElementById('starting-weights-button').addEventListener('click', this.submit);
+        this.header.addHeaderToPage();
     }
 
     /**
@@ -58,7 +58,29 @@ class StartingWeights extends BindingClass {
     }
 
     /**
-     * When the playlist is updated in the datastore, redirect to the view playlist page.
+     * Checks to see if user is logged in. If not, user is redirected to home page.
+     */
+    async isLoggedIn() {
+        const isLoggedIn = await this.client.isLoggedIn();
+
+        if (!isLoggedIn) {
+            window.location.href = `/index.html`;
+        }
+    }
+
+    /**
+     * Checks to see if user has already created a profile. 
+     * If so, user is redirected to upcoming workouts page.
+     */
+    async isCurrentUser() {
+        const currentUser = await this.client.getIsCurrentUser();
+        if (currentUser.isCurrentUser) {
+            window.location.href = `/upcomingWorkouts.html`
+        } 
+    }
+
+    /**
+     * When the profile is updated in the datastore, redirect to the upcoming workouts page.
      */
     redirectToWorkout() {
         const profile = this.dataStore.get('profile');

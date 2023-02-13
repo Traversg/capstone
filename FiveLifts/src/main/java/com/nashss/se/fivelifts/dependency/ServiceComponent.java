@@ -5,6 +5,7 @@ import com.nashss.se.fivelifts.activity.GetIsCurrentUserActivity;
 import com.nashss.se.fivelifts.activity.GetUpcomingWorkoutsActivity;
 import com.nashss.se.fivelifts.activity.GetWorkoutHistoryActivity;
 
+import com.nashss.se.fivelifts.metrics.MetricsPublisher;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -13,7 +14,7 @@ import javax.inject.Singleton;
  * Dagger component for providing dependency injection in the FiveLifts Service.
  */
 @Singleton
-@Component(modules = {DaoModule.class})
+@Component(modules = {DaoModule.class, MetricsModule.class})
 public interface ServiceComponent {
 
     /**
