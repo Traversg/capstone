@@ -260,7 +260,7 @@ public class AddWorkoutActivityTest {
                 .withDeadliftReps(expectedDeadliftReps)
                 .withOverheadPressReps(overheadPresWithSixReps)
                 .build();
-        
+
         // THEN
         assertThrows(TooManyRepsException.class, () -> addWorkoutActivity.handleRequest(request));
         verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_TOOMANYREPSEXCEPTION_COUNT), anyDouble());
