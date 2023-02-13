@@ -11,6 +11,8 @@ import com.nashss.se.fivelifts.enums.WorkoutType;
 import com.nashss.se.fivelifts.exceptions.BodyWeightLessThanZeroException;
 import com.nashss.se.fivelifts.exceptions.RepsLessThanZeroException;
 import com.nashss.se.fivelifts.exceptions.TooManyRepsException;
+import com.nashss.se.fivelifts.metrics.MetricsConstants;
+import com.nashss.se.fivelifts.metrics.MetricsPublisher;
 import com.nashss.se.fivelifts.models.WorkoutModel;
 import com.nashss.se.fivelifts.utils.Increments;
 
@@ -33,17 +35,20 @@ public class AddWorkoutActivity {
     private final Logger log = LogManager.getLogger();
     private final UserDao userDao;
     private final WorkoutDao workoutDao;
+    private final MetricsPublisher metricsPublisher;
 
     /**
      * Instantiates a new AddWorkoutActivity object.
      *
      * @param userDao UserDao to access the users table.
      * @param workoutDao WorkoutDao to access the workouts table.
+     * @param metricsPublisher used to record metrics.
      */
     @Inject
-    public AddWorkoutActivity(WorkoutDao workoutDao, UserDao userDao) {
+    public AddWorkoutActivity(WorkoutDao workoutDao, UserDao userDao, MetricsPublisher metricsPublisher) {
         this.userDao = userDao;
         this.workoutDao = workoutDao;
+        this.metricsPublisher = metricsPublisher;
     }
 
     /**
@@ -72,8 +77,10 @@ public class AddWorkoutActivity {
         }
 
         if (bodyWeight < 0) {
+            metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_BODYWEIGHTLESSTHANZERO_COUNT, 1);
             throw new BodyWeightLessThanZeroException("Body Weight cannot be less than zero.");
         }
+        metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_BODYWEIGHTLESSTHANZERO_COUNT, 0);
 
         List<List<Integer>> repslist = new ArrayList<>();
 
@@ -96,12 +103,16 @@ public class AddWorkoutActivity {
                 .anyMatch(this::repsLessThan0);
 
         if (isMoreThanFive) {
+            metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_TOOMANYREPSEXCEPTION_COUNT, 1);
             throw new TooManyRepsException("Reps entered cannot be more than five.");
         }
+        metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_TOOMANYREPSEXCEPTION_COUNT, 0);
 
         if (isLessThanZero) {
+            metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_REPSLESSTHANZEROEXCEPTION_COUNT, 1);
             throw new RepsLessThanZeroException("Reps entered cannot be less than zero.");
         }
+        metricsPublisher.addCount(MetricsConstants.ADDWORKOUT_REPSLESSTHANZEROEXCEPTION_COUNT, 0);
 
         WorkoutType workoutType = (addWorkoutRequest.getWorkoutType().equals("Workout A")) ?
                 WorkoutType.WORKOUT_A : WorkoutType.WORKOUT_B;

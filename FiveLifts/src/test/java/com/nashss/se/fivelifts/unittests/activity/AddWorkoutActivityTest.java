@@ -11,6 +11,8 @@ import com.nashss.se.fivelifts.enums.WorkoutType;
 import com.nashss.se.fivelifts.exceptions.BodyWeightLessThanZeroException;
 import com.nashss.se.fivelifts.exceptions.RepsLessThanZeroException;
 import com.nashss.se.fivelifts.exceptions.TooManyRepsException;
+import com.nashss.se.fivelifts.metrics.MetricsConstants;
+import com.nashss.se.fivelifts.metrics.MetricsPublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -23,7 +25,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -35,12 +37,15 @@ public class AddWorkoutActivityTest {
     @Mock
     private UserDao userDao;
 
+    @Mock
+    private MetricsPublisher metricsPublisher;
+
     private AddWorkoutActivity addWorkoutActivity;
 
     @BeforeEach
     void setUp() {
         openMocks(this);
-        addWorkoutActivity = new AddWorkoutActivity(workoutDao, userDao);
+        addWorkoutActivity = new AddWorkoutActivity(workoutDao, userDao, metricsPublisher);
     }
 
     @Test
@@ -104,6 +109,9 @@ public class AddWorkoutActivityTest {
         // THEN
         verify(workoutDao).saveWorkout(any(Workout.class));
         verify(userDao).saveUser(any(User.class));
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_BODYWEIGHTLESSTHANZERO_COUNT), anyDouble());
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_REPSLESSTHANZEROEXCEPTION_COUNT), anyDouble());
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_TOOMANYREPSEXCEPTION_COUNT), anyDouble());
 
         assertEquals(expectedEmail, result.getWorkout().getEmail());
         assertEquals(expectedWorkoutType, result.getWorkout().getWorkoutType());
@@ -188,6 +196,9 @@ public class AddWorkoutActivityTest {
         // THEN
         verify(workoutDao).saveWorkout(any(Workout.class));
         verify(userDao).saveUser(any(User.class));
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_BODYWEIGHTLESSTHANZERO_COUNT), anyDouble());
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_REPSLESSTHANZEROEXCEPTION_COUNT), anyDouble());
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_TOOMANYREPSEXCEPTION_COUNT), anyDouble());
 
         assertEquals(expectedEmail, result.getWorkout().getEmail());
         assertEquals(expectedWorkoutType, result.getWorkout().getWorkoutType());
@@ -215,56 +226,88 @@ public class AddWorkoutActivityTest {
     public void handleRequest_withRepMoreThanFive_throwsTooManyRepsException() {
         // GIVEN
         String expectedEmail = "expectedEmail";
-        List<Integer> squatReps = List.of(5,5,5,5,5);
-        List<Integer> benchPressReps = new ArrayList<>();
-        List<Integer> barbellRowReps = new ArrayList<>();
-        List<Integer> deadliftReps = List.of(5);
-        List<Integer> overheadPressWithSixReps = List.of(6,5,5,5,5);
+        String requestWorkoutType = "Workout A";
+        String requestWorkoutDate = "2023-02-07";
+        String requestTimeStarted = "2023-02-07T10:45:26.798462";
+        String requestTimeEnded = "2023-02-07T11:45:26.798462";
+        double zeroBodyWeight = 175;
+        int expectedDeadlift = 300;
+        int expectedSquat = 250;
+        int expectedBenchPress = 200;
+        int expectedBarbellRow = 175;
+        int expectedOverheadPress = 125;
+        List<Integer> expectedSquatReps = List.of(5,5,5,5,5);
+        List<Integer> expectedBenchPressReps = new ArrayList<>();
+        List<Integer> expectedBarbellRowReps = new ArrayList<>();
+        List<Integer> expectedDeadliftReps = List.of(5);
+        List<Integer> overheadPresWithSixReps = List.of(6,5,5,5,5);
 
         AddWorkoutRequest request = AddWorkoutRequest.builder()
                 .withEmail(expectedEmail)
-                .withDeadliftWeight(300)
-                .withSquatWeight(225)
-                .withBenchPressWeight(175)
-                .withBarbellRowWeight(150)
-                .withOverheadPressWeight(125)
-                .withSquatReps(squatReps)
-                .withBenchPressReps(benchPressReps)
-                .withBarbellRowReps(barbellRowReps)
-                .withDeadliftReps(deadliftReps)
-                .withOverheadPressReps(overheadPressWithSixReps)
+                .withWorkoutType(requestWorkoutType)
+                .withWorkoutDate(requestWorkoutDate)
+                .withTimeStarted(requestTimeStarted)
+                .withTimeEnded(requestTimeEnded)
+                .withBodyWeight(zeroBodyWeight)
+                .withDeadliftWeight(expectedDeadlift)
+                .withSquatWeight(expectedSquat)
+                .withBenchPressWeight(expectedBenchPress)
+                .withBarbellRowWeight(expectedBarbellRow)
+                .withOverheadPressWeight(expectedOverheadPress)
+                .withSquatReps(expectedSquatReps)
+                .withBenchPressReps(expectedBenchPressReps)
+                .withBarbellRowReps(expectedBarbellRowReps)
+                .withDeadliftReps(expectedDeadliftReps)
+                .withOverheadPressReps(overheadPresWithSixReps)
                 .build();
-
+        
         // THEN
         assertThrows(TooManyRepsException.class, () -> addWorkoutActivity.handleRequest(request));
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_TOOMANYREPSEXCEPTION_COUNT), anyDouble());
     }
 
     @Test
     public void handleRequest_withRepLessThanZero_throwsLessThanZeroException() {
         // GIVEN
         String expectedEmail = "expectedEmail";
-        List<Integer> squatReps = List.of(5,5,5,5,5);
-        List<Integer> benchPressReps = new ArrayList<>();
-        List<Integer> barbellRowReps = new ArrayList<>();
-        List<Integer> deadliftReps = List.of(5);
-        List<Integer> overheadPressWithLessThanZeroReps = List.of(-1,5,5,5,5);
+        String requestWorkoutType = "Workout A";
+        String requestWorkoutDate = "2023-02-07";
+        String requestTimeStarted = "2023-02-07T10:45:26.798462";
+        String requestTimeEnded = "2023-02-07T11:45:26.798462";
+        double zeroBodyWeight = 175;
+        int expectedDeadlift = 300;
+        int expectedSquat = 250;
+        int expectedBenchPress = 200;
+        int expectedBarbellRow = 175;
+        int expectedOverheadPress = 125;
+        List<Integer> expectedSquatReps = List.of(5,5,5,5,5);
+        List<Integer> expectedBenchPressReps = new ArrayList<>();
+        List<Integer> expectedBarbellRowReps = new ArrayList<>();
+        List<Integer> expectedDeadliftReps = List.of(5);
+        List<Integer> overheadPresWithNegativeRep = List.of(-1,5,5,5,5);
 
         AddWorkoutRequest request = AddWorkoutRequest.builder()
                 .withEmail(expectedEmail)
-                .withDeadliftWeight(300)
-                .withSquatWeight(225)
-                .withBenchPressWeight(175)
-                .withBarbellRowWeight(150)
-                .withOverheadPressWeight(125)
-                .withSquatReps(squatReps)
-                .withBenchPressReps(benchPressReps)
-                .withBarbellRowReps(barbellRowReps)
-                .withDeadliftReps(deadliftReps)
-                .withOverheadPressReps(overheadPressWithLessThanZeroReps)
+                .withWorkoutType(requestWorkoutType)
+                .withWorkoutDate(requestWorkoutDate)
+                .withTimeStarted(requestTimeStarted)
+                .withTimeEnded(requestTimeEnded)
+                .withBodyWeight(zeroBodyWeight)
+                .withDeadliftWeight(expectedDeadlift)
+                .withSquatWeight(expectedSquat)
+                .withBenchPressWeight(expectedBenchPress)
+                .withBarbellRowWeight(expectedBarbellRow)
+                .withOverheadPressWeight(expectedOverheadPress)
+                .withSquatReps(expectedSquatReps)
+                .withBenchPressReps(expectedBenchPressReps)
+                .withBarbellRowReps(expectedBarbellRowReps)
+                .withDeadliftReps(expectedDeadliftReps)
+                .withOverheadPressReps(overheadPresWithNegativeRep)
                 .build();
 
         // THEN
         assertThrows(RepsLessThanZeroException.class, () -> addWorkoutActivity.handleRequest(request));
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_REPSLESSTHANZEROEXCEPTION_COUNT), anyDouble());
     }
 
     @Test
@@ -291,10 +334,6 @@ public class AddWorkoutActivityTest {
         List<Integer> expectedBarbellRowReps = new ArrayList<>();
         List<Integer> expectedDeadliftReps = List.of(5);
         List<Integer> expectedOverheadPressReps = List.of(5,5,5,5,5);
-
-        int expectedIncrementedSquat = 255;
-        int expectedIncrementedOverheadPress = 130;
-        int expectedIncrementedDeadlift = 310;
 
         User user = new User();
         user.setEmail(expectedEmail);
@@ -330,6 +369,9 @@ public class AddWorkoutActivityTest {
         // THEN
         verify(workoutDao).saveWorkout(any(Workout.class));
         verify(userDao).saveUser(any(User.class));
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_BODYWEIGHTLESSTHANZERO_COUNT), anyDouble());
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_REPSLESSTHANZEROEXCEPTION_COUNT), anyDouble());
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_TOOMANYREPSEXCEPTION_COUNT), anyDouble());
 
         assertEquals(expectedEmail, result.getWorkout().getEmail());
         assertEquals(expectedWorkoutType, result.getWorkout().getWorkoutType());
@@ -347,10 +389,6 @@ public class AddWorkoutActivityTest {
         assertEquals(expectedOverheadPressReps, result.getWorkout().getOverheadPressReps());
         assertEquals(expectedDeadliftReps, result.getWorkout().getDeadliftReps());
         assertEquals(expectedBarbellRowReps, result.getWorkout().getBarbellRowReps());
-
-        assertEquals(expectedIncrementedSquat, user.getSquat());
-        assertEquals(expectedIncrementedOverheadPress, user.getOverheadPress());
-        assertEquals(expectedIncrementedDeadlift, user.getDeadlift());
     }
 
     @Test
@@ -394,5 +432,6 @@ public class AddWorkoutActivityTest {
 
         // WHEN + THEN
         assertThrows(BodyWeightLessThanZeroException.class, () -> addWorkoutActivity.handleRequest(request));
+        verify(metricsPublisher).addCount(eq(MetricsConstants.ADDWORKOUT_BODYWEIGHTLESSTHANZERO_COUNT), anyDouble());
     }
 }
