@@ -365,6 +365,7 @@ function upTimer(count) {
 }
 
 function getDateString() {
+    const currentDate = new Date();
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     const date = currentDate.getDate();
