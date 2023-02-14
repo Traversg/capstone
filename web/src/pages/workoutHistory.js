@@ -68,7 +68,7 @@ class WorkoutHistory extends BindingClass {
 
     async resetProfile() {
         const isDeleted = await this.client.deleteUserProfileAndWorkoutHistory();
-        if (isDeleted.isDeleted) {
+        if (isDeleted.deleted) {
             window.location.href = `/index.html`;
         }
     }
