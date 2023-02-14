@@ -12,6 +12,8 @@ public class MetricsConstants {
             "AddWorkout.BodyWeightLessThanZero.Count";
     public static final String CREATEPROFILE_BODYWEIGHTLESSTHANZERO_COUNT =
             "CreateProfile.BodyWeightLessThanZero.Count";
+    public static final String GETMOSTRECENTWORKOUT_WORKOUTNOTFOUND_COUNT =
+            "GetMostRecentWorkout.WorkoutNotFound.Count";
     public static final String SERVICE = "Service";
     public static final String SERVICE_NAME = "FiveLiftsService";
     public static final String NAMESPACE_NAME = "Capstone/FiveLiftsService";
