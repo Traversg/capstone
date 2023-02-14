@@ -251,7 +251,7 @@ export default class FiveLiftsClient extends BindingClass {
                     Authorization: `Bearer ${token}`
                 }
             });
-            return response.data.isDeleted;
+            return response.data;
         } catch (error) {
             this.handleError(error, errorCallback);
         }
