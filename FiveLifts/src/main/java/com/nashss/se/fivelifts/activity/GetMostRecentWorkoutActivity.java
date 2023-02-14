@@ -8,6 +8,7 @@ import com.nashss.se.fivelifts.dynamodb.models.Workout;
 import com.nashss.se.fivelifts.exceptions.WorkoutNotFoundException;
 import com.nashss.se.fivelifts.metrics.MetricsConstants;
 import com.nashss.se.fivelifts.metrics.MetricsPublisher;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,6 +29,7 @@ public class GetMostRecentWorkoutActivity {
      * Instantiates a new GetMostRecentWorkoutActivity object.
      *
      * @param workoutDao WorkoutDao to access the workouts table.
+     * @param metricsPublisher to record metrics.
      */
     @Inject
     public GetMostRecentWorkoutActivity(WorkoutDao workoutDao,
@@ -38,7 +40,7 @@ public class GetMostRecentWorkoutActivity {
 
     /**
      * This method handles the incoming request by
-     * retrieving the most recent workout from the database
+     * retrieving the most recent workout from the database.
      * <p>
      *
      * @param getMostRecentWorkoutRequest request object containing the email

@@ -2,6 +2,10 @@ package com.nashss.se.fivelifts.activity.results;
 
 import com.nashss.se.fivelifts.models.WorkoutModel;
 
+/**
+ * Implementation of the GetMostRecentWorkoutResult for the
+ * FiveLifts' GetMostRecentWorkout API.
+ */
 public class GetMostRecentWorkoutResult {
     private final WorkoutModel mostRecentWorkout;
 

@@ -1,9 +1,10 @@
 package com.nashss.se.fivelifts.lambda;
 
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.nashss.se.fivelifts.activity.requests.GetMostRecentWorkoutRequest;
 import com.nashss.se.fivelifts.activity.results.GetMostRecentWorkoutResult;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 /**
  * Takes a GetMostRecentWorkoutLambda and returns a LambdaResponse.
@@ -13,7 +14,8 @@ public class GetMostRecentWorkoutLambda
     implements RequestHandler<AuthenticatedLambdaRequest<GetMostRecentWorkoutRequest>, LambdaResponse> {
 
     @Override
-    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetMostRecentWorkoutRequest> input, Context context) {
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetMostRecentWorkoutRequest> input,
+                                        Context context) {
         return super.runActivity(
             () -> input.fromUserClaims(claims ->
                 GetMostRecentWorkoutRequest.builder()

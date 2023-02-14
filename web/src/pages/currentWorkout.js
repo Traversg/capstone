@@ -136,6 +136,9 @@ class CurrentWorkout extends BindingClass {
         });
     }
 
+    /**
+     * Method to redirect to Upcoming Workouts page.
+     */
     async redirectToUpcomingWorkouts() {
         const completedWorkout = this.dataStore.get('completedWorkout');
         if (completedWorkout != null) {
@@ -143,6 +146,9 @@ class CurrentWorkout extends BindingClass {
         }
     }
 
+    /**
+     * Method to start rest timer.
+     */
     async startTimer() {
         const timerButton = document.getElementById('timerButton');
         timerButton.disabled = true;
@@ -162,6 +168,9 @@ class CurrentWorkout extends BindingClass {
         }, 1000);
     }
 
+    /**
+     * Method to check if a user is logged in.
+     */
     async isLoggedIn() {
         const isLoggedIn = await this.client.isLoggedIn();
 
@@ -170,6 +179,10 @@ class CurrentWorkout extends BindingClass {
         }
     }
 
+
+    /**
+     * Method to check if a user has a profile in the user table.
+     */
     async isCurrentUser() {
         const currentUser =  await this.client.getIsCurrentUser();
         if (!currentUser) {
