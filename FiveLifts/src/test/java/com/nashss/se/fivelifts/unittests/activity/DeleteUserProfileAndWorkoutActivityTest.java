@@ -18,10 +18,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-@Disabled
 public class DeleteUserProfileAndWorkoutActivityTest {
     @Mock
     private UserDao userDao;
@@ -56,7 +55,6 @@ public class DeleteUserProfileAndWorkoutActivityTest {
                 .withEmail(userEmail)
                 .build();
 
-        when(userDao.getUser(userEmail)).thenReturn(null);
         when(workoutDao.getWorkoutHistory(userEmail)).thenReturn(workoutHistory);
 
         // WHEN
@@ -64,6 +62,8 @@ public class DeleteUserProfileAndWorkoutActivityTest {
                 deleteUserProfileAndWorkoutHistoryActivity.handleRequest(request);
 
         // THEN
+        verify(workoutDao, times(workoutHistory.size())).deleteWorkout(workout);
+        verify(userDao).deleteUser(user);
         assertEquals(userEmail, result.getEmail());
         assertTrue(result.isDeleted());
     }

@@ -6,8 +6,6 @@ import com.nashss.se.fivelifts.dynamodb.UserDao;
 import com.nashss.se.fivelifts.dynamodb.WorkoutDao;
 import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.dynamodb.models.Workout;
-import com.nashss.se.fivelifts.exceptions.UserNotFoundException;
-import com.nashss.se.fivelifts.exceptions.WorkoutNotFoundException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,38 +62,14 @@ public class DeleteUserProfileAndWorkoutHistoryActivity {
         user.setEmail(userEmail);
         userDao.deleteUser(user);
 
-        boolean userDeleted = false;
-        try {
-            userDao.getUser(userEmail);
-        } catch (UserNotFoundException e) {
-            userDeleted = true;
-        }
-
         List<Workout> workoutHistory = workoutDao.getWorkoutHistory(userEmail);
         for (Workout workout : workoutHistory) {
-            Workout workoutToDelete = new Workout();
-            workoutToDelete.setEmail(userEmail);
-            workoutToDelete.setWorkoutDate(workout.getWorkoutDate());
-            workoutDao.deleteWorkout(workoutToDelete);
-        }
-
-        boolean workoutHistoryDeleted = false;
-        try {
-            workoutDao.getWorkoutHistory(userEmail);
-        } catch (WorkoutNotFoundException e) {
-            workoutHistoryDeleted = true;
-        }
-
-        if (userDeleted && workoutHistoryDeleted) {
-            return DeleteUserProfileAndWorkoutHistoryResult.builder()
-                    .withEmail(userEmail)
-                    .withIsDeleted(true)
-                    .build();
+            workoutDao.deleteWorkout(workout);
         }
 
         return DeleteUserProfileAndWorkoutHistoryResult.builder()
                 .withEmail(userEmail)
-                .withIsDeleted(false)
+                .withIsDeleted(true)
                 .build();
     }
 }

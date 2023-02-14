@@ -398,6 +398,12 @@ span {
     flex-direction: column;
 }
 
+.workoutComplete {
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 250px;
+}
+
 /* WORKOUT HISTORY PAGE */
 
 .workout {
@@ -424,4 +430,12 @@ span {
 .bodyWeightHistory {
     display: flex;
     justify-content: space-between;
+}
+
+.resetButton {
+    font-size: 24px;
+    padding: 10px 118px;
+    border-radius: 4px;
+    font-family: 'Anton', sans-serif;
+    width: 550px;
 }
