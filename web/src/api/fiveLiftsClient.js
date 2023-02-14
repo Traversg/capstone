@@ -16,7 +16,8 @@ export default class FiveLiftsClient extends BindingClass {
         super();
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'createProfile', 
-        'getUpcomingWorkouts', 'getIsCurrentUser', 'getCurrentWorkout', 'addWorkout', 'getWorkoutHistory'];
+        'getUpcomingWorkouts', 'getIsCurrentUser', 'getCurrentWorkout', 'addWorkout', 'getWorkoutHistory',
+        'deleteUserProfileAndWorkoutHistory'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -170,7 +171,7 @@ export default class FiveLiftsClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns workout history.
      */
-        async getWorkoutHistory() {
+        async getWorkoutHistory(errorCallback) {
             try {
                 const token = await this.getTokenOrThrow("Only authenicated users can access user information.");
                 const response = await this.axiosClient.get('workoutHistory', {
@@ -234,6 +235,25 @@ export default class FiveLiftsClient extends BindingClass {
             return response.data.workout;
         } catch (error) {
             this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Deletes current user and their workout history.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns true if deleted.
+     */
+    async deleteUserProfileAndWorkoutHistory(errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenicated users can access user information.");
+            const response = await this.axiosClient.delete('resetProfile', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.isDeleted;
+        } catch (error) {
+            this.handleError(error, errorCallback);
         }
     }
 

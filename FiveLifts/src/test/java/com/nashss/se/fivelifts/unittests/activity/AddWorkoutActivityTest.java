@@ -20,6 +20,7 @@ import org.mockito.Mock;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,10 +57,10 @@ public class AddWorkoutActivityTest {
         WorkoutType expectedWorkoutType = WorkoutType.WORKOUT_A;
         String requestWorkoutDate = "2023-02-07";
         LocalDate expectedWorkoutDate = LocalDate.parse(requestWorkoutDate);
-        String requestTimeStarted = "2023-02-07T10:45:26.798462";
-        String requestTimeEnded = "2023-02-07T11:45:26.798462";
-        Duration expectedTotalWorkoutTime = Duration.between(LocalDateTime.parse(requestTimeStarted),
-                LocalDateTime.parse(requestTimeEnded));
+        String requestTimeStarted = "2023-02-07T10:45:26.000z";
+        String requestTimeEnded = "2023-02-07T11:45:26.000z";
+        Duration expectedTotalWorkoutTime = Duration.between(LocalDateTime.parse(requestTimeStarted, DateTimeFormatter.ISO_DATE_TIME),
+                LocalDateTime.parse(requestTimeEnded, DateTimeFormatter.ISO_DATE_TIME));
         double expectedBodyWeight = 175.0;
         int expectedDeadlift = 300;
         int expectedSquat = 250;
@@ -143,10 +144,10 @@ public class AddWorkoutActivityTest {
         WorkoutType expectedWorkoutType = WorkoutType.WORKOUT_A;
         String requestWorkoutDate = "2023-02-07";
         LocalDate expectedWorkoutDate = LocalDate.parse(requestWorkoutDate);
-        String requestTimeStarted = "2023-02-07T10:45:26.798462";
-        String requestTimeEnded = "2023-02-07T11:45:26.798462";
-        Duration expectedTotalWorkoutTime = Duration.between(LocalDateTime.parse(requestTimeStarted),
-                LocalDateTime.parse(requestTimeEnded));
+        String requestTimeStarted = "2023-02-07T10:45:26.000z";
+        String requestTimeEnded = "2023-02-07T11:45:26.000z";
+        Duration expectedTotalWorkoutTime = Duration.between(LocalDateTime.parse(requestTimeStarted, DateTimeFormatter.ISO_DATE_TIME),
+                LocalDateTime.parse(requestTimeEnded, DateTimeFormatter.ISO_DATE_TIME));
         double expectedBodyWeight = 175.0;
         int expectedDeadlift = 300;
         int expectedSquat = 250;
@@ -228,8 +229,8 @@ public class AddWorkoutActivityTest {
         String expectedEmail = "expectedEmail";
         String requestWorkoutType = "Workout A";
         String requestWorkoutDate = "2023-02-07";
-        String requestTimeStarted = "2023-02-07T10:45:26.798462";
-        String requestTimeEnded = "2023-02-07T11:45:26.798462";
+        String requestTimeStarted = "2023-02-07T10:45:26.000z";
+        String requestTimeEnded = "2023-02-07T11:45:26.000z";
         double zeroBodyWeight = 175;
         int expectedDeadlift = 300;
         int expectedSquat = 250;
@@ -272,8 +273,8 @@ public class AddWorkoutActivityTest {
         String expectedEmail = "expectedEmail";
         String requestWorkoutType = "Workout A";
         String requestWorkoutDate = "2023-02-07";
-        String requestTimeStarted = "2023-02-07T10:45:26.798462";
-        String requestTimeEnded = "2023-02-07T11:45:26.798462";
+        String requestTimeStarted = "2023-02-07T10:45:26.000z";
+        String requestTimeEnded = "2023-02-07T11:45:26.000z";
         double zeroBodyWeight = 175;
         int expectedDeadlift = 300;
         int expectedSquat = 250;
@@ -318,10 +319,10 @@ public class AddWorkoutActivityTest {
         WorkoutType expectedWorkoutType = WorkoutType.WORKOUT_A;
         String requestWorkoutDate = "2023-02-07";
         LocalDate expectedWorkoutDate = LocalDate.parse(requestWorkoutDate);
-        String requestTimeStarted = "2023-02-07T10:45:26.798462";
-        String requestTimeEnded = "2023-02-07T11:45:26.798462";
-        Duration expectedTotalWorkoutTime = Duration.between(LocalDateTime.parse(requestTimeStarted),
-                LocalDateTime.parse(requestTimeEnded));
+        String requestTimeStarted = "2023-02-07T10:45:26.000z";
+        String requestTimeEnded = "2023-02-07T11:45:26.000z";
+        Duration expectedTotalWorkoutTime = Duration.between(LocalDateTime.parse(requestTimeStarted, DateTimeFormatter.ISO_DATE_TIME),
+                LocalDateTime.parse(requestTimeEnded, DateTimeFormatter.ISO_DATE_TIME));
         double zeroBodyWeight = 0;
         double expectedBodyWeight = 175.5;
         int expectedDeadlift = 300;
@@ -397,8 +398,8 @@ public class AddWorkoutActivityTest {
         String expectedEmail = "expectedEmail";
         String requestWorkoutType = "Workout A";
         String requestWorkoutDate = "2023-02-07";
-        String requestTimeStarted = "2023-02-07T10:45:26.798462";
-        String requestTimeEnded = "2023-02-07T11:45:26.798462";
+        String requestTimeStarted = "2023-02-07T10:45:26.000z";
+        String requestTimeEnded = "2023-02-07T11:45:26.000z";
         double negativeBodyWeight = -1;
         int expectedDeadlift = 300;
         int expectedSquat = 250;

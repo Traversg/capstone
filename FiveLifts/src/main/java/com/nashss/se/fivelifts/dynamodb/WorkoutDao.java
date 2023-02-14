@@ -68,8 +68,7 @@ public class WorkoutDao {
         DynamoDBQueryExpression<Workout> queryExpression = new DynamoDBQueryExpression<Workout>()
                 .withKeyConditionExpression("email = :email")
                 .withExpressionAttributeValues(valueMap)
-                .withScanIndexForward(false)
-                .withLimit(20);
+                .withScanIndexForward(false);
         PaginatedQueryList<Workout> workoutHistory = dynamoDbMapper.query(Workout.class, queryExpression);
 
         if (workoutHistory.isEmpty()) {
@@ -82,11 +81,20 @@ public class WorkoutDao {
     }
 
     /**
-     * Saves (creates or updates) the given user.
+     * Saves (creates or updates) the given workout.
      *
-     * @param workout The user to save
+     * @param workout The workout to save
      */
     public void saveWorkout(Workout workout) {
         dynamoDbMapper.save(workout);
+    }
+
+    /**
+     * Deletes the given workout.
+     *
+     * @param workout The workout to delete
+     */
+    public void deleteWorkout(Workout workout) {
+        dynamoDbMapper.delete(workout);
     }
 }

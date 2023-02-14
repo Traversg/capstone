@@ -10,7 +10,7 @@ class WorkoutHistory extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'displayWorkoutHistory', 'isLoggedIn', 
-        'isCurrentUser'], this);
+        'isCurrentUser', 'resetProfile'], this);
         this.dataStore = new DataStore();
         this.header = new Header(this.dataStore);
     }
@@ -19,11 +19,12 @@ class WorkoutHistory extends BindingClass {
      * Add the header to the page and load the MusicPlaylistClient.
      */
     async mount() {
+        document.getElementById('resetButton').addEventListener('click', this.resetProfile);
         this.header.addHeaderToPage();
         this.client = new FiveLiftsClient();
         await this.isLoggedIn();
         await this.isCurrentUser();
-        this.displayWorkoutHistory();
+        
     }
 
     /**
@@ -31,10 +32,10 @@ class WorkoutHistory extends BindingClass {
      * workout history.
      */
     async displayWorkoutHistory() {
-        const upcomingWorkouts = await this.client.getWorkoutHistory();
+        const workoutHistory = await this.client.getWorkoutHistory();
 
-        for (let workout in upcomingWorkouts) {
-            let currentWorkout = upcomingWorkouts[workout];
+        for (let workout in workoutHistory) {
+            let currentWorkout = workoutHistory[workout];
             if (currentWorkout.workoutType == 'WORKOUT_A') {
                 displayWorkoutA(currentWorkout);
             } else {
@@ -61,7 +62,14 @@ class WorkoutHistory extends BindingClass {
             `;
             document.getElementById('startingWeightsButton').addEventListener('click', this.redirectToStartingWeights);
         } else {
-            this.displayUpcomingWorkouts();
+            this.displayWorkoutHistory();
+        }
+    }
+
+    async resetProfile() {
+        const isDeleted = await this.client.deleteUserProfileAndWorkoutHistory();
+        if (isDeleted.isDeleted) {
+            window.location.href = `/index.html`;
         }
     }
 

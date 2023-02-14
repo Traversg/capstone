@@ -1,5 +1,8 @@
 package com.nashss.se.fivelifts.exceptions;
 
+/**
+ * Exception to throw when a rep entered is less than zero.
+ */
 public class RepsLessThanZeroException extends RuntimeException {
     private static final long serialVersionUID = -6342321508531808722L;
 

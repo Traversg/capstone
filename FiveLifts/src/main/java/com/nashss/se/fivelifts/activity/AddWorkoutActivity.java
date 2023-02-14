@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -117,8 +118,10 @@ public class AddWorkoutActivity {
         WorkoutType workoutType = (addWorkoutRequest.getWorkoutType().equals("Workout A")) ?
                 WorkoutType.WORKOUT_A : WorkoutType.WORKOUT_B;
 
-        LocalDateTime timeStarted = LocalDateTime.parse(addWorkoutRequest.getTimeStarted());
-        LocalDateTime timeEnded = LocalDateTime.parse(addWorkoutRequest.getTimeEnded());
+        LocalDateTime timeStarted = LocalDateTime.parse(addWorkoutRequest.getTimeStarted(),
+                DateTimeFormatter.ISO_DATE_TIME);
+        LocalDateTime timeEnded = LocalDateTime.parse(addWorkoutRequest.getTimeEnded(),
+                DateTimeFormatter.ISO_DATE_TIME);
 
         Workout workout = new Workout();
         workout.setEmail(addWorkoutRequest.getEmail());
@@ -211,6 +214,6 @@ public class AddWorkoutActivity {
 
     private boolean repsLessThan0(List<Integer> reps) {
         return reps.stream()
-                .anyMatch(rep-> rep < 0);
+                .anyMatch(rep -> rep < 0);
     }
 }

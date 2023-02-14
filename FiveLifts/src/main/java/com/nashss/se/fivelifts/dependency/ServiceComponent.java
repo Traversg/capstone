@@ -1,11 +1,11 @@
 package com.nashss.se.fivelifts.dependency;
 import com.nashss.se.fivelifts.activity.AddWorkoutActivity;
 import com.nashss.se.fivelifts.activity.CreateProfileActivity;
+import com.nashss.se.fivelifts.activity.DeleteUserProfileAndWorkoutHistoryActivity;
 import com.nashss.se.fivelifts.activity.GetIsCurrentUserActivity;
 import com.nashss.se.fivelifts.activity.GetUpcomingWorkoutsActivity;
 import com.nashss.se.fivelifts.activity.GetWorkoutHistoryActivity;
 
-import com.nashss.se.fivelifts.metrics.MetricsPublisher;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -46,4 +46,10 @@ public interface ServiceComponent {
      * @return GetWorkoutHistoryActivity
      */
     GetWorkoutHistoryActivity provideGetWorkoutHistoryActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return DeleteUserProfileAndWorkoutHistory
+     */
+    DeleteUserProfileAndWorkoutHistoryActivity provideDeleteProfileAndWorkoutHistoryActivity();
 }

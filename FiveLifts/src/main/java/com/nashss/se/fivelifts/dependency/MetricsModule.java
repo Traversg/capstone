@@ -8,6 +8,9 @@ import dagger.Provides;
 
 import javax.inject.Singleton;
 
+/**
+ * Dagger Module providing dependencies for metrics classes.
+ */
 @Module
 public class MetricsModule {
 

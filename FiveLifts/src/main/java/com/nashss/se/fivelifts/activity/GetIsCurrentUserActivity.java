@@ -3,7 +3,6 @@ package com.nashss.se.fivelifts.activity;
 import com.nashss.se.fivelifts.activity.requests.GetIsCurrentUserRequest;
 import com.nashss.se.fivelifts.activity.results.GetIsCurrentUserResult;
 import com.nashss.se.fivelifts.dynamodb.UserDao;
-import com.nashss.se.fivelifts.dynamodb.models.User;
 import com.nashss.se.fivelifts.exceptions.UserNotFoundException;
 
 import org.apache.logging.log4j.LogManager;
@@ -43,7 +42,7 @@ public class GetIsCurrentUserActivity {
         log.info("Received GetIsCurrentUserRequest {}", getIsCurrentUserRequest);
 
         try {
-            User user = userDao.getUser(getIsCurrentUserRequest.getEmail());
+            userDao.getUser(getIsCurrentUserRequest.getEmail());
         } catch (UserNotFoundException e) {
             return GetIsCurrentUserResult.builder()
                     .withIsCurrentUser(false)

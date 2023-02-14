@@ -10,7 +10,7 @@ class CurrentWorkout extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'displayCurrentWorkout', 'finishWorkout', 'finishWorkoutA',
-            'finishWorkoutB', 'startTimer', 'isLoggedIn', 'isCurrentUser'], this);
+            'finishWorkoutB', 'startTimer', 'isLoggedIn', 'isCurrentUser', 'isWorkoutComplete'], this);
         this.dataStore = new DataStore();
         this.header = new Header(this.dataStore);
     }
@@ -25,6 +25,7 @@ class CurrentWorkout extends BindingClass {
         this.client = new FiveLiftsClient();
         await this.isLoggedIn();
         await this.isCurrentUser();
+        await this.isWorkoutComplete();
         const startTime = new Date();
         this.dataStore.set('startTime', startTime);
     }
@@ -188,6 +189,33 @@ class CurrentWorkout extends BindingClass {
             this.displayCurrentWorkout();
         }
     }
+    /**
+     * Method to check if workout is already done for the day.
+     */
+    // TODO CLEAN UP - GET WORKOUT FROM API
+    async isWorkoutComplete() {
+        const mostRecentWorkout = await this.client.getCurrentWorkout();
+        const mostRecentWorkoutDate = mostRecentWorkout[0].workoutDate;
+        const today = new Date();
+        const todayMonth = today.getMonth() + 1;
+        const todayDate = today.getDate();
+        const workoutMonth = mostRecentWorkoutDate[1];
+        const workoutDate = mostRecentWorkoutDate[2] - 2;
+
+        if (todayMonth === workoutMonth && 
+            todayDate === workoutDate) {
+            const currentWorkoutTitle = document.getElementById('currentWorkoutTitle');
+            currentWorkoutTitle.classList.add('hidden');
+            const timer = document.getElementById('timer');
+            timer.classList.add('hidden');
+            const finishWorkoutButton = document.getElementById('finishWorkoutButton');
+            finishWorkoutButton.classList.add('hidden');
+            const currentWorkoutCard = document.getElementById('currentWorkoutCard');
+            currentWorkoutCard.innerHTML = `
+            <h1 class="workoutComplete">Workout complete. Great job!</h1>
+            `;
+        }
+    }
 }
 
 function displayWorkoutA(workoutA) {
@@ -337,32 +365,29 @@ function upTimer(count) {
 }
 
 function getDateString() {
-    const currentDate = new Date();
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     const date = currentDate.getDate();
     
-    if (date < 10) {
+    if (date < 10 && month < 10) {
         return `${year}-0${Number(month) + 1}-0${date}`;
-    } else {
+    } 
+    
+    if (month < 10) {
+        return `${year}-0${Number(month) + 1}-${date}`
+    }
+
+    if (date < 10) {
+        return `${year}-${Number(month) + 1}-0${date}`
+    }
+
+    else {
         return `${year}-0${Number(month) + 1}-${date}`
     }
 }
 
 function getTimeString(time) {
-    const year = time.getFullYear();
-    const month = time.getMonth();
-    const date = time.getDate();
-    const hour = time.getHours();
-    const minute = time.getMinutes();
-    const second = time.getSeconds();
-    const milliseconds = time.getMilliseconds();
-
-    if (date < 10) {
-        return `${year}-0${Number(month) + 1}-0${date}T${hour}:${minute}:${second}.${milliseconds}`
-    } else {
-        return `${year}-0${Number(month) + 1}-${date}T${hour}:${minute}:${second}.${milliseconds}`;
-    }
+    return time.toISOString();
 }
 
 function getSquatReps() {

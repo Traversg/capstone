@@ -60,4 +60,16 @@ public class UserDaoTest {
         // THEN
         verify(dynamoDBMapper).save(user);
     }
+
+    @Test
+    public void deleteUser_callsMapperWithUser() {
+        // GIVEN
+        User user = new User();
+
+        // WHEN
+        userDao.deleteUser(user);
+
+        // THEN
+        verify(dynamoDBMapper).delete(user);
+    }
 }

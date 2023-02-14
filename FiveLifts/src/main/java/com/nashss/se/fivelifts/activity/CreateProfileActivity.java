@@ -48,7 +48,7 @@ public class CreateProfileActivity {
     public CreateProfileResult handleRequest(final CreateProfileRequest createProfileRequest) {
         log.info("Received CreateProfileRequest {}", createProfileRequest);
 
-        int MINIMUM_WEIGHT = 45;
+        int minimumWeight = 45;
         int startingBarbellRowWeight = createProfileRequest.getBarbellRow();
         int startingDeadliftWeight = createProfileRequest.getDeadlift();
         int startingBenchPressWeight = createProfileRequest.getBenchPress();
@@ -64,11 +64,11 @@ public class CreateProfileActivity {
         newUser.setName(createProfileRequest.getName());
         newUser.setEmail(createProfileRequest.getEmail());
         newUser.setBodyWeight(bodyWeight);
-        newUser.setBarbellRow(Math.max(roundDown(startingBarbellRowWeight), MINIMUM_WEIGHT));
-        newUser.setDeadlift(Math.max(roundDown(startingDeadliftWeight), MINIMUM_WEIGHT));
-        newUser.setBenchPress(Math.max(roundDown(startingBenchPressWeight), MINIMUM_WEIGHT));
-        newUser.setOverheadPress(Math.max(roundDown(startingOverheadPressWeight), MINIMUM_WEIGHT));
-        newUser.setSquat(Math.max(roundDown(startingSquatWeight), MINIMUM_WEIGHT));
+        newUser.setBarbellRow(Math.max(roundDown(startingBarbellRowWeight), minimumWeight));
+        newUser.setDeadlift(Math.max(roundDown(startingDeadliftWeight), minimumWeight));
+        newUser.setBenchPress(Math.max(roundDown(startingBenchPressWeight), minimumWeight));
+        newUser.setOverheadPress(Math.max(roundDown(startingOverheadPressWeight), minimumWeight));
+        newUser.setSquat(Math.max(roundDown(startingSquatWeight), minimumWeight));
 
         userDao.saveUser(newUser);
 
@@ -77,7 +77,12 @@ public class CreateProfileActivity {
                 .withProfile(userModel)
                 .build();
     }
-
+    /**
+     * If lift entered is not divisible by 5,
+     * rounds down to nearest number divisible by 5.
+     * @param lift weight entered
+     * @return lift weight
+     * */
     public int roundDown(int lift) {
         int remainder = lift % 5;
         if (remainder == 0) {

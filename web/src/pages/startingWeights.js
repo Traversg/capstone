@@ -11,7 +11,6 @@ class StartingWeights extends BindingClass {
         super();
         this.bindClassMethods(['mount', 'submit', 'isLoggedIn', 'isCurrentUser'], this);
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.redirectToWorkout);
         this.header = new Header(this.dataStore);
     }
 
@@ -30,12 +29,12 @@ class StartingWeights extends BindingClass {
      * Method to run when the create profile submit button is pressed. Call the FiveLiftsService to create the
      * profile.
      */
-    async submit(evt) {
-        evt.preventDefault();
+    async submit() {
+        //evt.preventDefault();
 
-        const errorMessageDisplay = document.getElementById('error-message');
+        /* const errorMessageDisplay = document.getElementById('error-message');
         errorMessageDisplay.innerText = ``;
-        errorMessageDisplay.classList.add('hidden');
+        errorMessageDisplay.classList.add('hidden'); */
 
         const createButton = document.getElementById('starting-weights-button');
         const origButtonText = createButton.innerText;
@@ -50,11 +49,11 @@ class StartingWeights extends BindingClass {
 
         const profile = await this.client.createProfile(squat, benchPress, overheadPress, 
             barbellRow, deadlift, bodyWeight, (error) => {
-            createButton.innerText = origButtonText;
-            errorMessageDisplay.innerText = `Error: ${error.message}`;
-            errorMessageDisplay.classList.remove('hidden');
+            console.log(error);
         });
+        
         this.dataStore.set('profile', profile);
+        this.redirectToWorkout();
     }
 
     /**
