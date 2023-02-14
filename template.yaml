@@ -80,7 +80,7 @@ Resources:
       CallbackURLs:
         - !If
           - DeployCloudFront
-          - !Sub "https://${CloudfrontDistribution.DomainName}"
+          - !Sub "https://${CloudfrontDistribution.DomainName}/redirect.html"
           - http://localhost:8000/redirect.html
       LogoutURLs:
         - !If
