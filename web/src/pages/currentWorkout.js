@@ -207,13 +207,13 @@ class CurrentWorkout extends BindingClass {
      */
     // TODO CLEAN UP - GET WORKOUT FROM API
     async isWorkoutComplete() {
-        const mostRecentWorkout = await this.client.getCurrentWorkout();
-        const mostRecentWorkoutDate = mostRecentWorkout[0].workoutDate;
+        const mostRecentWorkout = await this.client.getMostRecentWorkout();
+        const mostRecentWorkoutDate = mostRecentWorkout.workoutDate;
         const today = new Date();
         const todayMonth = today.getMonth() + 1;
         const todayDate = today.getDate();
         const workoutMonth = mostRecentWorkoutDate[1];
-        const workoutDate = mostRecentWorkoutDate[2] - 2;
+        const workoutDate = mostRecentWorkoutDate[2];
 
         if (todayMonth === workoutMonth && 
             todayDate === workoutDate) {

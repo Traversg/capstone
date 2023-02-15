@@ -17,7 +17,7 @@ export default class FiveLiftsClient extends BindingClass {
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'createProfile', 
         'getUpcomingWorkouts', 'getIsCurrentUser', 'getCurrentWorkout', 'addWorkout', 'getWorkoutHistory',
-        'deleteUserProfileAndWorkoutHistory'];
+        'deleteUserProfileAndWorkoutHistory', 'getMostRecentWorkout'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -252,6 +252,25 @@ export default class FiveLiftsClient extends BindingClass {
                 }
             });
             return response.data.isDeleted;
+        } catch (error) {
+            this.handleError(error, errorCallback);
+        }
+    }
+
+    /**
+     * Get the most recent workout from user's workout history.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @retuns most recent workout.
+     */
+    async getMostRecentWorkout(errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenicated users can access user information.");
+            const response = await this.axiosClient.get('recentWorkout', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.mostRecentWorkout;
         } catch (error) {
             this.handleError(error, errorCallback);
         }
