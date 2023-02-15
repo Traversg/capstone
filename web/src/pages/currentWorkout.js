@@ -409,9 +409,11 @@ function getSquatReps() {
 
     for (let i=0; i < 5; i++) {
         let setNumber = "squatSet" + (i + 1);
-        let testElement = document.getElementById('body-weight');
-        let setNumberElement = document.getElementById(setNumber);
-        reps[i] = document.getElementById(setNumber).value;
+        let repValue = document.getElementById(setNumber).value;
+        if (repValue === "") {
+            repValue = 0;
+        }
+        reps[i] = repValue;
     }
 
     return reps;
@@ -422,7 +424,11 @@ function getBenchPressReps() {
 
     for (let i=0; i < 5; i++) {
         let setNumber = "benchPressSet" + (i + 1);
-        reps[i] = document.getElementById(setNumber).value;
+        let repValue = document.getElementById(setNumber).value;
+        if (repValue === "") {
+            repValue = 0;
+        }
+        reps[i] = repValue;
     }
 
     return reps;
@@ -433,7 +439,11 @@ function getBarbellRowReps() {
 
     for (let i=0; i < 5; i++) {
         let setNumber = "barbellRowSet" + (i + 1);
-        reps[i] = document.getElementById(setNumber).value;
+        let repValue = document.getElementById(setNumber).value;
+        if (repValue === "") {
+            repValue = 0;
+        }
+        reps[i] = repValue;
     }
 
     return reps;
@@ -444,7 +454,11 @@ function getOverheadPressReps() {
 
     for (let i=0; i < 5; i++) {
         let setNumber = "overheadPressSet" + (i + 1);
-        reps[i] = document.getElementById(setNumber).value;
+        let repValue = document.getElementById(setNumber).value;
+        if (repValue === "") {
+            repValue = 0;
+        }
+        reps[i] = repValue;
     }
 
     return reps;
@@ -453,7 +467,11 @@ function getOverheadPressReps() {
 function getDeadliftReps() {
     const reps = [];
 
-    reps[0] = document.getElementById('deadliftSet1').value;
+    let repValue = document.getElementById('deadliftSet1').value;
+    if (repValue === "") {
+        repValue = 0;
+    }
+    reps[0] = repValue;
 
     return reps;
 }
