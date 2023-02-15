@@ -88,22 +88,23 @@ public class GetUpcomingWorkoutsActivity {
     }
 
     private Workout createWorkoutA(int squatWeight, int benchPressWeight, int barbellRowWeight,
-                                   LocalDate dayToStart, boolean isCurrentUser) {
+                                   LocalDate dayToStart, boolean isCurrentUser,
+                                   boolean isFirstOfType, boolean firstSquat) {
         Workout workout = new Workout();
 
-        if (isCurrentUser) {
+        if (isCurrentUser && !firstSquat) {
             workout.setSquatWeight(squatWeight + Increments.squat());
         } else {
             workout.setSquatWeight(squatWeight);
         }
 
-        if (isCurrentUser) {
+        if (isCurrentUser && !isFirstOfType) {
             workout.setBenchPressWeight(benchPressWeight + Increments.benchPress());
         } else {
             workout.setBenchPressWeight(benchPressWeight);
         }
 
-        if (isCurrentUser) {
+        if (isCurrentUser && !isFirstOfType) {
             workout.setBarbellRowWeight(barbellRowWeight + Increments.barbellRow());
         } else {
             workout.setBarbellRowWeight(barbellRowWeight);
@@ -115,17 +116,23 @@ public class GetUpcomingWorkoutsActivity {
     }
 
     private Workout createWorkoutB(int squatWeight, int overheadPress, int deadlift,
-                                   LocalDate dayToStart, boolean isCurrentUser) {
+                                   LocalDate dayToStart, boolean isCurrentUser,
+                                   boolean isFirstofType, boolean firstSquat) {
         Workout workout = new Workout();
-        workout.setSquatWeight(squatWeight + Increments.squat());
 
-        if (isCurrentUser) {
+        if (!firstSquat) {
+            workout.setSquatWeight(squatWeight + Increments.squat());
+        } else {
+            workout.setSquatWeight(squatWeight);
+        }
+
+        if (isCurrentUser && !isFirstofType) {
             workout.setOverheadPressWeight(overheadPress + Increments.overheadPress());
         } else {
             workout.setOverheadPressWeight(overheadPress);
         }
 
-        if (isCurrentUser) {
+        if (isCurrentUser && !isFirstofType) {
             workout.setDeadliftWeight(deadlift + Increments.deadlift());
         } else {
             workout.setDeadliftWeight(deadlift);
@@ -146,13 +153,15 @@ public class GetUpcomingWorkoutsActivity {
         List<WorkoutModel> upcomingWorkouts = new ArrayList<>();
 
         Workout workout1 = createWorkoutA(mostRecentSquatWeight, mostRecentBenchPressWeight,
-                mostRecentBarbellRowWeight, dayToStart, isCurrentUser);
+                mostRecentBarbellRowWeight, dayToStart, isCurrentUser, true, true);
 
         Workout workout2 = createWorkoutB(workout1.getSquatWeight(), mostRecentOverheadPressWeight,
-                mostRecentDeadliftWeight, dayToStart.plusDays(2), isCurrentUser);
+                mostRecentDeadliftWeight, dayToStart.plusDays(2), isCurrentUser,
+                true, false);
 
         Workout workout3 = createWorkoutA(workout2.getSquatWeight(), workout1.getBenchPressWeight(),
-                workout1.getBarbellRowWeight(), workout2.getWorkoutDate().plusDays(2), true);
+                workout1.getBarbellRowWeight(), workout2.getWorkoutDate().plusDays(2), true,
+                false, false);
 
         upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout1));
         upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout2));
@@ -170,11 +179,13 @@ public class GetUpcomingWorkoutsActivity {
         List<WorkoutModel> upcomingWorkouts = new ArrayList<>();
 
         Workout workout1 = createWorkoutB(mostRecentSquatWeight, mostRecentOverheadPressWeight,
-                mostRecentDeadliftWeight, dayToStart, true);
+                mostRecentDeadliftWeight, dayToStart, true, true, true);
         Workout workout2 = createWorkoutA(workout1.getSquatWeight(), mostRecentBenchPressWeight,
-                mostRecentBarbellRowWeight, dayToStart.plusDays(2), true);
+                mostRecentBarbellRowWeight, dayToStart.plusDays(2), true,
+                true, false);
         Workout workout3 = createWorkoutB(workout2.getSquatWeight(), workout1.getOverheadPressWeight(),
-                workout1.getDeadliftWeight(), workout2.getWorkoutDate().plusDays(2), true);
+                workout1.getDeadliftWeight(), workout2.getWorkoutDate().plusDays(2), true,
+                false, false);
 
         upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout1));
         upcomingWorkouts.add(new ModelConverter().toWorkoutModel(workout2));

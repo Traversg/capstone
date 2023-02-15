@@ -7,24 +7,16 @@ import BindingClass from '../util/bindingClass';
 class Index extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'login', 'redirectCurrentUser'], this);
+        this.bindClassMethods(['mount', 'redirectCurrentUser'], this);
     }
 
     /**
      * Add the header to the page and load the FiveLiftsClient.
      */
     mount() {
-        document.getElementById('login').addEventListener('click', this.login);
         this.client = new FiveLiftsClient();
-        this.redirectCurrentUser();
-    }
-
-    /**
-     * Method to run when the login button is pressed. Call the FiveLiftsService to login
-     * the user.
-     */
-    async login() {
         document.getElementById('login').addEventListener('click', this.client.login);
+        this.redirectCurrentUser();
     }
 
     /**
@@ -44,8 +36,8 @@ class Index extends BindingClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const login = new Index();
-    login.mount();
+    const index = new Index();
+    index.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);
