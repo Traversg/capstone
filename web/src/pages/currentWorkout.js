@@ -136,6 +136,9 @@ class CurrentWorkout extends BindingClass {
         });
     }
 
+    /**
+     * Method to redirect to Upcoming Workouts page.
+     */
     async redirectToUpcomingWorkouts() {
         const completedWorkout = this.dataStore.get('completedWorkout');
         if (completedWorkout != null) {
@@ -143,6 +146,9 @@ class CurrentWorkout extends BindingClass {
         }
     }
 
+    /**
+     * Method to start rest timer.
+     */
     async startTimer() {
         const timerButton = document.getElementById('timerButton');
         timerButton.disabled = true;
@@ -162,6 +168,9 @@ class CurrentWorkout extends BindingClass {
         }, 1000);
     }
 
+    /**
+     * Method to check if a user is logged in.
+     */
     async isLoggedIn() {
         const isLoggedIn = await this.client.isLoggedIn();
 
@@ -170,6 +179,10 @@ class CurrentWorkout extends BindingClass {
         }
     }
 
+
+    /**
+     * Method to check if a user has a profile in the user table.
+     */
     async isCurrentUser() {
         const currentUser =  await this.client.getIsCurrentUser();
         if (!currentUser) {
@@ -192,15 +205,14 @@ class CurrentWorkout extends BindingClass {
     /**
      * Method to check if workout is already done for the day.
      */
-    // TODO CLEAN UP - GET WORKOUT FROM API
     async isWorkoutComplete() {
-        const mostRecentWorkout = await this.client.getCurrentWorkout();
-        const mostRecentWorkoutDate = mostRecentWorkout[0].workoutDate;
+        const mostRecentWorkout = await this.client.getMostRecentWorkout();
+        const mostRecentWorkoutDate = mostRecentWorkout.workoutDate;
         const today = new Date();
         const todayMonth = today.getMonth() + 1;
         const todayDate = today.getDate();
         const workoutMonth = mostRecentWorkoutDate[1];
-        const workoutDate = mostRecentWorkoutDate[2] - 2;
+        const workoutDate = mostRecentWorkoutDate[2];
 
         if (todayMonth === workoutMonth && 
             todayDate === workoutDate) {

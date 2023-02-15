@@ -3,6 +3,7 @@ import com.nashss.se.fivelifts.activity.AddWorkoutActivity;
 import com.nashss.se.fivelifts.activity.CreateProfileActivity;
 import com.nashss.se.fivelifts.activity.DeleteUserProfileAndWorkoutHistoryActivity;
 import com.nashss.se.fivelifts.activity.GetIsCurrentUserActivity;
+import com.nashss.se.fivelifts.activity.GetMostRecentWorkoutActivity;
 import com.nashss.se.fivelifts.activity.GetUpcomingWorkoutsActivity;
 import com.nashss.se.fivelifts.activity.GetWorkoutHistoryActivity;
 
@@ -52,4 +53,10 @@ public interface ServiceComponent {
      * @return DeleteUserProfileAndWorkoutHistory
      */
     DeleteUserProfileAndWorkoutHistoryActivity provideDeleteProfileAndWorkoutHistoryActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return GetMostRecentWorkoutActivity
+     */
+    GetMostRecentWorkoutActivity provideMostRecentWorkoutActivity();
 }
