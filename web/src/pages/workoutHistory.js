@@ -105,6 +105,9 @@ function getDisplayDate(year, month, day) {
 function displayWorkoutA(workoutA) {
     let displayDate = getDisplayDate(workoutA.workoutDate[0],
         (workoutA.workoutDate[1] - 1), workoutA.workoutDate[2]);
+    const squatReps = getSquatRepsDisplay(workoutA);
+    const benchPressReps = getBenchPressRepsDisplay(workoutA);
+    const barbellRowReps = getBarbellRowRepsDispay(workoutA);
 
     let workoutCard = document.getElementById('workoutHistory');
     let workoutBlock = document.createElement('div');
@@ -117,7 +120,7 @@ function displayWorkoutA(workoutA) {
         <div class="exercise">
             <h3>Squat</h3>
             <div class="weight">
-                <h3>5x5</h3>
+                <h3>${squatReps}</h3>
                 <h3 class="setWeight">${workoutA.squatWeight}lbs</h3>
             </div>
         </div>
@@ -125,7 +128,7 @@ function displayWorkoutA(workoutA) {
         <div class="exercise">
             <h3>Bench Press</h3>
             <div class="weight">
-                <h3>5x5</h3>
+                <h3>${benchPressReps}</h3>
                 <h3 class="setWeight">${workoutA.benchPressWeight}lbs</h3>
             </div>
         </div>
@@ -133,7 +136,7 @@ function displayWorkoutA(workoutA) {
         <div class="exercise">
             <h3>Barbell Row</h3>
             <div class="weight">
-                <h3>5x5</h3>
+                <h3>${barbellRowReps}</h3>
                 <h3 class="setWeight">${workoutA.barbellRowWeight}lbs</h3>
             </div>
         </div>
@@ -153,6 +156,9 @@ function displayWorkoutA(workoutA) {
 function displayWorkoutB(workoutB) {
     let displayDate = getDisplayDate(workoutB.workoutDate[0],
         (workoutB.workoutDate[1] - 1), workoutB.workoutDate[2]);
+    const squatReps = getSquatRepsDisplay(workoutB);
+    const overheadPressReps = getOverheadPressRepsDispay(workoutB);
+    const deadliftReps = getDeadliftRepsDispay(workoutB);
         
     let workoutCard = document.getElementById('workoutHistory');
     let workoutBlock = document.createElement('div');
@@ -165,7 +171,7 @@ function displayWorkoutB(workoutB) {
         <div class="exercise">
             <h3>Squat</h3>
             <div class="weight">
-                <h3>5x5</h3>
+                <h3>${squatReps}</h3>
                 <h3 class="setWeight">${workoutB.squatWeight}lbs</h3>
             </div>
         </div>
@@ -173,13 +179,13 @@ function displayWorkoutB(workoutB) {
         <div class="exercise">
             <h3>Overhead Press</h3>
             <div class="weight">
-                <h3>5x5</h3>
+                <h3>${overheadPressReps}</h3>
                 <h3 class="setWeight">${workoutB.overheadPressWeight}lbs</h3>
             </div>
         </div>
         <hr>
         <div class="exercise">
-            <h3>Deadlift</h3>
+            <h3>${deadliftReps}</h3>
             <div class="weight">
                 <h3>1x5</h3>
                 <h3 class="setWeight">${workoutB.deadliftWeight}lbs</h3>
@@ -191,6 +197,96 @@ function displayWorkoutB(workoutB) {
             <h3 class="setWeight">${workoutB.bodyWeight}lbs</h3>
         </div>`;
     workoutCard.appendChild(workoutBlock);
+}
+
+function getSquatRepsDisplay(workout) {
+    const squatReps = workout.squatReps;
+    const maxReps = 25;
+    let totalReps = 0;
+    let repString = "";
+    
+    for (let rep of squatReps) {
+        repString += rep + " | ";
+        totalReps += rep;
+    }
+
+    if (totalReps === maxReps) {
+        return "5x5";
+    }
+
+    return repString.slice(0, repString.length - 2);
+}
+
+function getBenchPressRepsDisplay(workout) {
+    const benchPressReps = workout.benchPressReps;
+    const maxReps = 25;
+    let totalReps = 0;
+    let repString = "";
+    
+    for (let rep of benchPressReps) {
+        repString += rep + " | ";
+        totalReps += rep;
+    }
+
+    if (totalReps === maxReps) {
+        return "5x5";
+    }
+
+    return repString.slice(0, repString.length - 2);
+}
+
+function getBarbellRowRepsDispay(workout) {
+    const barbellRowReps = workout.barbellRowReps;
+    const maxReps = 25;
+    let totalReps = 0;
+    let repString = "";
+    
+    for (let rep of barbellRowReps) {
+        repString += rep + " | ";
+        totalReps += rep;
+    }
+
+    if (totalReps === maxReps) {
+        return "5x5";
+    }
+
+    return repString.slice(0, repString.length - 2);
+}
+
+function getOverheadPressRepsDispay(workout) {
+    const overheadPressReps = workout.overheadPressReps;
+    const maxReps = 25;
+    let totalReps = 0;
+    let repString = "";
+    
+    for (let rep of overheadPressReps) {
+        repString += rep + " | ";
+        totalReps += rep;
+    }
+
+    if (totalReps === maxReps) {
+        return "5x5";
+    }
+
+    return repString.slice(0, repString.length - 2);
+}
+
+function getDeadliftRepsDispay(workout) {
+    const deadliftReps = workout.deadliftReps;
+    const maxReps = 5;
+    let totalReps = 0;
+    let repString = "";
+    
+    for (let rep of deadliftReps) {
+        repString += rep + " | ";
+        totalReps += rep;
+    }
+
+    if (totalReps === maxReps) {
+        return "1x5";
+    }
+
+    return repString.slice(0, repString.length - 2);
 }
 
 /**
