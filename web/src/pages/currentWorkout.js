@@ -205,7 +205,6 @@ class CurrentWorkout extends BindingClass {
     /**
      * Method to check if workout is already done for the day.
      */
-    // TODO CLEAN UP - GET WORKOUT FROM API
     async isWorkoutComplete() {
         const mostRecentWorkout = await this.client.getMostRecentWorkout();
         const mostRecentWorkoutDate = mostRecentWorkout.workoutDate;
