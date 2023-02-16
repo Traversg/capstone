@@ -25,7 +25,6 @@ class CurrentWorkout extends BindingClass {
         this.client = new FiveLiftsClient();
         await this.isLoggedIn();
         await this.isCurrentUser();
-        await this.isWorkoutComplete();
         const startTime = new Date();
         this.dataStore.set('startTime', startTime);
     }
@@ -125,8 +124,8 @@ class CurrentWorkout extends BindingClass {
         const deadliftReps = getDeadliftReps();
         const bodyWeight = document.getElementById('body-weight').value;
     
-        return await this.client.addWorkout(date, workoutType, timeStarted,
-            timeEnded, squatWeight, benchPressWeight, overheadPressWeight, barbellRowWeight,
+        return await this.client.addWorkout(date, workoutType, timeStartedString,
+            timeEndedString, squatWeight, benchPressWeight, overheadPressWeight, barbellRowWeight,
             deadliftWeight, squatReps, benchPressReps, overheadPressReps,
             barbellRowReps, deadliftReps, bodyWeight, (error) => {
                 const errorBlock = document.getElementById('errorMessage');
@@ -199,7 +198,7 @@ class CurrentWorkout extends BindingClass {
             `;
             document.getElementById('startingWeightsButton').addEventListener('click', this.redirectToStartingWeights);
         } else {
-            this.displayCurrentWorkout();
+            this.isWorkoutComplete();
         }
     }
     /**
@@ -226,6 +225,8 @@ class CurrentWorkout extends BindingClass {
             currentWorkoutCard.innerHTML = `
             <h1 class="workoutComplete">Workout complete. Great job!</h1>
             `;
+        } else {
+            this.displayCurrentWorkout();
         }
     }
 }
@@ -399,7 +400,7 @@ function getDateString() {
     }
 }
 
-function getTimeString(time) {
+ function getTimeString(time) {
     return time.toISOString();
 }
 
