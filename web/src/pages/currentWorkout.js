@@ -124,8 +124,8 @@ class CurrentWorkout extends BindingClass {
         const deadliftReps = getDeadliftReps();
         const bodyWeight = document.getElementById('body-weight').value;
     
-        return await this.client.addWorkout(date, workoutType, timeStartedString,
-            timeEndedString, squatWeight, benchPressWeight, overheadPressWeight, barbellRowWeight,
+        return await this.client.addWorkout(date, workoutType, timeStarted,
+            timeEnded, squatWeight, benchPressWeight, overheadPressWeight, barbellRowWeight,
             deadliftWeight, squatReps, benchPressReps, overheadPressReps,
             barbellRowReps, deadliftReps, bodyWeight, (error) => {
                 const errorBlock = document.getElementById('errorMessage');
