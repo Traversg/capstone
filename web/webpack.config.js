@@ -28,7 +28,12 @@ module.exports = {
     upcomingWorkouts : path.resolve(__dirname, 'src', 'pages', 'upcomingWorkouts.js'),
     redirect: path.resolve(__dirname, 'src', 'pages', 'redirect.js'),
     currentWorkout: path.resolve(__dirname, 'src', 'pages', 'currentWorkout'),
-    workoutHistory: path.resolve(__dirname, 'src', 'pages', 'workoutHistory')
+    workoutHistory: path.resolve(__dirname, 'src', 'pages', 'workoutHistory'),
+    squatProgress: path.resolve(__dirname, 'src', 'pages', 'squatProgress'),
+    benchPressProgress: path.resolve(__dirname, 'src', 'pages', 'benchPressProgress'),
+    barbellRowProgress: path.resolve(__dirname, 'src', 'pages', 'barbellRowProgress'),
+    overheadPressProgress: path.resolve(__dirname, 'src', 'pages', 'overheadPressProgress'),
+    deadliftProgress: path.resolve(__dirname, 'src', 'pages', 'deadliftProgress')
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),

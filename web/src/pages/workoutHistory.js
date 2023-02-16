@@ -185,9 +185,9 @@ function displayWorkoutB(workoutB) {
         </div>
         <hr>
         <div class="exercise">
-            <h3>${deadliftReps}</h3>
+            <h3>Deadlift</h3>
             <div class="weight">
-                <h3>1x5</h3>
+                <h3>${deadliftReps}</h3>
                 <h3 class="setWeight">${workoutB.deadliftWeight}lbs</h3>
             </div>
         </div>

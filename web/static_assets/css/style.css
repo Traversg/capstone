@@ -226,7 +226,7 @@ h3 {
 }
 
 hr {
-    border-width: .5px;
+    /*border-width: .5px; */
     margin-top: -5px;
     margin-bottom: -5px;
     border-color: #6e6d73;
@@ -438,4 +438,66 @@ span {
     border-radius: 4px;
     font-family: 'Anton', sans-serif;
     width: 550px;
+}
+
+/* PROGRESS PAGES */
+
+.progressTitle {
+    color: #ffffff;
+    font-family: 'Anton', sans-serif;
+}
+
+th {
+    color:#ffffff;
+    font-family: 'Open Sans', sans-serif;
+    width: 250px;
+    background-color: #ff0024;
+}
+
+td {
+    color:#ffffff;
+    font-family: 'Open Sans', sans-serif;
+    width: 250px; 
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid #ffffff;
+  }
+
+table {
+    border-collapse: collapse;
+}
+
+.progressCard {
+    /*display: flex; */
+    flex-direction: column;
+    background-color: #1c1c1e;
+    padding: 25px;
+    border-radius: 8px;
+    width: 500px;
+    margin-bottom: 25px;
+}
+
+#table {
+    color:#ffffff;
+    border-color: #ffffff;
+}
+
+.progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.progressDateAndWeight {
+    display: flex;
+    justify-content: space-between;
+}
+
+.data {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #6e6d73;
 }
