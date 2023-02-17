@@ -114,7 +114,6 @@ function displayWorkoutA(workoutA, workoutNumber) {
             <h3 class="setWeight">${workoutA.squatWeight}lbs</h3>
         </div>
     </div>
-    <hr>
     <div class="exercise">
         <h3>Bench Press</h3>
         <div class="weight">
@@ -122,7 +121,6 @@ function displayWorkoutA(workoutA, workoutNumber) {
             <h3 class="setWeight">${workoutA.benchPressWeight}lbs</h3>
         </div>
     </div>
-    <hr>
     <div class="exercise">
         <h3>Barbell Row</h3>
         <div class="weight">
@@ -154,7 +152,6 @@ function displayWorkoutB(workoutB, workoutNumber) {
             <h3 class="setWeight">${workoutB.squatWeight}lbs</h3>
         </div>
     </div>
-    <hr>
     <div class="exercise">
         <h3>Overhead Press</h3>
         <div class="weight">
@@ -162,7 +159,6 @@ function displayWorkoutB(workoutB, workoutNumber) {
             <h3 class="setWeight">${workoutB.overheadPressWeight}lbs</h3>
         </div>
     </div>
-    <hr>
     <div class="exercise">
         <h3>Deadlift</h3>
         <div class="weight">
