@@ -108,6 +108,7 @@ function displayWorkoutA(workoutA) {
     const squatReps = getSquatRepsDisplay(workoutA);
     const benchPressReps = getBenchPressRepsDisplay(workoutA);
     const barbellRowReps = getBarbellRowRepsDispay(workoutA);
+    const duration = getDurationString(workoutA.totalWorkoutTime);
 
     let workoutCard = document.getElementById('workoutHistory');
     let workoutBlock = document.createElement('div');
@@ -124,7 +125,6 @@ function displayWorkoutA(workoutA) {
                 <h3 class="setWeight">${workoutA.squatWeight}lbs</h3>
             </div>
         </div>
-        <hr>
         <div class="exercise">
             <h3>Bench Press</h3>
             <div class="weight">
@@ -132,7 +132,6 @@ function displayWorkoutA(workoutA) {
                 <h3 class="setWeight">${workoutA.benchPressWeight}lbs</h3>
             </div>
         </div>
-        <hr>
         <div class="exercise">
             <h3>Barbell Row</h3>
             <div class="weight">
@@ -140,10 +139,13 @@ function displayWorkoutA(workoutA) {
                 <h3 class="setWeight">${workoutA.barbellRowWeight}lbs</h3>
             </div>
         </div>
-        <hr>
         <div class="bodyWeightHistory">
             <h3>Body Weight</h3>
             <h3 class="setWeight">${workoutA.bodyWeight}lbs</h3>
+        </div>
+        <div class="workoutTime">
+            <h3>Duration</h3>
+            <h3>${duration}</h3>
         </div>`;
     workoutCard.appendChild(workoutBlock);
 }
@@ -159,6 +161,7 @@ function displayWorkoutB(workoutB) {
     const squatReps = getSquatRepsDisplay(workoutB);
     const overheadPressReps = getOverheadPressRepsDispay(workoutB);
     const deadliftReps = getDeadliftRepsDispay(workoutB);
+    const duration = getDurationString(workoutB.totalWorkoutTime);
         
     let workoutCard = document.getElementById('workoutHistory');
     let workoutBlock = document.createElement('div');
@@ -175,7 +178,6 @@ function displayWorkoutB(workoutB) {
                 <h3 class="setWeight">${workoutB.squatWeight}lbs</h3>
             </div>
         </div>
-        <hr>
         <div class="exercise">
             <h3>Overhead Press</h3>
             <div class="weight">
@@ -183,7 +185,6 @@ function displayWorkoutB(workoutB) {
                 <h3 class="setWeight">${workoutB.overheadPressWeight}lbs</h3>
             </div>
         </div>
-        <hr>
         <div class="exercise">
             <h3>Deadlift</h3>
             <div class="weight">
@@ -191,10 +192,13 @@ function displayWorkoutB(workoutB) {
                 <h3 class="setWeight">${workoutB.deadliftWeight}lbs</h3>
             </div>
         </div>
-        <hr>
         <div class="bodyWeightHistory">
             <h3>Body Weight</h3>
             <h3 class="setWeight">${workoutB.bodyWeight}lbs</h3>
+        </div>
+        <div class="workoutTime">
+            <h3>Duration</h3>
+            <h3>${duration}</h3>
         </div>`;
     workoutCard.appendChild(workoutBlock);
 }
@@ -287,6 +291,11 @@ function getDeadliftRepsDispay(workout) {
     }
 
     return repString.slice(0, repString.length - 2);
+}
+
+function getDurationString(duration) {
+    const index = duration.toString().split('.');
+    return index[0] + "min";
 }
 
 /**
