@@ -1,3 +1,6 @@
+* { 
+    box-sizing: border-box; 
+}
 
 body {
     padding: 0;
@@ -12,6 +15,10 @@ button {
     background-color: #ff0024;
     color: #ffffff;
     border: none;
+}
+
+.hidden {
+    display: none;
 }
 
 #header {
@@ -269,12 +276,6 @@ h3 {
     margin-bottom: 25px;
 }
 
-hr {
-    /*border-width: .5px; */
-    margin-top: -5px;
-    margin-bottom: -5px;
-    border-color: #6e6d73;
-}
 
 .workout1 {
     border-left: #ff0024 solid 2px;
@@ -431,10 +432,6 @@ span {
     font-family: 'Anton', sans-serif;
 }
 
-.hidden {
-    display: none;
-}
-
 #timerDisplay {
     margin-top: -15px;
     color: #ffffff;
@@ -471,6 +468,15 @@ span {
     align-items: center;
     flex-direction: column;
     color: #ffffff;
+}
+
+@media screen and (max-width: 400px) {
+
+    .workoutHistoryCard {
+        scale: .65;
+        margin-top: -150px;
+    }
+
 }
 
 .workoutHistoryTitle {
@@ -565,3 +571,55 @@ table {
 .data:last-child {
     border-bottom: 0px;
 }
+
+/* HAMBURGER MENU */
+
+@media screen and (min-width: 769px) {
+    .hamburgerNav {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .fullNav {
+        display: none;
+    }
+
+    .hamburgerButton {
+        font-size: 50px;
+    }
+
+    .mobileMenu {
+        margin-top: 300px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mobileMenu ul {
+        color: #ffffff;
+        font-family: 'Anton', sans-serif;
+        list-style-type: none;
+    }
+
+    .mobileMenu a {
+        color :#ffffff;
+        text-decoration: none;
+        font-size: 40px;
+        font-family: 'Anton', sans-serif;
+    }
+
+    .mobileMenu button {
+        margin-right: 15px;
+        margin-top: 15px;
+        font-size: 40px;
+    }
+
+    .logoutButtonMobile {
+        padding-top: 250px;
+        font-family: 'Anton', sans-serif;
+        font-size: 16px;
+    }
+    
+  }
+
+
