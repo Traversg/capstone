@@ -1,3 +1,4 @@
+import { DEFAULT_PRIMARY_KEY_VALUE_SEPARATOR } from '@aws-amplify/datastore/lib-esm/util';
 import FiveLiftsClient from '../api/fiveLiftsClient';
 import BindingClass from "../util/bindingClass";
 
@@ -20,6 +21,7 @@ export default class Header extends BindingClass {
      */
     async addHeaderToPage() {
         const siteTitle = this.createSiteTitle();
+        const currentPage = window.location.href;
 
         const header = document.getElementById('header');
         header.appendChild(siteTitle);
@@ -44,6 +46,9 @@ export default class Header extends BindingClass {
         </div>
         <div class="hamburgerNav">
             <button type="button" class="hamburgerButton" id="hamburgerButton">&#9776</button>
+            <div class="closeDiv hidden" id="closeDiv">
+                <a class="close" id="close" href=${currentPage}>x</a>
+            </div>
         </div>
         `;
         header.appendChild(navBar);
@@ -66,8 +71,11 @@ export default class Header extends BindingClass {
     }
 
     displayMobileMenu() {
+        const hamburgerButton = document.getElementById('hamburgerButton');
+        hamburgerButton.classList.add('hidden');
+        const closeDiv = document.getElementById('closeDiv');
+        closeDiv.classList.remove('hidden');
         document.getElementById('background').style.backgroundColor = "#ff0024";
-        document.getElementById('hamburgerButton').innerText = "x";
         document.getElementById('workoutHistoryCard').innerHTML = `
         <div class="mobileMenu" id="mobileMenu">
         <div class="dropdown">
@@ -85,11 +93,9 @@ export default class Header extends BindingClass {
         <button class="logoutButtonMobile" id="logout" type="button">Logout</button>
         </div>
     `;
-    document.getElementById('hamburgerButton').addEventListener('click', this.closeMobileMenu);
     }
 
     closeMobileMenu() {
-        const mobileMenu = document.getElementById('mobileMenu');
-        mobileMenu.classList.add('hidden');
+        window.location.href = `/workoutHistory.html`;
     }
 }
