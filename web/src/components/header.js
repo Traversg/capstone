@@ -10,7 +10,7 @@ export default class Header extends BindingClass {
         super();
 
         const methodsToBind = [
-            'addHeaderToPage', 'createSiteTitle'];
+            'addHeaderToPage', 'createSiteTitle', 'displayMobileMenu', 'displayProgressMenu'];
         this.bindClassMethods(methodsToBind, this);
 
         this.client = new FiveLiftsClient();
@@ -76,26 +76,42 @@ export default class Header extends BindingClass {
         const closeDiv = document.getElementById('closeDiv');
         closeDiv.classList.remove('hidden');
         document.getElementById('background').style.backgroundColor = "#ff0024";
-        document.getElementById('workoutHistoryCard').innerHTML = `
+        document.getElementById('mobileMenuCard').innerHTML = `
         <div class="mobileMenu" id="mobileMenu">
-        <div class="dropdown">
-            <button class="dropbtn">Progress</button>
-            <div class="dropdown-content">
-                <a href="/squatProgress.html">Squat</a>
-                <a href=/benchPressProgress.html">Bench Press</a>
-                <a href="/barbellRowProgress.html">Barbell Row</a>
-                <a href="/overheadPressProgress.html">Overhead Press</a>
-                <a href="/deadliftProgress.html">Deadlift</a>
+            <div class="linkWrapper" id="progressButtonWrapper">
+                <button class="dropbtn" id="progressButton" type="button">Progress</button>
             </div>
-        </div>    
-        <a href="/upcomingWorkouts.html">Upcoming Workouts</a>
-        <a href="/workoutHistory.html">Workout History</a>
-        <button class="logoutButtonMobile" id="logout" type="button">Logout</button>
+            <div class="linkWrapper" id="upcomingWorkoutsWrapper">    
+                <a href="/upcomingWorkouts.html">Upcoming Workouts</a>
+            </div>
+            <div class="linkWrapper" id="workoutHistoryWrapper">
+                <a href="/workoutHistory.html">Workout History</a>
+            </div>
+            <button class="logoutButtonMobile" id="logoutMobile" type="button">Logout</button>
         </div>
-    `;
+        `;
+        const progressButton = document.getElementById('progressButton');
+        const logout = document.getElementById('logoutMobile');
+        progressButton.addEventListener('click', this.displayProgressMenu);
+        logout.addEventListener('click', this.client.logout);
     }
 
-    closeMobileMenu() {
-        window.location.href = `/workoutHistory.html`;
-    }
+    displayProgressMenu() {
+        console.log("successful click")
+        const progressButton = document.getElementById('progressButtonWrapper');
+        const upcomingWorkoutsWrapper = document.getElementById('upcomingWorkoutsWrapper');
+        const workoutHistoryWrapper = document.getElementById('workoutHistoryWrapper');
+        progressButton.classList.add('hidden');
+        upcomingWorkoutsWrapper.classList.add('hidden');
+        workoutHistoryWrapper.classList.add('hidden');
+        document.getElementById('mobileMenuCard').innerHTML = `
+        <div class="mobileMenu" id="mobileMenu">
+            <a href="/squatProgress.html">Squat</a>
+            <a href=/benchPressProgress.html">Bench Press</a>
+            <a href="/barbellRowProgress.html">Barbell Row</a>
+            <a href="/overheadPressProgress.html">Overhead Press</a>
+            <a href="/deadliftProgress.html">Deadlift</a>
+        </div>
+        `;
+    } 
 }
