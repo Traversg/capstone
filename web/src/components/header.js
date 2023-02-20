@@ -32,11 +32,11 @@ export default class Header extends BindingClass {
             <li class="dropdown">
                 <button class="dropbtn">Progress</button>
                 <div class="dropdown-content">
-                    <a href="/squatProgress.html">Squat</a>
-                    <a href=/benchPressProgress.html">Bench Press</a>
-                    <a href="/barbellRowProgress.html">Barbell Row</a>
-                    <a href="/overheadPressProgress.html">Overhead Press</a>
-                    <a href="/deadliftProgress.html">Deadlift</a>
+                    <a href="/progress/squatProgress.html">Squat</a>
+                    <a href="/progress/benchPressProgress.html">Bench Press</a>
+                    <a href="/progress/barbellRowProgress.html">Barbell Row</a>
+                    <a href="/progress/overheadPressProgress.html">Overhead Press</a>
+                    <a href="/progress/deadliftProgress.html">Deadlift</a>
                 </div>
             </li>    
             <li><a href="/upcomingWorkouts.html">Upcoming Workouts</a></li>
