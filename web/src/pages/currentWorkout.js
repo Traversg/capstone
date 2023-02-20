@@ -206,6 +206,12 @@ class CurrentWorkout extends BindingClass {
      */
     async isWorkoutComplete() {
         const mostRecentWorkout = await this.client.getMostRecentWorkout();
+        
+        if (mostRecentWorkout === undefined) {
+            this.displayCurrentWorkout();
+        }
+
+
         const mostRecentWorkoutDate = mostRecentWorkout.workoutDate;
         const today = new Date();
         const todayMonth = today.getMonth() + 1;
