@@ -407,6 +407,10 @@ h3 {
     border: 2px solid #ff0024;
 }
 
+.squatInput {
+    color: #ffffff;
+}
+
 .repInputs input:last-child {
     margin-right: 0px;
 }
@@ -666,7 +670,7 @@ table {
     }
 
     .logoutButtonMobile {
-        padding-top: 100px;
+        padding-top: 200px;
         font-family: 'Anton', sans-serif;
         font-size: 16px;
     }
@@ -690,8 +694,16 @@ table {
     }
 
     .linkWrapper {
-        margin-bottom: 50px;
-        border-bottom: 1px solid #ffffff;
+        margin-bottom: 10px;
+        /* border-bottom: 1px solid #ffffff; */
+    }
+
+    .backButton {
+        margin-top: 100px;
+        padding-top: 100px;
+        font-family: 'Anton', sans-serif;
+        color: #ffffff;
+        font-size: 40px;
     }
     
   }

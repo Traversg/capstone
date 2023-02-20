@@ -111,7 +111,10 @@ export default class Header extends BindingClass {
             <a href="/barbellRowProgress.html">Barbell Row</a>
             <a href="/overheadPressProgress.html">Overhead Press</a>
             <a href="/deadliftProgress.html">Deadlift</a>
+            <button class="backButton" id="backButton" type="button">&#8592;</button>
         </div>
         `;
+        const backButton = document.getElementById('backButton');
+        backButton.addEventListener('click', this.displayMobileMenu);
     } 
 }

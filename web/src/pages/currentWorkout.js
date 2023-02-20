@@ -217,10 +217,10 @@ class CurrentWorkout extends BindingClass {
             todayDate === workoutDate) {
             const currentWorkoutTitle = document.getElementById('currentWorkoutTitle');
             currentWorkoutTitle.classList.add('hidden');
-            const timer = document.getElementById('timer');
-            timer.classList.add('hidden');
-            const finishWorkoutButton = document.getElementById('finishWorkoutButton');
-            finishWorkoutButton.classList.add('hidden');
+            const timerButton = document.getElementById('timerButton');
+            timerButton.classList.add('hidden');
+            const workoutSubmitButton = document.getElementById('workoutSubmitButton');
+            workoutSubmitButton.classList.add('hidden');
             const currentWorkoutCard = document.getElementById('currentWorkoutCard');
             currentWorkoutCard.innerHTML = `
             <h1 class="workoutComplete">Workout complete. Great job!</h1>
@@ -244,7 +244,7 @@ function displayWorkoutA(workoutA) {
         </div>
         <div class="reps">
             <div class="repInputs">
-                <input type="number" required class="validated-field" id="squatSet1" min="1" max="5" placeholder="0" 
+                <input class="squatInput" type="number" required class="validated-field" id="squatSet1" min="1" max="5" placeholder="0" 
                 autofocus>
                 <input type="number" required class="validated-field" id="squatSet2" min="1" max="5" placeholder="0" 
                 autofocus>

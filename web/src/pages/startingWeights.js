@@ -73,7 +73,7 @@ class StartingWeights extends BindingClass {
      */
     async isCurrentUser() {
         const currentUser = await this.client.getIsCurrentUser();
-        if (currentUser.isCurrentUser) {
+        if (currentUser) {
             window.location.href = `/upcomingWorkouts.html`
         } 
     }

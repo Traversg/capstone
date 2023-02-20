@@ -3,15 +3,386 @@
     {
       "PutRequest": {
         "Item": {
-          "id": { "S": "ABC123" },
-          "name": { "S": "Joe Sixpack" },
-          "email": { "S": "joe_sixpack@gmail.com" },
-          "bodyWeight": { "N": "175.0" },
-          "deadlift": {"N": "300"},
-          "squat": {"N": "275"},
-          "bench": {"N": "200"},
-          "overheadPress": {"N": "125"},
-          "barbellRow": {"N": "175"}
+          "name": { "S": "Travers Geoffray" },
+          "email": { "S": "traversgeoffray+test1@gmail.com" },
+          "bodyWeight": { "N": "173.2" },
+          "deadlift": {"N": "275"},
+          "squat": {"N": "235"},
+          "bench": {"N": "185"},
+          "overheadPress": {"N": "115"},
+          "barbellRow": {"N": "160"}
+        }
+      }
+    }
+  ],
+  "workouts": [
+    {
+      "PutRequest": {
+        "Item": {
+          "email": { "S": "traversgeoffray+test1@gmail.com" },
+          "workoutDate": { "S": "2023-01-28" },
+          "barbellRowReps": { "L":  [] },
+          "barbellRowWeight": { "N": "0" },
+          "benchPressReps": { "L":  [] },
+          "benchPressWeight": { "N": "0" },
+          "bodyWeight": { "N": "171.2" },
+          "deadliftReps": { "L": [
+            { "N": 2 }
+          ]},
+          "deadliftWeight": { "N": "285" },
+          "overheadPressReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 }
+          ]},
+          "overheadPressWeight": { "N": "120" },
+          "squatReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 4 },
+            { "N": 4 }
+          ]},
+          "squatWeight": { "N": 240 },
+          "totalWorkoutTime": { "S" : "PT60.000S"},
+          "workoutType": { "S" : "WORKOUT_B"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "email": { "S": "traversgeoffray+test1@gmail.com" },
+          "workoutDate": { "S": "2023-01-31" },
+          "barbellRowReps": { "L":  [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 }
+          ]},
+          "barbellRowWeight": { "N": "170" },
+          "benchPressReps": { "L":  [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 }
+          ]},
+          "benchPressWeight": { "N": "170" },
+          "bodyWeight": { "N": "173.6" },
+          "deadliftReps": { "L": [] },
+          "deadliftWeight": { "N": "0" },
+          "overheadPressReps": { "L": [] },
+          "overheadPressWeight": { "N": "0" },
+          "squatReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 }
+          ]},
+          "squatWeight": { "N": 240 },
+          "totalWorkoutTime": { "S" : "PT85.000S"},
+          "workoutType": { "S" : "WORKOUT_A"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "email": { "S": "traversgeoffray+test1@gmail.com" },
+          "workoutDate": { "S": "2023-02-02" },
+          "barbellRowReps": { "L":  [] },
+          "barbellRowWeight": { "N": "0" },
+          "benchPressReps": { "L":  [] },
+          "benchPressWeight": { "N": "0" },
+          "bodyWeight": { "N": "172.4" },
+          "deadliftReps": { "L": [
+            { "N": 3 }
+          ]},
+          "deadliftWeight": { "N": "285" },
+          "overheadPressReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 3 },
+            { "N": 4 }
+          ]},
+          "overheadPressWeight": { "N": "125" },
+          "squatReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 4 },
+            { "N": 5 },
+            { "N": 3 }
+          ]},
+          "squatWeight": { "N": 245 },
+          "totalWorkoutTime": { "S" : "PT63.000S"},
+          "workoutType": { "S" : "WORKOUT_B"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "email": { "S": "traversgeoffray+test1@gmail.com" },
+          "workoutDate": { "S": "2023-02-04" },
+          "barbellRowReps": { "L":  [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 }
+          ]},
+          "barbellRowWeight": { "N": "175" },
+          "benchPressReps": { "L":  [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 }
+          ]},
+          "benchPressWeight": { "N": "175" },
+          "bodyWeight": { "N": "172.6" },
+          "deadliftReps": { "L": [] },
+          "deadliftWeight": { "N": "0" },
+          "overheadPressReps": { "L": [] },
+          "overheadPressWeight": { "N": "0" },
+          "squatReps": { "L": [
+            { "N": 4 },
+            { "N": 4 },
+            { "N": 4 },
+            { "N": 4 },
+            { "N": 4 }
+          ]},
+          "squatWeight": { "N": 245 },
+          "totalWorkoutTime": { "S" : "PT84.000S"},
+          "workoutType": { "S" : "WORKOUT_A"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "email": { "S": "traversgeoffray+test1@gmail.com" },
+          "workoutDate": { "S": "2023-02-07" },
+          "barbellRowReps": { "L":  [] },
+          "barbellRowWeight": { "N": "0" },
+          "benchPressReps": { "L":  [] },
+          "benchPressWeight": { "N": "0" },
+          "bodyWeight": { "N": "172.4" },
+          "deadliftReps": { "L": [
+            { "N": 3 }
+          ]},
+          "deadliftWeight": { "N": "285" },
+          "overheadPressReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 4 },
+            { "N": 5 }
+          ]},
+          "overheadPressWeight": { "N": "125" },
+          "squatReps": { "L": [
+            { "N": 4 },
+            { "N": 4 },
+            { "N": 4 },
+            { "N": 4 },
+            { "N": 4 }
+          ]},
+          "squatWeight": { "N": 245 },
+          "totalWorkoutTime": { "S" : "PT75.000S"},
+          "workoutType": { "S" : "WORKOUT_B"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "email": { "S": "traversgeoffray+test1@gmail.com" },
+          "workoutDate": { "S": "2023-02-09" },
+          "barbellRowReps": { "L":  [
+            { "N": 5 },
+            { "N": 4 },
+            { "N": 5 },
+            { "N": 4 },
+            { "N": 5 }
+          ]},
+          "barbellRowWeight": { "N": "180" },
+          "benchPressReps": { "L":  [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 }
+          ]},
+          "benchPressWeight": { "N": "180" },
+          "bodyWeight": { "N": "171.8" },
+          "deadliftReps": { "L": [] },
+          "deadliftWeight": { "N": "0" },
+          "overheadPressReps": { "L": [] },
+          "overheadPressWeight": { "N": "0" },
+          "squatReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 }
+          ]},
+          "squatWeight": { "N": 220 },
+          "totalWorkoutTime": { "S" : "PT73.000S"},
+          "workoutType": { "S" : "WORKOUT_A"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "email": { "S": "traversgeoffray+test1@gmail.com" },
+          "workoutDate": { "S": "2023-02-11" },
+          "barbellRowReps": { "L":  [] },
+          "barbellRowWeight": { "N": "0" },
+          "benchPressReps": { "L":  [] },
+          "benchPressWeight": { "N": "0" },
+          "bodyWeight": { "N": "171.2" },
+          "deadliftReps": { "L": [
+            { "N": 5 }
+          ]},
+          "deadliftWeight": { "N": "255" },
+          "overheadPressReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 4 },
+            { "N": 5 },
+            { "N": 3 }
+          ]},
+          "overheadPressWeight": { "N": "125" },
+          "squatReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 }
+          ]},
+          "squatWeight": { "N": 225 },
+          "totalWorkoutTime": { "S" : "PT57.000S"},
+          "workoutType": { "S" : "WORKOUT_B"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "email": { "S": "traversgeoffray+test1@gmail.com" },
+          "workoutDate": { "S": "2023-02-14" },
+          "barbellRowReps": { "L":  [
+            { "N": 4 },
+            { "N": 5 },
+            { "N": 4 },
+            { "N": 5 },
+            { "N": 4 }
+          ]},
+          "barbellRowWeight": { "N": "180" },
+          "benchPressReps": { "L":  [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 4 },
+            { "N": 5 },
+            { "N": 4 }
+          ]},
+          "benchPressWeight": { "N": "185" },
+          "bodyWeight": { "N": "173.2" },
+          "deadliftReps": { "L": [] },
+          "deadliftWeight": { "N": "0" },
+          "overheadPressReps": { "L": [] },
+          "overheadPressWeight": { "N": "0" },
+          "squatReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 }
+          ]},
+          "squatWeight": { "N": 230 },
+          "totalWorkoutTime": { "S" : "PT75.000S"},
+          "workoutType": { "S" : "WORKOUT_A"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "email": { "S": "traversgeoffray+test1@gmail.com" },
+          "workoutDate": { "S": "2023-02-16" },
+          "barbellRowReps": { "L":  [] },
+          "barbellRowWeight": { "N": "0" },
+          "benchPressReps": { "L":  [] },
+          "benchPressWeight": { "N": "0" },
+          "bodyWeight": { "N": "173.2" },
+          "deadliftReps": { "L": [
+            { "N": 5 }
+          ]},
+          "deadliftWeight": { "N": "265" },
+          "overheadPressReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 }
+          ]},
+          "overheadPressWeight": { "N": "110" },
+          "squatReps": { "L": [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 4 }
+          ]},
+          "squatWeight": { "N": 235 },
+          "totalWorkoutTime": { "S" : "PT57.000S"},
+          "workoutType": { "S" : "WORKOUT_B"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "email": { "S": "traversgeoffray+test1@gmail.com" },
+          "workoutDate": { "S": "2023-02-18" },
+          "barbellRowReps": { "L":  [
+            { "N": 3 },
+            { "N": 4 },
+            { "N": 4 },
+            { "N": 4 },
+            { "N": 4 }
+          ]},
+          "barbellRowWeight": { "N": "180" },
+          "benchPressReps": { "L":  [
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 5 },
+            { "N": 3 },
+            { "N": 4 }
+          ]},
+          "benchPressWeight": { "N": "185" },
+          "bodyWeight": { "N": "173.2" },
+          "deadliftReps": { "L": [] },
+          "deadliftWeight": { "N": "0" },
+          "overheadPressReps": { "L": [] },
+          "overheadPressWeight": { "N": "0" },
+          "squatReps": { "L": [
+            { "N": 5 },
+            { "N": 4 },
+            { "N": 5 },
+            { "N": 3 },
+            { "N": 3 }
+          ]},
+          "squatWeight": { "N": 235 },
+          "totalWorkoutTime": { "S" : "PT88.000S"},
+          "workoutType": { "S" : "WORKOUT_A"}
         }
       }
     }
