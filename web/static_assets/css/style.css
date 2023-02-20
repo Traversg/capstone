@@ -397,12 +397,12 @@ h3 {
     background-color: #1c1c1e;
     padding: 25px;
     border-radius: 8px;
-    width: 350px;
+    width: 400px;
 }
 
 .repInputs input {
     margin-right: 10px;
-    width: 15px;
+    width: 100px;
     background-color: #ff0024;
     border: 2px solid #ff0024;
 }
@@ -413,7 +413,7 @@ h3 {
 
 .repInputs input:last-child {
     margin-right: 0px;
-}
+} 
 
 .repInputs input:focus {
     border: 2px solid #ffffff;
@@ -445,7 +445,7 @@ h3 {
     border-radius: 4px;
     font-family: 'Anton', sans-serif;
     margin-top: 10px;
-    width: 350px;
+    width: 400px;
 }
 
 .timerButton {
@@ -560,7 +560,7 @@ span {
     font-family: 'Anton', sans-serif;
 }
 
-th {
+/*th {
     color:#ffffff;
     font-family: 'Open Sans', sans-serif;
     width: 250px;
@@ -580,7 +580,7 @@ table, th, td {
 
 table {
     border-collapse: collapse;
-}
+}*/
 
 .progressCard {
     flex-direction: column;
@@ -591,10 +591,10 @@ table {
     margin-bottom: 25px;
 }
 
-#table {
+/*#table {
     color:#ffffff;
     border-color: #ffffff;
-}
+}*/
 
 .progress {
     display: flex;
