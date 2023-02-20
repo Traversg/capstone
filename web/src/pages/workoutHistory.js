@@ -24,7 +24,6 @@ class WorkoutHistory extends BindingClass {
         this.client = new FiveLiftsClient();
         await this.isLoggedIn();
         await this.isCurrentUser();
-        
     }
 
     /**
@@ -33,6 +32,9 @@ class WorkoutHistory extends BindingClass {
      */
     async displayWorkoutHistory() {
         const workoutHistory = await this.client.getWorkoutHistory();
+
+        const workoutHistoryTitle = document.getElementById('workoutHistoryTitle');
+        workoutHistoryTitle.innerText = "WORKOUT HISTORY";
 
         for (let workout in workoutHistory) {
             let currentWorkout = workoutHistory[workout];

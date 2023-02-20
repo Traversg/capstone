@@ -32,6 +32,9 @@ class UpcomingWorkouts extends BindingClass {
     async displayUpcomingWorkouts() {
         const upcomingWorkouts = await this.client.getUpcomingWorkouts();
 
+        const upcomingWorkoutsTitle = document.getElementById('upcomingWorkoutsTitle');
+        upcomingWorkoutsTitle.innerText = "UPCOMING WORKOUTS";
+
         for (let workout in upcomingWorkouts) {
             let workoutNumber = `workout${Number(workout) + 1}`;
             let currentWorkout = upcomingWorkouts[workout];
