@@ -362,7 +362,6 @@ Resources:
   #-----------------------------------------------------
   # DynamoDB Configuration
   #-----------------------------------------------------
-
   UsersTable:
     Type: AWS::DynamoDB::Table
     Properties:
