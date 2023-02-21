@@ -64,7 +64,7 @@ public class User {
         this.squat = squat;
     }
 
-    @DynamoDBAttribute(attributeName = "benchPress")
+    @DynamoDBAttribute(attributeName = "bench")
     public int getBenchPress() {
         return benchPress;
     }

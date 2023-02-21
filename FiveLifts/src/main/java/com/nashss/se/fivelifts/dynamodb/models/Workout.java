@@ -111,7 +111,7 @@ public class Workout {
         this.barbellRowWeight = barbellRowWeight;
     }
 
-    @DynamoDBAttribute(attributeName = "deadLiftWeight")
+    @DynamoDBAttribute(attributeName = "deadliftWeight")
     public int getDeadliftWeight() {
         return deadliftWeight;
     }
