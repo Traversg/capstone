@@ -68,6 +68,11 @@ class OverheadPressProgress extends BindingClass {
      */
     displayProgress() {
         const workoutHistory = this.dataStore.get('workoutHistory');
+        const progressTitle = document.getElementById('progressTitle');
+        progressTitle.innerText = "OVERHEAD PRESS";
+
+        const progressCard = document.getElementById('progressCard');
+        progressCard.classList.remove('hidden');
         for (let workout of workoutHistory) {
             const date = displayDate(workout.workoutDate);
             const weight = workout.overheadPressWeight;
@@ -77,7 +82,7 @@ class OverheadPressProgress extends BindingClass {
             div.classList.add('data');
             div.innerHTML = `
             <h3 class="progressDate">${date}</h3>
-            <h3 class="progressWeight">${weight}</h3>
+            <h3 class="progressWeight">${weight}lbs</h3>
             `
             const progressCard = document.getElementById('progressCard');
             progressCard.appendChild(div);

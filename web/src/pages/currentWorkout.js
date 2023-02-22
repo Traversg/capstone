@@ -35,6 +35,13 @@ class CurrentWorkout extends BindingClass {
      */
     async displayCurrentWorkout() {
         const currentWorkout = await this.client.getCurrentWorkout();
+
+        const timerButton = document.getElementById('timerButton');
+        timerButton.classList.remove('hidden');
+
+        const finishWorkoutButton = document.getElementById('workoutSubmitButton');
+        finishWorkoutButton.classList.remove('hidden');
+        
         this.dataStore.set('currentWorkout', currentWorkout[0]);
         const currentWorkoutType = currentWorkout[0].workoutType;
         this.dataStore.set('currentWorkoutType', currentWorkoutType);

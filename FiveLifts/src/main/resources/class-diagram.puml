@@ -2,66 +2,72 @@
 'https://plantuml.com/class-diagram
 
 class User {
-- userId : String
-- userName : String
-- weight : double
+- email : String
+- bodyWeight : double
 - deadlift : int
 - squat : int
-- bench : int
-- ohp : int
-- row : int
-+ getUserId() : String
-+ setUserId() : void
-+ getUserName() : String
-+ setUserName() : void
-+ getWeight() : double
-+ setWeight() : void
+- benchPress : int
+- overheadPress : int
+- barbellRow : int
++ getEmail() : String
++ setEmail() : void
++ getBodyWeight() : double
++ setBodyWeight() : void
 + getDeadlift() : int
 + setDeadlift() : void
 + getSquat() : int
 + setSquat() : void
-+ getBench() : int
-+ setBench() : void
-+ getOHP() : int
-+ setOHP() : void
-+ getRow() : int
-+ setRow() : void
++ getBenchPress() : int
++ setBenchPress() : void
++ getOverheadPress() : int
++ setOverheadPress() : void
++ getBarbellRow() : int
++ setBarbellRow() : void
 }
 
 class Workout {
 - workoutType : enum
-- userId : String
-- date : Date
-- timeStarted : TimeStamp
-- timeEnded : TimeStamp
+- email : String
+- workoutDate : LocalDateTime
+- totalWorkoutTime : Duration
 - squatReps : int[]
-- benchReps : int[]
+- benchPressReps : int[]
 - deadliftReps : int[]
-- ohpReps : int[]
-- rowReps : int[]
-- isComplete : boolean
+- overheadPressReps : int[]
+- barbellRowReps : int[]
+- squatWeight : int
+- benchPressWeight : int
+- barbellRowWeight : int
+- overheadPressWeight : int
+- deadliftWeight : int
 + getWorkoutType() : String
 + setWorkoutType() : void
-+ getUserId() : String
++ getEmail() : String
 + setUserId() : void
-+ getDate() : Date
-+ setDate() : void
-+ getTimeStarted() : TimeStamp
-+ setTimeStarted() : void
-+ getTimeEnded() : TimeStamp
-+ setTimeEnded() : void
++ getWorkoutDate() : LocalDateTime
++ setWorkoutDate() : void
++ getTotalWorkoutTime() : Duration
++ setTotalWorkoutTime() : void
 + getSquatReps() : int[]
 + setSquatReps() : void
-+ getBenchReps() : int[]
-+ setBenchReps() : void
++ getBenchPressReps() : int[]
++ setBenchPressReps() : void
 + getDeadliftReps() : int[]
 + setDeadliftReps() : void
-+ getOHPReps() : int[]
-+ setOHPReps() : void
-+ getRowReps() : int[]
-+ setRowReps() : void
-+ isComplete() : boolean
-- isComplete() : void
++ getOverheadPressReps() : int[]
++ setOverheadPressReps() : void
++ getBarbellRowReps() : int[]
++ setBarbellRowReps() : void
++ getSquatWeight() : int
++ setSquatWeight() : void
++ getBenchPressWeight() : int
++ setBenchPressWeight() : void
++ getBarbellRowWeight() : int
++ setBarbellRowWeight() : void
++ getOverheadPressWeight() : int
++ setOverheadPressWeight() : void
++ getDeadliftWeight() : int
++ setDeadliftWeight() : void
 }
 
 enum WorkoutType {
@@ -72,57 +78,85 @@ WORKOUT_B
 class UserDao {
 - final dynamoDBMapper : DynamoDBMapper
 + getUser : User
-+ addUser : User
++ saveUser : void
++ deleterUser : void
 }
 
 class WorkoutDao {
 - final dynamoDBMapper : DynamoDBMapper
-+ getWorkout : Workout
-+ createWorkout : Workout
-+ getWorkoutHistory: List<Workout>
++ getMostRecentWorkout(String email) : Optional<Workout>
++ saveWorkout : void
++ getWorkoutHistory(String email) : List<Workout>
++ deleteWorkout : void
 }
 
-class AddRepsToSetActivity {
+class AddWorkoutActivity {
 - final workoutDao : WorkoutDao
-- handleRequest(AddRepsToSetRequest request) : AddRepsToSetResult
++ handleRequest(AddWorkoutRequest request) : AddWorkoutResult
+- canIncrement(int reps) : boolean
+- canIncrementDeadlift(int reps) : boolean
+- getReps(List<Integer> reps) : int
+- repsMoreThanFive(List<Integer> reps) : boolean
+- repsLessThanZero(List<Intger> reps) : boolean
 }
 
-class StartWorkoutActivity {
-- final workoutDao : WorkoutDao
-+ handleRequest(StartWorkoutRequest request) : StartWorkoutResult
-}
-
-class EndWorkoutActivity {
-- final workoutDao : WorkoutDao
+class CreateProfileActivity {
 - final userDao : UserDao
-+ handleRequest(EndWorkoutRequest request) : EndWorkoutResult
++ handleRequest(CreateProfileRequest request) : CreateProfileResult
+- roundDown(int lift)
+}
+
+class DeleteUserProfileAndWorkoutHistoryActivity {
+ - final workoutDao : WorkoutDao
+ - final userDao : UserDao
+ + handleRequest(DeleteUserProfileAndWorkoutHistoryRequest request) : DeleteUserProfileAndWorkoutHistoryResult
+}
+
+class GetIsCurrentUserActivity {
+- final userDao : UserDao
++ handleRequest(GetIsCurrentUserRequest request) : GetIsCurrentUserResult
+}
+
+class GetMostRecentWorkoutActivity {
+- final workoutDao : WorkoutDao
++ handleRequest(GetMostRecentWorkoutRequest request) : GetMostRecentWorkoutResult
 }
 
 class GetWorkoutHistoryActivity {
 - final workoutDao : WorkoutDao
-+ handleRequest(EndWorkoutRequest request) : EndWorkoutResult
++ handleRequest(WorkoutHistoryRequest request) : WorkoutHistoryResult
 }
 
-class GetUpcomingWorkoutActivity {
+class GetUpcomingWorkoutsActivity {
 - final workoutDao : workoutDao
 - final userDao : UserDao
-+ handleRequest(GetUpcomingWorkout request) : GetUpcomingResult
++ handleRequest(GetUpcomingWorkouts request) : GetUpcomingWorkoutsResult
+- dayToStartWorkout(LocalDate mostRecentWorkoutDate) : LocalDateTime
+- createWorkoutA(int squatWeight, int benchPressWeight, int barbellRowWeight,
+                LocalDate dayToStart, boolean isCurrentUser, boolean isFirstOfType, boolean firstSquat) : Workout
+- createWorkoutB(int squatWeight, int benchPressWeight, int barbellRowWeight,
+                LocalDate dayToStart, boolean isCurrentUser, boolean isFirstOfType, boolean firstSquat) : Workout
+- createABAWorkoutSchedule(int mostRecentSquatWeight, int mostRecentBenchPressWeight,
+                int mostRecentBarbellRowWeight, int mostRecentOverheadPressWeight,
+                int mostRecentDeadliftWeight, LocalDate dayToStart, boolean isCurrentUser) : List<WorkoutModel>
+- createBABWorkoutSchedule(int mostRecentSquatWeight, int mostRecentBenchPressWeight,
+              int mostRecentBarbellRowWeight, int mostRecentOverheadPressWeight,
+              int mostRecentDeadliftWeight, LocalDate dayToStart) : List<WorkoutModel>
+- createUpcomingWorkouts(Optional<Workout> mostRecentWorkout, GetUpcomingWorkoutRequest request) : List<WorkoutModel>
 }
 
-class CreateProgramActivity {
-- final userDao : UserDao
-+ handleRequest(CreateProgramRequest request) : CreateProgramResult
-}
+
 
 User --|> UserDao
 Workout --|> WorkoutDao
-AddRepsToSetActivity <|-- WorkoutDao
-StartWorkoutActivity <|-- WorkoutDao
-EndWorkoutActivity <|-- WorkoutDao
-EndWorkoutActivity <|-- UserDao
+AddWorkoutActivity <|-- WorkoutDao
+GetIsCurrentUserActivity <|-- UserDao
+CreateProfileActivity <|-- UserDao
 GetWorkoutHistoryActivity <|-- WorkoutDao
 GetUpcomingWorkoutActivity <|-- UserDao
 GetUpcomingWorkoutActivity <|-- WorkoutDao
-CreateProgramActivity <|-- UserDao
+DeleteUserProfileAndWorkoutHistoryActivity <|-- WorkoutDao
+DeleteUserProfileAndWorkoutHistoryActivity <|-- UserDao
+GetMostRecentWorkoutActivity <|-- WorkoutDao
 WorkoutType --|> Workout
 @enduml
