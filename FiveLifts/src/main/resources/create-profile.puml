@@ -1,0 +1,9 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+Client -> Starting_Weights_Page: Click Submit
+Starting_Weights_Page -> CreateProfileActivity: Send create profile request
+CreateProfileActivity -> UserDao: Save created profile
+CreateProfileActivity -> Starting_Weights_Page: Send create profile result
+Starting_Weights_Page -> Client: Sent to upcoming workouts page
+@enduml

@@ -32,6 +32,12 @@ class UpcomingWorkouts extends BindingClass {
     async displayUpcomingWorkouts() {
         const upcomingWorkouts = await this.client.getUpcomingWorkouts();
 
+        const upcomingWorkoutsDisplay = document.getElementById('upcomingWorkouts');
+        upcomingWorkoutsDisplay.classList.remove('hidden');
+
+        const startWorkoutButton = document.getElementById('startWorkoutButton');
+        startWorkoutButton.classList.remove('hidden');
+
         const upcomingWorkoutsTitle = document.getElementById('upcomingWorkoutsTitle');
         upcomingWorkoutsTitle.innerText = "UPCOMING WORKOUTS";
 

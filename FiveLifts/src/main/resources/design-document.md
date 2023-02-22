@@ -1,4 +1,4 @@
-# StrongLifts Clone Design
+# StrongLifts Clone Design (FiveLifts)
 
 ## 1. Problem Statement
 
@@ -51,62 +51,59 @@ U6. As a lifter, I want to see what my warmup weights are for each exercise.
 
 User Table:
 - Email : Partition Key: String
-- Name : Attribute : String
-- Weight : Attribute : double
+- Body Weight : Attribute : double
 - Deadlift : Attribute  : int
 - Squat : Attribute : int
-- Bench : Attribute : int
-- OHP : Attribute : int
-- Row : Attribute : int
+- Bench Press : Attribute : int
+- Overhead Press : Attribute : int
+- Barbell Row : Attribute : int
 
 Workout Table:
 - Email : Partition Key : String
-- WorkoutDate : Sort Key : Datetime
+- WorkoutDate : Sort Key : LocalDateTime
 - WorkoutType : Attribute : enum
-- TimeStarted : Attribute : TimeStamp
-- TimeEnded : Attribute : TimeStamp
+- TotalWorkoutTime : Attribute : Duration
 - SquatWeight : Attribute : int
-- BenchWeight : Attribute : int
-- OhpWeight : Attribute : int
+- BenchPressWeight : Attribute : int
+- OverheadPressWeight : Attribute : int
 - RowWeight : Attribute : int
 - DeadliftWeight : Attribute : int
 - SquatReps : Attribute : int[]
-- BenchReps : Attribute : int[]
-- OHPReps : Attribute : int[]
-- RowReps : Attribute : int[]
+- BenchPressReps : Attribute : int[]
+- OverheadPressReps : Attribute : int[]
+- BarbellRowReps : Attribute : int[]
 - DeadliftReps : Attribute : int[]
-
-Workout GSI Table:
-- UserId : Partition Key : String
-- isComplete : Sort Key : boolean
-- Include All
 
 ## 6. API
 
-### 6.1 Add Reps To Set Endpoint
-- Accepts `PUT` requests to /workout/:userId
-- Accepts data to update a `workout` including the number of reps, the exercise, and the user ID associated with the workout. Returns the corresponding `workout`.
+### 6.1 Add Workout Endpoint
+- Accepts `POST` requests to /workouts
+- Accepts data to add a new `workout` including the number of reps, the exercise, and the email associated with the workout. Returns the corresponding `workout`.
 
 ### 6.2 Get Upcoming Workouts Endpoint
-- Accepts `GET` requests to /workout
+- Accepts `GET` requests to /workouts
 - Accepts email from AWS Cognito and returns the corresponding Workouts.
 
-### 6.3 Start Workout Endpoint
-- Accepts `POST` requests to /workout
-- Accepts data to create a new `workout` with a provided userID and returns a new `workout`.
+### 6.3 Create Profile Endpoint
+- Accepts `POST` requests to /user
+- Accepts data to create a new `user` with a provided email and starting weights and returns a new `user`.
 
 ![startWorkoutImage](diagram-13903889164156429315.png)
-### 6.4 End Workout Endpoint
-- Accepts `PUT` requests to /workout/:userid
-- Accepts data to update a `workout` including a signal of completion and returns the corresponding `workout`.
+### 6.4 Is Current User Endpoint
+- Accepts `GET` requests to /users
+- Accepts email from AWS Cognito and returns a true if that user is in the user table, false if not.
 
 ### 6.5 Get Workout History Endpoint
-- Accepts `GET` requests to /workout/:userId
-- Accepts a user ID and returns the corresponding workouts
+- Accepts `GET` requests to /workoutHistory
+- Accepts an email from AWS Cognito and returns the corresponding workouts.
 
-### 6.6 Create Profile Endpoint
-- Accepts `POST` requests to /user
-- Accepts data to create a new user, with a provided ID, name, body weight, and exercise weight and returns a new User.
+### 6.6 Get Most Recent Workout Endpoint
+- Accepts `GET` requests to /recentWorkout
+- Accepts an email from AWS Cognito and returns the most recent workout.
+
+### 6.7 Delete User Profile and Workouts Endpoint
+- Accepts `DELETE` requests to /resetProfile
+- Accepts an email from AWS Cognito and returns the email deleted and a boolean. 
 
 ## 7. Mockup
 

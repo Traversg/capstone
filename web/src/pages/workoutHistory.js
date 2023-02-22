@@ -33,6 +33,9 @@ class WorkoutHistory extends BindingClass {
     async displayWorkoutHistory() {
         const workoutHistory = await this.client.getWorkoutHistory();
 
+        const resetButton = document.getElementById('resetButton');
+        resetButton.classList.remove('hidden');
+
         const workoutHistoryTitle = document.getElementById('workoutHistoryTitle');
         workoutHistoryTitle.innerText = "WORKOUT HISTORY";
 
