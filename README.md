@@ -14,7 +14,7 @@
   <p align="center">
     Leave your workout log at home!
     <br />
-    <a href="https://d1k3aqhoaq55zf.cloudfront.net/"><strong>Go the application »</strong></a>
+    <a href="https://d1k3aqhoaq55zf.cloudfront.net"><strong>Go the application »</strong></a>
     <br />
     <br />
     <a href="#usage">View Demo</a>
